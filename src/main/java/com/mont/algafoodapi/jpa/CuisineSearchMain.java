@@ -5,18 +5,18 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 
 import com.mont.algafoodapi.AlgafoodApiApplication;
-import com.mont.algafoodapi.model.Kitchen;
+import com.mont.algafoodapi.model.Cuisine;
 
-public class KitchenSearchMain {
+public class CuisineSearchMain {
     public static void main(String[] args) {
           ApplicationContext applicationContext = new SpringApplicationBuilder(AlgafoodApiApplication.class)
                 .web(WebApplicationType.NONE)
                 .run(args);
     
-            KitchenRegistration kitchenRegistration = applicationContext.getBean(KitchenRegistration.class);
-            Kitchen kitchen = kitchenRegistration.findById(1L);
+            CuisineRegistration cuisineRegistration = applicationContext.getBean(CuisineRegistration.class);
+            Cuisine cuisine = cuisineRegistration.findById(1L);
 
-            System.out.println(kitchen.getName());
+            System.out.println(cuisine.getName());
 
         }
 }

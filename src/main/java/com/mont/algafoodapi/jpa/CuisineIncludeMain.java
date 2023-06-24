@@ -7,11 +7,11 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 
 import com.mont.algafoodapi.AlgafoodApiApplication;
-import com.mont.algafoodapi.model.Kitchen;
+import com.mont.algafoodapi.model.Cuisine;
 
 import jakarta.transaction.Transactional;
 
-public class KitchenIncludeMain {
+public class CuisineIncludeMain {
     
     public static void main(String[] args) {
         ApplicationContext applicationContext = new SpringApplicationBuilder(AlgafoodApiApplication.class)
@@ -19,16 +19,16 @@ public class KitchenIncludeMain {
                 .run(args);
         
 
-            KitchenRegistration kitchenRegistration = applicationContext.getBean(KitchenRegistration.class);
+            CuisineRegistration cuisineRegistration = applicationContext.getBean(CuisineRegistration.class);
             
-            Kitchen kitchen1 = new Kitchen(null, "Chinese");
-            Kitchen kitchen2 = new Kitchen(null, "Australian");
+            Cuisine cuisine1 = new Cuisine(null, "Chinese");
+            Cuisine cuisine2 = new Cuisine(null, "Australian");
 
-            kitchen1 = kitchenRegistration.create(kitchen1);
-            kitchen2 = kitchenRegistration.create(kitchen2);
+            cuisine1 = cuisineRegistration.create(cuisine1);
+            cuisine2 = cuisineRegistration.create(cuisine2);
 
-            System.out.printf("%d - %s\n", kitchen1.getId(), kitchen1.getName());
-            System.out.printf("%d - %s\n", kitchen2.getId(), kitchen2.getName());
+            System.out.printf("%d - %s\n", cuisine1.getId(), cuisine1.getName());
+            System.out.printf("%d - %s\n", cuisine2.getId(), cuisine2.getName());
             
         }
 }

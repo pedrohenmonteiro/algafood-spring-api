@@ -8,9 +8,9 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 
 import com.mont.algafoodapi.AlgafoodApiApplication;
-import com.mont.algafoodapi.model.Kitchen;
+import com.mont.algafoodapi.model.Cuisine;
 
-public class KitchenQueryMain {
+public class CuisineQueryMain {
     
     public static void main(String[] args) {
         ApplicationContext applicationContext = new SpringApplicationBuilder(AlgafoodApiApplication.class)
@@ -18,12 +18,12 @@ public class KitchenQueryMain {
                 .run(args);
         
 
-            KitchenRegistration kitchenRegistration = applicationContext.getBean(KitchenRegistration.class);
+            CuisineRegistration cuisineRegistration = applicationContext.getBean(CuisineRegistration.class);
             
-            List<Kitchen> kitchens = kitchenRegistration.list();
+            List<Cuisine> cuisines = cuisineRegistration.list();
 
-            for(Kitchen kitchen : kitchens) {
-                System.out.println(kitchen.getName());
+            for(Cuisine cuisine : cuisines) {
+                System.out.println(cuisine.getName());
             }
         }
 }
