@@ -1,3 +1,3 @@
-insert into kitchen (name) values ('Brazilian');
-insert into kitchen (name) values ('Japanese');
-insert into kitchen (name) values ('French');
+insert into cuisine (name) values ('Brazilian');
+insert into cuisine (name) values ('Japanese');
+insert into cuisine (name) values ('French');

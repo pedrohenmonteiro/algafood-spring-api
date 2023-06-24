@@ -5,30 +5,30 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.mont.algafoodapi.model.Kitchen;
+import com.mont.algafoodapi.model.Cuisine;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
 @Component
-public class KitchenRegistration {
+public class CuisineRegistration {
     
     @PersistenceContext
     private EntityManager manager;
 
-    public List<Kitchen> list() {
-        return manager.createQuery("from Kitchen", Kitchen.class)
+    public List<Cuisine> list() {
+        return manager.createQuery("from Cuisine", Cuisine.class)
         .getResultList();
     }
 
-    public Kitchen findById(Long id) {
-        return manager.find(Kitchen.class, id);
+    public Cuisine findById(Long id) {
+        return manager.find(Cuisine.class, id);
     }
 
     @Transactional
-    public Kitchen create(Kitchen kitchen) {
-        return manager.merge(kitchen);
+    public Cuisine save(Cuisine cuisine) {
+        return manager.merge(cuisine);
     }
 
 
