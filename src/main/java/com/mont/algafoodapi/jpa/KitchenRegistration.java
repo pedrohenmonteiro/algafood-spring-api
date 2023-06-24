@@ -22,8 +22,14 @@ public class KitchenRegistration {
         .getResultList();
     }
 
+    public Kitchen findById(Long id) {
+        return manager.find(Kitchen.class, id);
+    }
+
     @Transactional
     public Kitchen create(Kitchen kitchen) {
         return manager.merge(kitchen);
     }
+
+
 }
