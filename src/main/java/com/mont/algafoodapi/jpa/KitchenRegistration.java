@@ -1,14 +1,17 @@
-package com.jpa;
+package com.mont.algafoodapi.jpa;
 
 
 import java.util.List;
+
+import org.springframework.stereotype.Component;
 
 import com.mont.algafoodapi.model.Kitchen;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 
+@Component
 public class KitchenRegistration {
     
     @PersistenceContext
@@ -17,5 +20,10 @@ public class KitchenRegistration {
     public List<Kitchen> list() {
         return manager.createQuery("from Kitchen", Kitchen.class)
         .getResultList();
+    }
+
+    @Transactional
+    public Kitchen create(Kitchen kitchen) {
+        return manager.merge(kitchen);
     }
 }
