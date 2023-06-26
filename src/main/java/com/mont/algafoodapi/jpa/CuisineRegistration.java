@@ -31,5 +31,9 @@ public class CuisineRegistration {
         return manager.merge(cuisine);
     }
 
-
+    @Transactional
+    public void delete(Cuisine cuisine) {
+        cuisine = findById(cuisine.getId());
+        manager.remove(cuisine);
+    }
 }
