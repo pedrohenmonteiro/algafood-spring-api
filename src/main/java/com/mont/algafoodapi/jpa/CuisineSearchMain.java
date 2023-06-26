@@ -5,6 +5,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 
 import com.mont.algafoodapi.AlgafoodApiApplication;
+import com.mont.algafoodapi.domain.repository.CuisineRepository;
 import com.mont.algafoodapi.model.Cuisine;
 
 public class CuisineSearchMain {
@@ -13,8 +14,8 @@ public class CuisineSearchMain {
                 .web(WebApplicationType.NONE)
                 .run(args);
     
-            CuisineRegistration cuisineRegistration = applicationContext.getBean(CuisineRegistration.class);
-            Cuisine cuisine = cuisineRegistration.findById(1L);
+            CuisineRepository cuisineRepository = applicationContext.getBean(CuisineRepository.class);
+            Cuisine cuisine = cuisineRepository.findById(1L);
 
             System.out.println(cuisine.getName());
 

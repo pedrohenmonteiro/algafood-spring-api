@@ -6,6 +6,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 
 import com.mont.algafoodapi.AlgafoodApiApplication;
+import com.mont.algafoodapi.domain.repository.CuisineRepository;
 import com.mont.algafoodapi.model.Cuisine;
 
 public class CuisineDeleteMain {
@@ -16,13 +17,11 @@ public class CuisineDeleteMain {
                 .run(args);
         
 
-            CuisineRegistration cuisineRegistration = applicationContext.getBean(CuisineRegistration.class);
+            CuisineRepository cuisineRepository = applicationContext.getBean(CuisineRepository.class);
 
             Cuisine cuisine1 = new Cuisine(1L, "Chinese");
 
-            cuisineRegistration.delete(cuisine1);
-            
+            cuisineRepository.delete(cuisine1);
         
-            
         }
 }
