@@ -19,7 +19,7 @@ public class CuisineRepositoryImpl implements CuisineRepository {
 
     
     @Override
-    public List<Cuisine> list() {
+    public List<Cuisine> findAll() {
         return manager.createQuery("from Cuisine", Cuisine.class)
         .getResultList();
     }

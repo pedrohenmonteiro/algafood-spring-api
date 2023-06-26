@@ -21,7 +21,7 @@ public class CuisineQueryMain {
 
             CuisineRepository cuisineRepository = applicationContext.getBean(CuisineRepository.class);
             
-            List<Cuisine> cuisines = cuisineRepository.list();
+            List<Cuisine> cuisines = cuisineRepository.findAll();
 
             for(Cuisine cuisine : cuisines) {
                 System.out.println(cuisine.getName());

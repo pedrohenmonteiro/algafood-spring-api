@@ -6,7 +6,7 @@ import com.mont.algafoodapi.model.Cuisine;
 
 public interface CuisineRepository {
     
-    List<Cuisine> list();
+    List<Cuisine> findAll();
     
     Cuisine findById(Long id);
 
