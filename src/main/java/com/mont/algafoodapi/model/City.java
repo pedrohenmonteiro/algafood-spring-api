@@ -25,6 +25,4 @@ public class City {
 
     private String name;
 
-    @ManyToOne
-    private State state;
 }

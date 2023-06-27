@@ -33,7 +33,6 @@ public class Restaurant {
     private BigDecimal shipment;
 
     @ManyToOne
-    @Column(nullable = false)    
     @JoinColumn(name = "cuisine_id")
     private Cuisine cuisine;
 }
