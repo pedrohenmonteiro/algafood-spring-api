@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,5 +37,11 @@ public class CuisineController {
     @PostMapping
     public ResponseEntity<Cuisine> create(@RequestBody Cuisine cuisine) {
         return ResponseEntity.status(HttpStatus.CREATED).body(cuisineRepository.save(cuisine));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Cuisine> update(@PathVariable Long id, @RequestBody Cuisine cuisine) {
+        cuisine.setId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(cuisineRepository.save(cuisine));
     }
 }
