@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,12 +31,12 @@ public class CuisineController {
 
     @GetMapping
     public ResponseEntity<List<Cuisine>> findAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(cuisineRepository.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(cuisineService.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Cuisine> findById(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(cuisineRepository.findById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(cuisineService.findById(id));
     }
 
     @PostMapping
@@ -48,7 +47,7 @@ public class CuisineController {
     @PutMapping("/{id}")
     public ResponseEntity<Cuisine> update(@PathVariable Long id, @RequestBody Cuisine cuisine) {
         cuisine.setId(id);
-        return ResponseEntity.status(HttpStatus.OK).body(cuisineRepository.save(cuisine));
+        return ResponseEntity.status(HttpStatus.OK).body(cuisineService.update(id, cuisine));
     }
 
     @DeleteMapping("/{id}")
