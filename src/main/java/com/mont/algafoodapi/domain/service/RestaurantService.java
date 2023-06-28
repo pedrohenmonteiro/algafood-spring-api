@@ -26,5 +26,14 @@ public class RestaurantService {
         return restaurantRepository.save(restaurant);
     }
 
-   
+    public Restaurant update(Long id, Restaurant restaurant) {
+        restaurant.setId(id);
+        return restaurantRepository.save(restaurant);
+    }
+
+    public void delete(Long id) {
+        var entity = restaurantRepository.findById(id);
+        restaurantRepository.delete(entity);
+    }
+
 }
