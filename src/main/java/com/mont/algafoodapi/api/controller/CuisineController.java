@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.domain.model.Cuisine;
 import com.mont.algafoodapi.domain.repository.CuisineRepository;
+import com.mont.algafoodapi.domain.service.CuisineService;
 
 @RestController
 @RequestMapping("/cuisine")
@@ -24,6 +25,10 @@ public class CuisineController {
     
     @Autowired
     private CuisineRepository cuisineRepository;
+
+    @Autowired
+    private CuisineService cuisineService;
+
 
     @GetMapping
     public ResponseEntity<List<Cuisine>> findAll() {
@@ -37,7 +42,7 @@ public class CuisineController {
 
     @PostMapping
     public ResponseEntity<Cuisine> create(@RequestBody Cuisine cuisine) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(cuisineRepository.save(cuisine));
+        return ResponseEntity.status(HttpStatus.CREATED).body(cuisineService.save(cuisine));
     }
 
     @PutMapping("/{id}")

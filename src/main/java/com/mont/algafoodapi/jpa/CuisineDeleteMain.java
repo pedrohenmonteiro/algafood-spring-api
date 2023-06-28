@@ -21,7 +21,7 @@ public class CuisineDeleteMain {
 
             Cuisine cuisine1 = new Cuisine(1L, "Chinese");
 
-            cuisineRepository.delete(cuisine1);
+            // cuisineRepository.delete(id);
         
         }
 }

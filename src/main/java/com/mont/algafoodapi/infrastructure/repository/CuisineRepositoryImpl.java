@@ -2,6 +2,7 @@ package com.mont.algafoodapi.infrastructure.repository;
 
 import java.util.List;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
 import com.mont.algafoodapi.domain.model.Cuisine;
@@ -37,8 +38,12 @@ public class CuisineRepositoryImpl implements CuisineRepository {
 
     @Transactional
     @Override
-    public void delete(Cuisine cuisine) {
-        cuisine = findById(cuisine.getId());
+    public void delete(Long id) {
+       var cuisine = findById(id);
+
+       if(cuisine == null) {
+            throw new EmptyResultDataAccessException(1);
+       }
         manager.remove(cuisine);
     }
     
