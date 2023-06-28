@@ -53,9 +53,7 @@ public class CuisineController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        var entity = cuisineRepository.findById(id);
-        cuisineRepository.delete(entity);
-
+        cuisineService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
