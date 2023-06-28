@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.model.Cuisine;
 import com.mont.algafoodapi.domain.repository.CuisineRepository;
 
@@ -21,7 +22,7 @@ public class CuisineService {
         try {
             cuisineRepository.delete(id);
         } catch(DataIntegrityViolationException exception) {
-            throw new BadRequestException();
+            throw new BadRequestException("Can not remove resource in use");
         }
     }
 }
