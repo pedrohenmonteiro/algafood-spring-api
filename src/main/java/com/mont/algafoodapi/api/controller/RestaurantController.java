@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mont.algafoodapi.domain.model.Restaurant;
 import com.mont.algafoodapi.domain.service.RestaurantService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -37,6 +38,11 @@ public class RestaurantController {
     @PostMapping
     public ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant) {
         return ResponseEntity.status(HttpStatus.CREATED).body(restaurantService.create(restaurant));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Restaurant> update(@PathVariable Long id,@RequestBody Restaurant restaurant) {
+        return ResponseEntity.status(HttpStatus.OK).body(restaurantService.update(id, restaurant));
     }
     
 
