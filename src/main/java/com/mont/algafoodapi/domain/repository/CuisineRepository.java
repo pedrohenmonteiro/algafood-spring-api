@@ -2,7 +2,7 @@ package com.mont.algafoodapi.domain.repository;
 
 import java.util.List;
 
-import com.mont.algafoodapi.model.Cuisine;
+import com.mont.algafoodapi.domain.model.Cuisine;
 
 public interface CuisineRepository {
     

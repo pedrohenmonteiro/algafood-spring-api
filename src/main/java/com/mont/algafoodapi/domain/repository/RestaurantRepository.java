@@ -2,7 +2,7 @@ package com.mont.algafoodapi.domain.repository;
 
 import java.util.List;
 
-import com.mont.algafoodapi.model.Restaurant;
+import com.mont.algafoodapi.domain.model.Restaurant;
 
 public interface RestaurantRepository {
     List<Restaurant> findAll();
