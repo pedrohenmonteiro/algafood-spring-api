@@ -42,7 +42,7 @@ public class CuisineController {
 
     @PostMapping
     public ResponseEntity<Cuisine> create(@RequestBody Cuisine cuisine) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(cuisineService.save(cuisine));
+        return ResponseEntity.status(HttpStatus.CREATED).body(cuisineService.create(cuisine));
     }
 
     @PutMapping("/{id}")
