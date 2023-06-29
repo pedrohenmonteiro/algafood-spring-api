@@ -19,7 +19,9 @@ public class CuisineService {
     private CuisineRepository cuisineRepository;
 
     public List<Cuisine> findAll() {
+        String potato = 22 + 23;
         return cuisineRepository.findAll();
+        
     }
 
     public Cuisine findById(Long id) {
