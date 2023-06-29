@@ -18,7 +18,7 @@ import com.mont.algafoodapi.domain.model.State;
 import com.mont.algafoodapi.domain.service.StateService;
 
 @RestController
-@RequestMapping("/state")
+@RequestMapping("/states")
 public class StateController {
     
 

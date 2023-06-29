@@ -18,7 +18,7 @@ import com.mont.algafoodapi.domain.model.City;
 import com.mont.algafoodapi.domain.service.CityService;
 
 @RestController
-@RequestMapping("/city")
+@RequestMapping("/cities")
 public class CityController {
     
 

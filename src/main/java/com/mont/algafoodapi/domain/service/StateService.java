@@ -3,8 +3,12 @@ package com.mont.algafoodapi.domain.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.mont.algafoodapi.domain.exception.BadRequestException;
+import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.State;
 import com.mont.algafoodapi.domain.repository.StateRepository;
 
@@ -32,6 +36,13 @@ public class StateService {
     }
 
     public void delete(Long id) {
-    stateRepository.delete(id);
+
+    try {
+        stateRepository.delete(id);
+         } catch(DataIntegrityViolationException exception) {
+            throw new BadRequestException("Can not remove resource in use");
+        } catch(EmptyResultDataAccessException exception) {
+            throw new NotFoundException("Resource not found");
+        }
     }
 }

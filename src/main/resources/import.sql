@@ -9,5 +9,5 @@ insert into state (id, name) values (1, 'Paraná');
 insert into state (id, name) values (2, 'São Paulo');
 
 
-insert into city (name, state_id) values ("Londrina", 2);
-insert into city (name, state_id) values ("Maringá", 2);
+insert into city (name, state_id) values ("Londrina", 1);
+insert into city (name, state_id) values ("Maringá", 1);
