@@ -4,41 +4,41 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.mont.algafoodapi.domain.model.Restaurant;
-import com.mont.algafoodapi.domain.repository.RestaurantRepository;
+import com.mont.algafoodapi.domain.model.State;
+import com.mont.algafoodapi.domain.repository.StateRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
 @Component
-public class RestaurantRepositoryImpl implements RestaurantRepository {
+public class StateRepositoryImpl implements StateRepository {
     
       @PersistenceContext
     private EntityManager manager;
 
     
     @Override
-    public List<Restaurant> findAll() {
-        return manager.createQuery("from Restaurant", Restaurant.class)
+    public List<State> findAll() {
+        return manager.createQuery("from State", State.class)
         .getResultList();
     }
 
     @Override
-    public Restaurant findById(Long id) {
-        return manager.find(Restaurant.class, id);
+    public State findById(Long id) {
+        return manager.find(State.class, id);
     }
 
     @Transactional
     @Override
-    public Restaurant save(Restaurant restaurant) {
-        return manager.merge(restaurant);
+    public State save(State state) {
+        return manager.merge(state);
     }
 
     @Transactional
     @Override
     public void delete(Long id) {
-        var restaurant = findById(id);
-        manager.remove(restaurant);
+        var state = findById(id);
+        manager.remove(state);
     }
 }
