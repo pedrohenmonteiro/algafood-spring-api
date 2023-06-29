@@ -44,4 +44,4 @@ public class CuisineService {
             throw new NotFoundException("Resource not found");
         }
     }
-}
+} 

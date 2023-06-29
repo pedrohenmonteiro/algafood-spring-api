@@ -1,15 +1,9 @@
 package com.mont.algafoodapi.domain.repository;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.mont.algafoodapi.domain.model.City;
 
-public interface CityRepository {
-    List<City> findAll();
-    
-    City findById(Long id);
-
-    City save(City state);
-
-    void delete(Long id);
+public interface CityRepository extends JpaRepository<City, Long> {
+   
 }

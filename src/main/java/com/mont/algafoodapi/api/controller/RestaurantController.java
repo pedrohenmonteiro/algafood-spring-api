@@ -28,9 +28,6 @@ public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
 
-    @Autowired
-    private CuisineRepository cuisineRepository;
-
     @GetMapping
     public ResponseEntity<List<Restaurant>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(restaurantService.findAll());
@@ -59,4 +56,6 @@ public class RestaurantController {
         restaurantService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    
 }

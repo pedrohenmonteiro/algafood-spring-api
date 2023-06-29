@@ -1,15 +1,9 @@
 package com.mont.algafoodapi.domain.repository;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.mont.algafoodapi.domain.model.State;
 
-public interface StateRepository {
-    List<State> findAll();
-    
-    State findById(Long id);
+public interface StateRepository extends JpaRepository<State, Long> {
 
-    State save(State state);
-
-    void delete(Long id);
 }

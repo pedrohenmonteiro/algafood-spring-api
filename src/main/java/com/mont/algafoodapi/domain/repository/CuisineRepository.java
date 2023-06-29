@@ -1,16 +1,10 @@
 package com.mont.algafoodapi.domain.repository;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.mont.algafoodapi.domain.model.Cuisine;
 
-public interface CuisineRepository {
+public interface CuisineRepository extends JpaRepository<Cuisine, Long>{
     
-    List<Cuisine> findAll();
-    
-    Cuisine findById(Long id);
 
-    Cuisine save(Cuisine cuisine);
-
-    void delete(Long id);
 }
