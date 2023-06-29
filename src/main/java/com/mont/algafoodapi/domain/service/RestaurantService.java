@@ -10,13 +10,17 @@ import org.springframework.stereotype.Service;
 import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Restaurant;
+import com.mont.algafoodapi.domain.repository.CuisineRepository;
 import com.mont.algafoodapi.domain.repository.RestaurantRepository;
 
 @Service
 public class RestaurantService {
-    
+
     @Autowired
     private RestaurantRepository restaurantRepository;
+
+    @Autowired
+    private CuisineRepository cuisineRepository;
 
     public List<Restaurant> findAll() {
         return restaurantRepository.findAll();
@@ -27,6 +31,12 @@ public class RestaurantService {
     }
 
     public Restaurant create(Restaurant restaurant) {
+        Long cuisineId = restaurant.getCuisine().getId();
+        var cuisine = cuisineRepository.findById(cuisineId);
+        if(cuisine == null) {
+            throw new BadRequestException("Resource cuisine id " + cuisineId + " not found"); 
+        }
+        restaurant.setCuisine(cuisine);
         return restaurantRepository.save(restaurant);
     }
 

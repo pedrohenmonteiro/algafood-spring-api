@@ -44,12 +44,7 @@ public class RestaurantController {
 
     @PostMapping
     public ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant) {
-        Long cuisineId = restaurant.getCuisine().getId();
-        var cuisine = cuisineRepository.findById(cuisineId);
-        if(cuisine == null) {
-            throw new BadRequestException("Resource cuisine id " + cuisineId + " not found"); 
-        }
-        restaurant.setCuisine(cuisine);
+        
 
         return ResponseEntity.status(HttpStatus.CREATED).body(restaurantService.create(restaurant));
     }
