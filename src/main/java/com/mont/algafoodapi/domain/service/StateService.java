@@ -7,6 +7,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.mont.algafoodapi.domain.exception.BadRequestException;
+import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.State;
 import com.mont.algafoodapi.domain.repository.StateRepository;
@@ -37,8 +38,12 @@ public class StateService {
     }
 
     public void delete(Long id) {
-        getState(id);
-        stateRepository.deleteById(id);
+        try {
+            getState(id);
+            stateRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new ConflictException("Cannot delete resource due to existing references");
+        }
         
     }
 

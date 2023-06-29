@@ -3,9 +3,11 @@ package com.mont.algafoodapi.domain.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.mont.algafoodapi.domain.exception.BadRequestException;
+import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.City;
 import com.mont.algafoodapi.domain.repository.CityRepository;
@@ -43,8 +45,12 @@ public class CityService {
     }
 
     public void delete(Long id) {
-     getCity(id);
-     cityRepository.deleteById(id);
+        try {
+            getCity(id);
+            cityRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new ConflictException("Cannot delete resource due to existing references");
+        }
 }
 
     private City getCity(Long id) {
