@@ -29,6 +29,7 @@ public class CuisineService {
     }
 
     public Cuisine update(Long id, Cuisine cuisine) {
+        getCuisine(id);
         cuisine.setId(id);
         return cuisineRepository.save(cuisine);
     }

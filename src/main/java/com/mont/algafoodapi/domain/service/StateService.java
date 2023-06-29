@@ -29,6 +29,7 @@ public class StateService {
     }
 
     public State update(Long id, State state) {
+        getState(id);
         state.setId(id);
         return stateRepository.save(state);
     }

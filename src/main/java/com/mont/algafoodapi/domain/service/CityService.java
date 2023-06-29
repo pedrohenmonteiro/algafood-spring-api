@@ -3,8 +3,6 @@ package com.mont.algafoodapi.domain.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.mont.algafoodapi.domain.exception.BadRequestException;
@@ -39,6 +37,7 @@ public class CityService {
     }
 
     public City update(Long id, City city) {
+        getCity(id);
         city.setId(id);
         return cityRepository.save(city);
     }

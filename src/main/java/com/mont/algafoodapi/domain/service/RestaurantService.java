@@ -29,6 +29,7 @@ public class RestaurantService {
     }
 
     public Restaurant update(Long id, Restaurant restaurant) {
+        getRestaurant(id);
         restaurant.setId(id);
         return restaurantRepository.save(restaurant);
     }
