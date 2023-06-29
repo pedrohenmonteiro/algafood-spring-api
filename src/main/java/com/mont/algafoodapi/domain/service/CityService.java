@@ -27,9 +27,9 @@ public class CityService {
     }
 
     public City findById(Long id) {
-        return cityRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
+        return getCity(id);
     }
-
+    
     public City create(City city) {
         var stateId = city.getState().getId();
         var state = stateRepository.findById(stateId).orElseThrow(() -> new BadRequestException("Resource state id " + stateId + " not found"));
@@ -44,7 +44,11 @@ public class CityService {
     }
 
     public void delete(Long id) {
-     cityRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
+     getCity(id);
      cityRepository.deleteById(id);
 }
+
+    private City getCity(Long id) {
+        return cityRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
+    }
 }

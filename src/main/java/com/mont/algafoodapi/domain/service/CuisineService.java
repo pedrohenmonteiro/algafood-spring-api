@@ -3,11 +3,8 @@ package com.mont.algafoodapi.domain.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Cuisine;
 import com.mont.algafoodapi.domain.repository.CuisineRepository;
@@ -19,15 +16,14 @@ public class CuisineService {
     private CuisineRepository cuisineRepository;
 
     public List<Cuisine> findAll() {
-        String potato = 22 + 23;
         return cuisineRepository.findAll();
         
     }
 
     public Cuisine findById(Long id) {
-        return cuisineRepository.findById(id);
+        return getCuisine(id);
     }
-
+    
     public Cuisine create(Cuisine cuisine) {
         return cuisineRepository.save(cuisine);
     }
@@ -38,12 +34,12 @@ public class CuisineService {
     }
 
     public void delete(Long id) {
-        try {
-        cuisineRepository.delete(id);
-         } catch(DataIntegrityViolationException exception) {
-            throw new BadRequestException("Can not remove resource in use");
-        } catch(EmptyResultDataAccessException exception) {
-            throw new NotFoundException("Resource not found");
-        }
+    getCuisine(id);
+     cuisineRepository.deleteById(id);
     }
+
+    private Cuisine getCuisine(Long id) {
+        return cuisineRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
+    }
+    
 } 
