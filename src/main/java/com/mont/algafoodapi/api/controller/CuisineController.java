@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.domain.model.Cuisine;
+import com.mont.algafoodapi.domain.repository.CuisineRepository;
 import com.mont.algafoodapi.domain.service.CuisineService;
 
 @RestController
@@ -25,6 +27,9 @@ public class CuisineController {
 
     @Autowired
     private CuisineService cuisineService;
+
+    @Autowired
+    private CuisineRepository cuisineRepository;
 
 
     @GetMapping
@@ -53,4 +58,12 @@ public class CuisineController {
         cuisineService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/by-name")
+    public ResponseEntity<Cuisine> findByName(@RequestParam String name) {
+                return ResponseEntity.ok(cuisineRepository.findByName(name));
+
+    }
+
+ 
 }

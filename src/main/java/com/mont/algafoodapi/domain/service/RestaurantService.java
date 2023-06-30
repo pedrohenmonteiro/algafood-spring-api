@@ -37,9 +37,9 @@ public class RestaurantService {
     }
 
     public void delete(Long id) {
-    try {
-        getRestaurant(id);
-        restaurantRepository.deleteById(id);
+        try {
+            getRestaurant(id);
+            restaurantRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("Cannot delete resource due to existing references");
         }
