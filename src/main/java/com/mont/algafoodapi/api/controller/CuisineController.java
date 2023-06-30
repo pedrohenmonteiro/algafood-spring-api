@@ -60,7 +60,7 @@ public class CuisineController {
     }
 
     @GetMapping("/by-name")
-    public ResponseEntity<Cuisine> findByName(@RequestParam String name) {
+    public ResponseEntity<List<Cuisine>> findByName(@RequestParam String name) {
                 return ResponseEntity.ok(cuisineRepository.findByName(name));
 
     }
