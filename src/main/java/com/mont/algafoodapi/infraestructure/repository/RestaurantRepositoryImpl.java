@@ -6,16 +6,18 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.mont.algafoodapi.domain.model.Restaurant;
+import com.mont.algafoodapi.domain.repository.RestaurantRepositoryQueries;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 @Repository
-public class RestaurantRepositoryImpl {
+public class RestaurantRepositoryImpl implements RestaurantRepositoryQueries {
     
     @PersistenceContext
     private EntityManager em;
 
+    @Override
     public List<Restaurant> findByNameAndFee(String name, BigDecimal minDeliveryFee, BigDecimal maxDeliveryFee) {
 
         var jpql = "from Restaurant where name like :name "
