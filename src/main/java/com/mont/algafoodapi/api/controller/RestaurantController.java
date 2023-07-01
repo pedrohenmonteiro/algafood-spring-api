@@ -61,12 +61,9 @@ public class RestaurantController {
     }
 
     @GetMapping("/by-name-and-fee")
-    public ResponseEntity<List<Restaurant>> findByNameAndFee(
-    @RequestParam String name,
-    @RequestParam BigDecimal initialDeliveryFee,
-    @RequestParam BigDecimal finalDeliveryFee) {
+    public ResponseEntity<List<Restaurant>> findByNameAndFee(String name, BigDecimal minDeliveryFee, BigDecimal maxDeliveryFee) {
 
-    return ResponseEntity.ok().body(restaurantRepository.findByNameAndFee(name, initialDeliveryFee, finalDeliveryFee));
+    return ResponseEntity.ok().body(restaurantRepository.findByNameAndFee(name, minDeliveryFee, maxDeliveryFee));
     }
     
 }
