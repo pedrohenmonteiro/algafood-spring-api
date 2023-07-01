@@ -30,7 +30,7 @@ public class Restaurant {
     private String name;
     
     @Column(nullable = false)
-    private BigDecimal shipment;
+    private BigDecimal deliveryFee;
 
     @ManyToOne
     @JoinColumn(name = "cuisine_id")

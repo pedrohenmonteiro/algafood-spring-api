@@ -1,5 +1,6 @@
 package com.mont.algafoodapi.api.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.domain.model.Restaurant;
+import com.mont.algafoodapi.domain.repository.RestaurantRepository;
 import com.mont.algafoodapi.domain.service.RestaurantService;
 
 
@@ -24,6 +27,9 @@ public class RestaurantController {
     
     @Autowired
     private RestaurantService restaurantService;
+
+    @Autowired
+    private RestaurantRepository restaurantRepository;
 
     @GetMapping
     public ResponseEntity<List<Restaurant>> findAll() {
@@ -54,5 +60,13 @@ public class RestaurantController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/by-name-and-fee")
+    public ResponseEntity<List<Restaurant>> findByNameAndFee(
+    @RequestParam String name,
+    @RequestParam BigDecimal initialDeliveryFee,
+    @RequestParam BigDecimal finalDeliveryFee) {
+
+    return ResponseEntity.ok().body(restaurantRepository.findByNameAndFee(name, initialDeliveryFee, finalDeliveryFee));
+    }
     
 }
