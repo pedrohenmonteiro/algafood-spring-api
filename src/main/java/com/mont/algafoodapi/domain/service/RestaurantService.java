@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Restaurant;
+import com.mont.algafoodapi.domain.repository.CuisineRepository;
 import com.mont.algafoodapi.domain.repository.RestaurantRepository;
 
 @Service
@@ -16,6 +18,9 @@ public class RestaurantService {
 
     @Autowired 
     private RestaurantRepository restaurantRepository;
+
+    @Autowired
+    private CuisineRepository cuisineRepository;
 
     public List<Restaurant> findAll() {
         return restaurantRepository.findAll();
@@ -27,6 +32,10 @@ public class RestaurantService {
     }
     
     public Restaurant create(Restaurant restaurant) {
+        var cuisineId = restaurant.getCuisine().getId();
+        var cuisine = cuisineRepository.findById(cuisineId).orElseThrow(() -> new BadRequestException("Resource cuisine id " + cuisineId + " not found"));
+        restaurant.setCuisine(cuisine);
+        
         return restaurantRepository.save(restaurant);
     }
 

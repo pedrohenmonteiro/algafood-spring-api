@@ -30,12 +30,12 @@ public class CityService {
         return getCity(id);
     }
     
-    public City create(City city) {
-        var stateId = city.getState().getId();
+    public City create(City city) {var stateId = city.getState().getId();
         var state = stateRepository.findById(stateId).orElseThrow(() -> new BadRequestException("Resource state id " + stateId + " not found"));
         city.setState(state);
 
         return cityRepository.save(city);
+        
     }
 
     public City update(Long id, City city) {
@@ -46,7 +46,6 @@ public class CityService {
 
     public void delete(Long id) {
         try {
-            getCity(id);
             cityRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("Cannot delete resource due to existing references");
