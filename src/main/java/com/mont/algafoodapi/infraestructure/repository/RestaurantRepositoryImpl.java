@@ -1,6 +1,8 @@
 package com.mont.algafoodapi.infraestructure.repository;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,13 +61,27 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryQueries {
         // from Restaurant
         Root<Restaurant> root = criteria.from(Restaurant.class);  
 
-        Predicate namePredicate = builder.like(root.get("name"), "%" + name + "%"); 
+        var predicates = new ArrayList<Predicate>();
+
+        if(StringUtils.hasText(name)) {
+            Predicate namePredicate = builder.like(root.get("name"), "%" + name + "%"); 
+            predicates.add(namePredicate);
+        }
+
+        if(minDeliveryFee != null) {
         Predicate minFeePredicate = builder.greaterThanOrEqualTo(root.get("deliveryFee"), minDeliveryFee);
+        predicates.add(minFeePredicate);
+
+        }
+
+        if(maxDeliveryFee != null) {
         Predicate maxFeePredicate = builder.lessThanOrEqualTo(root.get("deliveryFee"), maxDeliveryFee);
-       
-        
+        predicates.add(maxFeePredicate);
+        }
+
         // where name like :name and deliveryFee >= :minDeliveryFee and deliveryFee <= :maxDeliveryFee
-        criteria.where(namePredicate, minFeePredicate, maxFeePredicate); 
+        criteria.where(predicates.toArray(new Predicate[0])); 
+
 
 
         return em.createQuery(criteria).getResultList();
