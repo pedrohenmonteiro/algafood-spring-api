@@ -14,6 +14,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 
 @Repository
 public class RestaurantRepositoryImpl implements RestaurantRepositoryQueries {
@@ -54,7 +56,16 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryQueries {
 
         CriteriaQuery<Restaurant> criteria = builder.createQuery(Restaurant.class);
 
-        criteria.from(Restaurant.class);  // from Restaurant
+        // from Restaurant
+        Root<Restaurant> root = criteria.from(Restaurant.class);  
+
+        Predicate namePredicate = builder.like(root.get("name"), "%" + name + "%"); 
+        Predicate minFeePredicate = builder.greaterThanOrEqualTo(root.get("deliveryFee"), minDeliveryFee);
+        Predicate maxFeePredicate = builder.lessThanOrEqualTo(root.get("deliveryFee"), maxDeliveryFee);
+       
+        
+        // where name like :name and deliveryFee >= :minDeliveryFee and deliveryFee <= :maxDeliveryFee
+        criteria.where(namePredicate, minFeePredicate, maxFeePredicate); 
 
 
         return em.createQuery(criteria).getResultList();
