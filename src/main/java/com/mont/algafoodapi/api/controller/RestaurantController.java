@@ -6,6 +6,7 @@ import static com.mont.algafoodapi.infraestructure.repository.spec.RestaurantSpe
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Restaurant;
 import com.mont.algafoodapi.domain.repository.RestaurantRepository;
 import com.mont.algafoodapi.domain.service.RestaurantService;
@@ -72,7 +74,12 @@ public class RestaurantController {
     @GetMapping("/free-delivery-fee")
     public ResponseEntity<List<Restaurant>> findByZeroDeliveryFee(String name) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(restaurantRepository.findByZeroDeliveryFee(name));
+        return ResponseEntity.ok(restaurantRepository.findByZeroDeliveryFee(name));
+    }
+
+    @GetMapping("/first")
+    public ResponseEntity<Restaurant> findFirst() {
+        return ResponseEntity.ok(restaurantRepository.findFirst().orElseThrow(() -> new NotFoundException("Resource not found")));
     }
     
 }
