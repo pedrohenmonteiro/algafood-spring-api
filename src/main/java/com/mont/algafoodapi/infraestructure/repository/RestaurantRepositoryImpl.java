@@ -54,6 +54,8 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryQueries {
         //      query.setParameter(k,  v);
         // });
 
+
+        
         CriteriaBuilder builder = em.getCriteriaBuilder();    
 
         CriteriaQuery<Restaurant> criteria = builder.createQuery(Restaurant.class);
@@ -82,10 +84,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryQueries {
         // where name like :name and deliveryFee >= :minDeliveryFee and deliveryFee <= :maxDeliveryFee
         criteria.where(predicates.toArray(new Predicate[0])); 
 
-
-
         return em.createQuery(criteria).getResultList();
         
+     }
     }
-
-}

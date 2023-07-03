@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mont.algafoodapi.domain.model.Restaurant;
 import com.mont.algafoodapi.domain.repository.RestaurantRepository;
 import com.mont.algafoodapi.domain.service.RestaurantService;
+import com.mont.algafoodapi.infraestructure.repository.spec.RestaurantWithSimilarNameSpec;
+import com.mont.algafoodapi.infraestructure.repository.spec.RestaurantZeroDeliveryFee;
 
 
 @RestController
@@ -64,6 +67,14 @@ public class RestaurantController {
     public ResponseEntity<List<Restaurant>> findByNameAndFee(String name, BigDecimal minDeliveryFee, BigDecimal maxDeliveryFee) {
 
     return ResponseEntity.ok().body(restaurantRepository.findByNameAndFee(name, minDeliveryFee, maxDeliveryFee));
+    }
+
+    @GetMapping("/free-delivery-fee")
+    public ResponseEntity<List<Restaurant>> findByZeroDeliveryFee(String name) {
+        var zeroDeliveryFee = new RestaurantZeroDeliveryFee();
+        var similarName = new RestaurantWithSimilarNameSpec(name);
+
+        return ResponseEntity.status(HttpStatus.OK).body(restaurantRepository.findAll(zeroDeliveryFee.and(similarName)));
     }
     
 }
