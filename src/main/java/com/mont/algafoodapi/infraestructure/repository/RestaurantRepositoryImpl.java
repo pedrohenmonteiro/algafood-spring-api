@@ -6,11 +6,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.mont.algafoodapi.domain.model.Restaurant;
+import com.mont.algafoodapi.domain.repository.RestaurantRepository;
 import com.mont.algafoodapi.domain.repository.RestaurantRepositoryQueries;
+import com.mont.algafoodapi.infraestructure.repository.spec.RestaurantSpecs;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -25,8 +29,13 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryQueries {
     @PersistenceContext
     private EntityManager em;
 
+    @Autowired @Lazy
+    private RestaurantRepository restaurantRepository;
+
     @Override
     public List<Restaurant> findByNameAndFee(String name, BigDecimal minDeliveryFee, BigDecimal maxDeliveryFee) {
+
+        
 
         // var jpql = new StringBuilder()
         // .append("from Restaurant where 0 = 0 ");
@@ -87,4 +96,9 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryQueries {
         return em.createQuery(criteria).getResultList();
         
      }
+
+    @Override
+    public List<Restaurant> findByZeroDeliveryFee(String name) {
+        return restaurantRepository.findAll(RestaurantSpecs.findZeroDeliveryFee().and(RestaurantSpecs.findWithSimilarName(name)));
+    }
     }

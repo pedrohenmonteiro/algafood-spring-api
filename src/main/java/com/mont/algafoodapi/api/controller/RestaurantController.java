@@ -72,7 +72,7 @@ public class RestaurantController {
     @GetMapping("/free-delivery-fee")
     public ResponseEntity<List<Restaurant>> findByZeroDeliveryFee(String name) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(restaurantRepository.findAll(RestaurantSpecs.findZeroDeliveryFee().and(RestaurantSpecs.findWithSimilarName(name))));
+        return ResponseEntity.status(HttpStatus.OK).body(restaurantRepository.findByZeroDeliveryFee(name));
     }
     
 }

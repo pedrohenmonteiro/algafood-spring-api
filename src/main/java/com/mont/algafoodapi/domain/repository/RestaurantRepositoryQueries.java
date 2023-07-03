@@ -9,4 +9,6 @@ public interface RestaurantRepositoryQueries {
 
     List<Restaurant> findByNameAndFee(String name, BigDecimal minDeliveryFee, BigDecimal maxDeliveryFee);
 
+    List<Restaurant> findByZeroDeliveryFee(String name);
+
 }
