@@ -40,8 +40,9 @@ public class RestaurantService {
     }
 
     public Restaurant update(Long id, Restaurant restaurant) {
-        getRestaurant(id);
+        var entity = getRestaurant(id);
         restaurant.setId(id);
+        restaurant.setPaymentMethods(entity.getPaymentMethods());
         return restaurantRepository.save(restaurant);
     }
 
