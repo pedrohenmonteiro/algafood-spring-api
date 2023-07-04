@@ -31,7 +31,7 @@ public class CuisineService {
     }
 
     public Cuisine update(Long id, Cuisine cuisine) {
-        var entity = getCuisine(id);
+        getCuisine(id);
         cuisine.setId(id);
         return cuisineRepository.save(cuisine);
     }

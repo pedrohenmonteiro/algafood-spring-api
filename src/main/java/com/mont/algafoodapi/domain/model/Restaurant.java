@@ -7,6 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -40,6 +41,10 @@ public class Restaurant {
     @JoinColumn(name = "cuisine_id")
     private Cuisine cuisine;
 
+    @Embedded
+    private Address address;
+
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "restaurant_payment_method",
         joinColumns = @JoinColumn(name = "restaurant_id"),

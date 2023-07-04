@@ -43,6 +43,7 @@ public class RestaurantService {
         var entity = getRestaurant(id);
         restaurant.setId(id);
         restaurant.setPaymentMethods(entity.getPaymentMethods());
+        restaurant.setAddress(entity.getAddress());
         return restaurantRepository.save(restaurant);
     }
 
