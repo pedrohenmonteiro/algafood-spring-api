@@ -20,4 +20,5 @@ insert into payment_method (description) values ("Cash");
 
 insert into restaurant_payment_method (restaurant_id, payment_method_id) values (1, 1), (1, 2), (2,1), (2,2), (2,3), (3,1), (3,2);
 
+insert into product (name, description, price, active, restaurant_id) values ('Pizza Marguerita', 'Tomato sauce, mozzarella and basil', 30, true, 3);
 
