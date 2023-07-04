@@ -1,8 +1,13 @@
 package com.mont.algafoodapi.domain.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.cglib.core.Local;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -41,8 +46,19 @@ public class Restaurant {
     @JoinColumn(name = "cuisine_id")
     private Cuisine cuisine;
 
+    @JsonIgnore
     @Embedded
     private Address address;
+
+
+    @CreationTimestamp
+    @Column(nullable = false)
+    private LocalDateTime dateCreation;
+
+    @UpdateTimestamp
+    @Column(nullable = false)
+    private LocalDateTime dateLastUpdate;
+
 
     @JsonIgnore
     @ManyToMany
