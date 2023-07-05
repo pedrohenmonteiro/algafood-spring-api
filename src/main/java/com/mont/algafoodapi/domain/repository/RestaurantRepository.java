@@ -13,7 +13,7 @@ public interface RestaurantRepository extends CustomJpaRepository<Restaurant, Lo
     @Override
     List<Restaurant> findByNameAndFee(String name, BigDecimal minDeliveryFee, BigDecimal maxDeliveryFee);
 
-    @Query("from Restaurant r join fetch r.cuisine left join fetch r.paymentMethods")
+    @Query("from Restaurant r join fetch r.cuisine")
     List<Restaurant> findAll();
  
 }
