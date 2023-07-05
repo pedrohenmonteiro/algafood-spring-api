@@ -23,7 +23,6 @@ import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Restaurant;
 import com.mont.algafoodapi.domain.repository.RestaurantRepository;
 import com.mont.algafoodapi.domain.service.RestaurantService;
-import com.mont.algafoodapi.infraestructure.repository.spec.RestaurantSpecs;
 
 
 @RestController

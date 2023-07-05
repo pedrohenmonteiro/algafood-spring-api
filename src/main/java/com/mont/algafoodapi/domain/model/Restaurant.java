@@ -42,8 +42,9 @@ public class Restaurant {
     
     private BigDecimal deliveryFee;
 
-    @ManyToOne
-    @JoinColumn(name = "cuisine_id")
+    // @JsonIgnore
+    @ManyToOne  // (fetch = FetchType.LAZY)
+    @JoinColumn(name = "cuisine_id", nullable = false)
     private Cuisine cuisine;
 
     @JsonIgnore
@@ -62,7 +63,7 @@ public class Restaurant {
     private LocalDateTime dateLastUpdate;
 
 
-    @JsonIgnore
+    // @JsonIgnore
     @ManyToMany
     @JoinTable(name = "restaurant_payment_method",
         joinColumns = @JoinColumn(name = "restaurant_id"),
@@ -70,6 +71,7 @@ public class Restaurant {
     private List<PaymentMethod> paymentMethods = new ArrayList<>();
 
 
+    @JsonIgnore
     @OneToMany(mappedBy = "restaurant")
     private List<Product> products = new ArrayList<>();    
 }

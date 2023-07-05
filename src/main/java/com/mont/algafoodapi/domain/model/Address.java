@@ -1,5 +1,7 @@
 package com.mont.algafoodapi.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
@@ -21,6 +23,7 @@ public class Address {
     @Column(name="address_neighbourhood")
     private String neighbourhood;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "address_city_id")
     private City city;

@@ -1,6 +1,9 @@
 package com.mont.algafoodapi.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,6 +28,7 @@ public class City {
 
     private String name;
 
+    @JsonIgnore
     @ManyToOne
     private State state;
 

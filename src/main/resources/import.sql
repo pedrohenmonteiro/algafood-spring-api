@@ -8,6 +8,7 @@ insert into state (id, name) values (2, 'São Paulo');
 
 insert into city (name, state_id) values ("Londrina", 1);
 insert into city (name, state_id) values ("Maringá", 1);
+insert into city (name, state_id) values ("São Paulo", 2);
 
 
 insert into restaurant (name, delivery_fee, cuisine_id, address_city_id, address_neighbourhood, address_street, address_number, address_zipcode, date_creation, date_last_update ) values ('La Gondola', 5, 1, 1, 'Centro', 'Rua Piauí', 100, '86020390',UTC_TIMESTAMP, UTC_TIMESTAMP);

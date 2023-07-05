@@ -46,6 +46,7 @@ public class RestaurantService {
         restaurant.setAddress(entity.getAddress());
         restaurant.setDateCreation(entity.getDateCreation());
         restaurant.setDateLastUpdate(entity.getDateLastUpdate());
+        restaurant.setAddress(entity.getAddress());
         return restaurantRepository.save(restaurant);
     }
 

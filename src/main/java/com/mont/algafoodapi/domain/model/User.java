@@ -1,6 +1,8 @@
 package com.mont.algafoodapi.domain.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -10,6 +12,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,4 +38,10 @@ public class User {
     @JsonIgnore
     @CreationTimestamp
     private LocalDateTime creationDate;
+
+    @ManyToMany
+    @JoinTable(name = "user_group",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "tb_group_id"))
+    private List<Group> groups = new ArrayList<>();
 }
