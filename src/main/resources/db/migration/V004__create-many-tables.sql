@@ -7,7 +7,7 @@ CREATE TABLE restaurant (
   address_number VARCHAR(20),
   address_complement VARCHAR(100),
   address_neighbourhood VARCHAR(100),
-  address_zipcode VARCHAR(8),
+  address_zipcode VARCHAR(9),
   delivery_fee DECIMAL(10, 2),
   date_creation DATETIME(6) NOT NULL,
   date_last_update DATETIME(6) NOT NULL,
