@@ -10,6 +10,7 @@ import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.City;
+import com.mont.algafoodapi.domain.model.State;
 import com.mont.algafoodapi.domain.repository.CityRepository;
 import com.mont.algafoodapi.domain.repository.StateRepository;
 
@@ -30,17 +31,17 @@ public class CityService {
         return getCity(id);
     }
     
-    public City create(City city) {var stateId = city.getState().getId();
-        var state = stateRepository.findById(stateId).orElseThrow(() -> new BadRequestException("Resource state id " + stateId + " not found"));
-        city.setState(state);
-
+    public City create(City city) {
+        getStateAndSetInCity(city);
         return cityRepository.save(city);
         
     }
 
+
     public City update(Long id, City city) {
         getCity(id);
         city.setId(id);
+        getStateAndSetInCity(city);
         return cityRepository.save(city);
     }
 
@@ -52,7 +53,13 @@ public class CityService {
         }
 }
 
-    private City getCity(Long id) {
-        return cityRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
+    private City getCity(Long cityId) {
+        return cityRepository.findById(cityId).orElseThrow(() -> new NotFoundException("Resource not found"));
+    }
+
+     private void getStateAndSetInCity(City city) {
+        var stateId = city.getState().getId();
+        var state = stateRepository.findById(stateId).orElseThrow(() -> new BadRequestException("Resource state id " + stateId + " not found"));
+        city.setState(state); 
     }
 }

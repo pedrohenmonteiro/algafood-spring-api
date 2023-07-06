@@ -28,7 +28,6 @@ public class City {
 
     private String name;
 
-    @JsonIgnore
     @ManyToOne
     private State state;
 
