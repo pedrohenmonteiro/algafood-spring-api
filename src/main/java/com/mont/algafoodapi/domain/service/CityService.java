@@ -32,7 +32,7 @@ public class CityService {
     }
     
     public City create(City city) {
-        getStateAndSetInCity(city);
+        setCity(city);
         return cityRepository.save(city);
         
     }
@@ -41,7 +41,7 @@ public class CityService {
     public City update(Long id, City city) {
         getCity(id);
         city.setId(id);
-        getStateAndSetInCity(city);
+        setCity(city);
         return cityRepository.save(city);
     }
 
@@ -57,7 +57,7 @@ public class CityService {
         return cityRepository.findById(cityId).orElseThrow(() -> new NotFoundException("Resource not found"));
     }
 
-     private void getStateAndSetInCity(City city) {
+     private void setCity(City city) {
         var stateId = city.getState().getId();
         var state = stateRepository.findById(stateId).orElseThrow(() -> new BadRequestException("Resource state id " + stateId + " not found"));
         city.setState(state); 

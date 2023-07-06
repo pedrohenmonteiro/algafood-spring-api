@@ -32,10 +32,7 @@ public class RestaurantService {
     }
     
     public Restaurant create(Restaurant restaurant) {
-        var cuisineId = restaurant.getCuisine().getId();
-        var cuisine = cuisineRepository.findById(cuisineId).orElseThrow(() -> new BadRequestException("Resource cuisine id " + cuisineId + " not found"));
-        restaurant.setCuisine(cuisine);
-        
+        setCuisine(restaurant);   
         return restaurantRepository.save(restaurant);
     }
 
@@ -47,6 +44,7 @@ public class RestaurantService {
         restaurant.setDateCreation(entity.getDateCreation());
         restaurant.setDateLastUpdate(entity.getDateLastUpdate());
         restaurant.setAddress(entity.getAddress());
+        setCuisine(restaurant);
         return restaurantRepository.save(restaurant);
     }
 
@@ -61,5 +59,12 @@ public class RestaurantService {
 
     private Restaurant getRestaurant(Long id) {
         return restaurantRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
+    }
+
+    private void setCuisine(Restaurant restaurant) {
+        var cuisineId = restaurant.getCuisine().getId();
+        var cuisine = cuisineRepository.findById(cuisineId).orElseThrow(() -> new BadRequestException("Resource cuisine id " + cuisineId + " not found"));
+        restaurant.setCuisine(cuisine);
+
     }
 }
