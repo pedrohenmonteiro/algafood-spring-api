@@ -1,6 +1,7 @@
 package com.mont.algafoodapi.domain.exception.handler;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -45,8 +46,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
             HttpStatusCode statusCode, WebRequest req) {
 
+        String title = HttpStatus.valueOf(statusCode.value()).getReasonPhrase();      
+
         if(body == null) {
-            body = new ExceptionResponse(Instant.now(), ex.getMessage(), req.getDescription(false), statusCode.value());
+            body = ExceptionResponse.builder()
+            .timestamp(LocalDateTime.now())
+            .status(statusCode.value())
+            .title(title)
+            .message(ex.getMessage())
+            .details(req.getDescription(false))
+            .build();
         }
 
         return super.handleExceptionInternal(ex, body, headers, statusCode, req);

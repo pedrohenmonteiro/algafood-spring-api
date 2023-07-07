@@ -1,20 +1,21 @@
 package com.mont.algafoodapi.domain.exception;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+@JsonInclude(Include.NON_NULL)
+@Builder
 @Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class ExceptionResponse {
-    private Instant timestamp;
+    private LocalDateTime timestamp;
+    private Integer status;
+    private String title;
     private String message;
     private String details;
-    private int status;
     
 }
