@@ -17,27 +17,26 @@ import com.mont.algafoodapi.domain.exception.ExceptionResponse;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 
 @RestControllerAdvice
-public class ResourceHandler extends ResponseEntityExceptionHandler{
+public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
     
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ExceptionResponse> notFoundExceptionHandler(Exception ex, WebRequest req)
+    public ResponseEntity<?> notFoundExceptionHandler(Exception ex, WebRequest req)
     {
-        var exceptionResponse = new ExceptionResponse(Instant.now(), ex.getMessage(), req.getDescription(false), HttpStatus.NOT_FOUND.value());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exceptionResponse);
+        return handleExceptionInternal(ex, null, new HttpHeaders(), HttpStatus.NOT_FOUND, req);
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ExceptionResponse> badRequestExceptionHandler(Exception ex, WebRequest req)
+    public ResponseEntity<?> badRequestExceptionHandler(Exception ex, WebRequest req)
     {
-        var exceptionResponse = new ExceptionResponse(Instant.now(), ex.getMessage(), req.getDescription(false), HttpStatus.BAD_REQUEST.value());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponse);
+        return handleExceptionInternal(ex, null, new HttpHeaders(), HttpStatus.BAD_REQUEST, req);
+
     }
 
     @ExceptionHandler(ConflictException.class) 
-        public ResponseEntity<ExceptionResponse> conflictExceptionHandler(Exception ex, WebRequest req)
+        public ResponseEntity<?> conflictExceptionHandler(Exception ex, WebRequest req)
     {
-        var exceptionResponse = new ExceptionResponse(Instant.now(), ex.getMessage(), req.getDescription(false), HttpStatus.CONFLICT.value());
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(exceptionResponse);
+        return handleExceptionInternal(ex, null, new HttpHeaders(), HttpStatus.CONFLICT, req);
+
     }
 
 
@@ -46,7 +45,9 @@ public class ResourceHandler extends ResponseEntityExceptionHandler{
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
             HttpStatusCode statusCode, WebRequest req) {
 
-        body = new ExceptionResponse(Instant.now(), ex.getMessage(), req.getDescription(false), statusCode.value());
+        if(body == null) {
+            body = new ExceptionResponse(Instant.now(), ex.getMessage(), req.getDescription(false), statusCode.value());
+        }
 
         return super.handleExceptionInternal(ex, body, headers, statusCode, req);
     }
