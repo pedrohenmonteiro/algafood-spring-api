@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import org.aspectj.weaver.ast.Instanceof;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.beans.factory.parsing.Problem;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -20,6 +21,8 @@ import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
@@ -56,17 +59,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 
     @Override
     public ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers, HttpStatusCode status, WebRequest req) {
-        Object[] args = {ex.getPropertyName(), ex.getValue()};
-		String defaultDetail = "Failed to convert '" + args[0] + "' with value: '" + args[1] + "'";
-		String messageCode = ErrorResponse.getDefaultDetailMessageCode(TypeMismatchException.class, null);
-		ProblemDetail body = createProblemDetail(ex, status, defaultDetail, messageCode, args, req);
-        return handleExceptionInternal(ex, null, new HttpHeaders(), status, req);
+        Object[] args = {ex.getPropertyName(),ex.getValue(), ex.getRequiredType().getSimpleName()};
+		String errorMessage = String.format("The URL param '%s' received the value '%s' which is a invalid type. The value type must be %s.", args);
+        
+        return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), status, req);
     }
 
     @Override
     public ResponseEntity<Object> handleHttpMessageNotReadable(
 			HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest req) {
-        String errorMessage = "The request body is invalid. check syntax error";
+        String errorMessage = "The request body is invalid. Check syntax error";
 
                 
         Throwable rootCause = ex.getCause();        
@@ -90,9 +92,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 
     private ResponseEntity<Object> handleInvalidFormatException(InvalidFormatException ex, HttpStatusCode status, WebRequest req) {
         String path = joinPath(ex.getPath());
-        String errorMessage = String.format("The value %s from %s has a invalid type. The value type must be %s", ex.getValue(), path, ex.getTargetType().getSimpleName());
+        Object[] args = {ex.getValue(), path, ex.getTargetType().getSimpleName()};
+        String errorMessage = String.format("The value %s from %s has a invalid type. The value type must be %s", args);
 
         return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), status, req);
+
+    }
+
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> handleAllExceptions(Exception ex, WebRequest req)
+    {
+        String errorMessage = "An unexpected internal system error has occurred."
+        + "Try again later and if the problem persists contact the system administrator.";
+        return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, req);
 
     }
 
