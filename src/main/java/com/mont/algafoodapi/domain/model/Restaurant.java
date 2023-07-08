@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mont.algafoodapi.Groups;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -46,16 +47,16 @@ public class Restaurant {
 
     // @NotNull
     // @NotEmpty
-    @NotBlank
+    @NotBlank(groups = Groups.CreateRestaurant.class)
     @Column(nullable = false)
     private String name;
     
-    @PositiveOrZero
+    @PositiveOrZero(groups = Groups.CreateRestaurant.class)
     private BigDecimal deliveryFee;
 
     // @JsonIgnore
     @Valid
-    @NotNull
+    @NotNull(groups = Groups.CreateRestaurant.class)
     @ManyToOne  // (fetch = FetchType.LAZY)
     @JoinColumn(name = "cuisine_id", nullable = false)
     private Cuisine cuisine;
