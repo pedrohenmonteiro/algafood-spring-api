@@ -28,6 +28,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.groups.ConvertGroup;
+import jakarta.validation.groups.Default;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -47,18 +49,19 @@ public class Restaurant {
 
     // @NotNull
     // @NotEmpty
-    @NotBlank(groups = Groups.CreateRestaurant.class)
+    @NotBlank
     @Column(nullable = false)
     private String name;
     
-    @PositiveOrZero(groups = Groups.CreateRestaurant.class)
+    @PositiveOrZero
     private BigDecimal deliveryFee;
 
     // @JsonIgnore
     @Valid
-    @NotNull(groups = Groups.CreateRestaurant.class)
+    @NotNull
     @ManyToOne  // (fetch = FetchType.LAZY)
     @JoinColumn(name = "cuisine_id", nullable = false)
+    @ConvertGroup(from = Default.class, to = Groups.CuisineId.class)
     private Cuisine cuisine;
 
     @JsonIgnore

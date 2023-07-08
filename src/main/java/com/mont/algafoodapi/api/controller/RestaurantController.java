@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.Groups;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
+import com.mont.algafoodapi.domain.model.Group;
 import com.mont.algafoodapi.domain.model.Restaurant;
 import com.mont.algafoodapi.domain.repository.RestaurantRepository;
 import com.mont.algafoodapi.domain.service.RestaurantService;
@@ -51,7 +52,7 @@ public class RestaurantController {
     }
 
     @PostMapping
-    public ResponseEntity<Restaurant> create(@RequestBody @Validated((Groups.CreateRestaurant.class)) Restaurant restaurant) {
+    public ResponseEntity<Restaurant> create(@RequestBody @Valid Restaurant restaurant) {
         
 
         return ResponseEntity.status(HttpStatus.CREATED).body(restaurantService.create(restaurant));
