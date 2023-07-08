@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
@@ -69,8 +70,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 
                 
         Throwable rootCause = ex.getCause();        
-        if (rootCause instanceof UnrecognizedPropertyException) {
-         return handleUnrecognizedPropertyException((UnrecognizedPropertyException)rootCause, status, req);
+        if (rootCause instanceof PropertyBindingException) {
+         return handlePropertyBindingException((PropertyBindingException)rootCause, status, req);
     } 
         if(rootCause instanceof InvalidFormatException) {
             return handleInvalidFormatException((InvalidFormatException) rootCause, status, req);
@@ -80,25 +81,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 		return handleExceptionInternal(ex, errorMessage, headers, status, req);
 	}
     
-    private ResponseEntity<Object> handleUnrecognizedPropertyException(UnrecognizedPropertyException ex, HttpStatusCode status, WebRequest req) {
-        String errorMessage = "The request body is invalid. check syntax error";
+    private ResponseEntity<Object> handlePropertyBindingException(PropertyBindingException ex, HttpStatusCode status, WebRequest req) {
         String path = joinPath(ex.getPath());
-
-        if(!path.isEmpty()) {
-            errorMessage = "The property '"+path+"' does not exist. Correct or remove this property and try again.";
-        }
+        String errorMessage = "The property '"+path+"' does not exist. Correct or remove this property and try again.";
         return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), status, req);
 
     }
 
     private ResponseEntity<Object> handleInvalidFormatException(InvalidFormatException ex, HttpStatusCode status, WebRequest req) {
-        String errorMessage = "The request body is invalid. check syntax error";
         String path = joinPath(ex.getPath());
+        String errorMessage = String.format("The value %s from %s has a invalid type. The value type must be %s", ex.getValue(), path, ex.getTargetType().getSimpleName());
 
-
-        if(!path.isEmpty()) {
-            errorMessage = String.format("The value %s from %s has a invalid type. The value type must be %s", ex.getValue(), path, ex.getTargetType().getSimpleName());
-        }
         return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), status, req);
 
     }
