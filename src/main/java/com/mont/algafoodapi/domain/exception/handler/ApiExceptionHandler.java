@@ -2,6 +2,7 @@ package com.mont.algafoodapi.domain.exception.handler;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collector;
@@ -64,18 +65,51 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
     @Override
     public ResponseEntity<Object> handleHttpMessageNotReadable(
 			HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest req) {
+        String errorMessage = "The request body is invalid. check syntax error";
+
                 
         Throwable rootCause = ex.getCause();        
         if (rootCause instanceof UnrecognizedPropertyException) {
          return handleUnrecognizedPropertyException((UnrecognizedPropertyException)rootCause, status, req);
     } 
-		return handleExceptionInternal(ex, null, headers, status, req);
+        if(rootCause instanceof InvalidFormatException) {
+            return handleInvalidFormatException((InvalidFormatException) rootCause, status, req);
+        }
+
+
+		return handleExceptionInternal(ex, errorMessage, headers, status, req);
 	}
     
     private ResponseEntity<Object> handleUnrecognizedPropertyException(UnrecognizedPropertyException ex, HttpStatusCode status, WebRequest req) {
-        String propertyName = ex.getPath().get(0).getFieldName();
-        String errorMessage = "The property "+propertyName+" does not exist. Correct or remove this property and try again.";
+        String errorMessage = "The request body is invalid. check syntax error";
+        String path = joinPath(ex.getPath());
+
+        if(!path.isEmpty()) {
+            errorMessage = "The property '"+path+"' does not exist. Correct or remove this property and try again.";
+        }
         return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), status, req);
+
+    }
+
+    private ResponseEntity<Object> handleInvalidFormatException(InvalidFormatException ex, HttpStatusCode status, WebRequest req) {
+        String errorMessage = "The request body is invalid. check syntax error";
+        String path = joinPath(ex.getPath());
+
+
+        if(!path.isEmpty()) {
+            errorMessage = String.format("The value %s from %s has a invalid type. The value type must be %s", ex.getValue(), path, ex.getTargetType().getSimpleName());
+        }
+        return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), status, req);
+
+    }
+
+    private String joinPath(List<Reference> references) {
+        List<String> paths = new ArrayList<>();
+        
+        for(int i = 0; i < references.size(); i++) {
+           paths.add(references.get(i).getFieldName());
+        }
+        return String.join(".", paths);
 
     }
 
