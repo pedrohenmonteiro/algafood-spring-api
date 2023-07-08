@@ -2,7 +2,7 @@ CREATE TABLE restaurant (
   id BIGINT NOT NULL AUTO_INCREMENT,
   cuisine_id BIGINT NOT NULL,
   address_city_id BIGINT,
-  name VARCHAR(100),
+  name VARCHAR(100) NOT NULL,
   address_street VARCHAR(100),
   address_number VARCHAR(20),
   address_complement VARCHAR(100),

@@ -24,6 +24,8 @@ import com.mont.algafoodapi.domain.model.Restaurant;
 import com.mont.algafoodapi.domain.repository.RestaurantRepository;
 import com.mont.algafoodapi.domain.service.RestaurantService;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/restaurants")
@@ -47,7 +49,7 @@ public class RestaurantController {
     }
 
     @PostMapping
-    public ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> create(@RequestBody @Valid Restaurant restaurant) {
         
 
         return ResponseEntity.status(HttpStatus.CREATED).body(restaurantService.create(restaurant));

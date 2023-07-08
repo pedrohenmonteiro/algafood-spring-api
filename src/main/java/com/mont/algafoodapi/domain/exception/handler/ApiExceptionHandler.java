@@ -1,34 +1,23 @@
 package com.mont.algafoodapi.domain.exception.handler;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
-import org.aspectj.weaver.ast.Instanceof;
 import org.springframework.beans.TypeMismatchException;
-import org.springframework.beans.factory.parsing.Problem;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.ExceptionResponse;
@@ -101,7 +90,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleAllExceptions(Exception ex, WebRequest req)
+    public ResponseEntity<?> handleUncaughtExceptions(Exception ex, WebRequest req)
     {
         String errorMessage = "An unexpected internal system error has occurred."
         + "Try again later and if the problem persists contact the system administrator.";
@@ -144,8 +133,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
             body = newBody.build();
         }
         
-        System.out.println(ex.getClass().getName());
-        System.out.println(ex.getCause());
+        // System.out.println(ex.getClass().getName());
+        // System.out.println(ex.getCause());
 
         return super.handleExceptionInternal(ex, body, headers, statusCode, req);
     }
