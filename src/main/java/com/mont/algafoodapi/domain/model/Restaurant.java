@@ -21,7 +21,12 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -39,13 +44,18 @@ public class Restaurant {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @NotNull
+    // @NotNull
+    // @NotEmpty
+    @NotBlank
     @Column(nullable = false)
     private String name;
     
+    @PositiveOrZero
     private BigDecimal deliveryFee;
 
     // @JsonIgnore
+    @Valid
+    @NotNull
     @ManyToOne  // (fetch = FetchType.LAZY)
     @JoinColumn(name = "cuisine_id", nullable = false)
     private Cuisine cuisine;

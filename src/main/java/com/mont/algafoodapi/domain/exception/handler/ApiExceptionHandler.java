@@ -99,13 +99,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
             .build()
         ).collect(Collectors.toList());
 
-        bindingResult.getFieldErrors().forEach((errors) -> {
-            System.out.println(errors.getField());
-            System.out.println(errors.getDefaultMessage());
-        });
-
-        
-
         var body = ExceptionResponse.builder()
             .timestamp(LocalDateTime.now())
             .status(status.value())
