@@ -3,6 +3,7 @@ package com.mont.algafoodapi.domain.exception.handler;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -23,6 +25,7 @@ import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.ExceptionResponse;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
+import com.mont.algafoodapi.domain.exception.ExceptionResponse.Field;
 
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
@@ -84,9 +87,36 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-            HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+            HttpHeaders headers, HttpStatusCode status, WebRequest req) {
+
+        BindingResult bindingResult = ex.getBindingResult();
         String errorMessage = "One or more fields are invalid. Fill in correctly and try again.";
-        return handleExceptionInternal(ex, errorMessage, headers, status, request);
+
+        var fieldErrors = bindingResult.getFieldErrors().stream().map(errors -> 
+            Field.builder()
+                .name(errors.getField())
+                .userMessage(errors.getDefaultMessage())
+            .build()
+        ).collect(Collectors.toList());
+
+        bindingResult.getFieldErrors().forEach((errors) -> {
+            System.out.println(errors.getField());
+            System.out.println(errors.getDefaultMessage());
+        });
+
+        
+
+        var body = ExceptionResponse.builder()
+            .timestamp(LocalDateTime.now())
+            .status(status.value())
+            .title(HttpStatus.valueOf(status.value()).getReasonPhrase())
+            .message(errorMessage)
+            .details(req.getDescription(false))
+            .fields(fieldErrors)
+        .build();
+        
+            
+        return handleExceptionInternal(ex, body, headers, status, req);
     }
 
 
@@ -142,7 +172,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
             newBody.message(message);
             body = newBody.build();
         }
-        
+
+
         // System.out.println(ex.getClass().getName());
         // System.out.println(ex.getCause());
 
