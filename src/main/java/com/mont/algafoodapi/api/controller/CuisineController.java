@@ -50,7 +50,7 @@ public class CuisineController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cuisine> update(@PathVariable Long id, @RequestBody Cuisine cuisine) {
+    public ResponseEntity<Cuisine> update(@PathVariable Long id, @RequestBody @Valid Cuisine cuisine) {
         cuisine.setId(id);
         return ResponseEntity.status(HttpStatus.OK).body(cuisineService.update(id, cuisine));
     }

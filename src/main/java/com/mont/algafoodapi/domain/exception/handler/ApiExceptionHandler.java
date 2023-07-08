@@ -131,6 +131,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 
 
 
+
     private String joinPath(List<Reference> references) {
         List<String> paths = new ArrayList<>();
         
@@ -167,8 +168,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
         }
 
 
-        // System.out.println(ex.getClass().getName());
-        // System.out.println(ex.getCause());
+        System.out.println(ex.getClass().getName());
+        System.out.println(ex.getCause());
 
         return super.handleExceptionInternal(ex, body, headers, statusCode, req);
     }
