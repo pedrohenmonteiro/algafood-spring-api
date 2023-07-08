@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -46,8 +47,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> handleUncaughtExceptions(Exception ex, WebRequest req)
+    {
+        String errorMessage = "An unexpected internal system error has occurred."
+        + "Try again later and if the problem persists contact the system administrator.";
+        return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, req);
+
+    }
+
     @Override
-    public ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers, HttpStatusCode status, WebRequest req) {
+    protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers, HttpStatusCode status, WebRequest req) {
         Object[] args = {ex.getPropertyName(),ex.getValue(), ex.getRequiredType().getSimpleName()};
 		String errorMessage = String.format("The URL param '%s' received the value '%s' which is a invalid type. The value type must be %s.", args);
         
@@ -55,7 +65,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
     }
 
     @Override
-    public ResponseEntity<Object> handleHttpMessageNotReadable(
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(
 			HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest req) {
         String errorMessage = "The request body is invalid. Check syntax error";
 
@@ -71,7 +81,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 
 		return handleExceptionInternal(ex, errorMessage, headers, status, req);
 	}
-    
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+            HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        String errorMessage = "One or more fields are invalid. Fill in correctly and try again.";
+        return handleExceptionInternal(ex, errorMessage, headers, status, request);
+    }
+
+
     private ResponseEntity<Object> handlePropertyBindingException(PropertyBindingException ex, HttpStatusCode status, WebRequest req) {
         String path = joinPath(ex.getPath());
         String errorMessage = "The property '"+path+"' does not exist. Correct or remove this property and try again.";
@@ -89,14 +107,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
     }
 
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleUncaughtExceptions(Exception ex, WebRequest req)
-    {
-        String errorMessage = "An unexpected internal system error has occurred."
-        + "Try again later and if the problem persists contact the system administrator.";
-        return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, req);
-
-    }
 
     private String joinPath(List<Reference> references) {
         List<String> paths = new ArrayList<>();
