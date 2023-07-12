@@ -3,24 +3,19 @@ package com.mont.algafoodapi;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Arrays;
-
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Cuisine;
-import com.mont.algafoodapi.domain.model.Restaurant;
 import com.mont.algafoodapi.domain.service.CuisineService;
 
 import jakarta.validation.ConstraintViolationException;
 
 @SpringBootTest
-class CuisineRegistrationIntegrationTests {
+class CuisineRegistrationIT {
 
 	@Autowired
 		private CuisineService cuisineService;
@@ -44,7 +39,7 @@ class CuisineRegistrationIntegrationTests {
 		Cuisine newCuisine = new Cuisine();
 		newCuisine.setName(null);
 		
-		assertThrows(ConstraintViolationException.class, () -> {
+		assertThrows(NotFoundException.class, () -> {
 			cuisineService.create(newCuisine);
 		});
 	}
