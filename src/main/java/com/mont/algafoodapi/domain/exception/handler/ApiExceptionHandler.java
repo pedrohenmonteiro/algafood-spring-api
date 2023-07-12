@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -29,6 +32,9 @@ import com.mont.algafoodapi.domain.exception.ExceptionResponse.Field;
 
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
+
+    @Autowired
+    private MessageSource messageSource;
     
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<?> notFoundExceptionHandler(Exception ex, WebRequest req)
@@ -93,10 +99,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
         String errorMessage = "One or more fields are invalid. Fill in correctly and try again.";
 
         var fieldErrors = bindingResult.getFieldErrors().stream().map(errors -> 
-            Field.builder()
-                .name(errors.getField())
-                .userMessage(errors.getDefaultMessage())
-            .build()
+            {
+              
+            String message = messageSource.getMessage(errors, LocaleContextHolder.getLocale());
+
+            return Field.builder()
+                        .name(errors.getField())
+                        .userMessage(message)
+                        .build();
+            }
         ).collect(Collectors.toList());
 
         var body = ExceptionResponse.builder()

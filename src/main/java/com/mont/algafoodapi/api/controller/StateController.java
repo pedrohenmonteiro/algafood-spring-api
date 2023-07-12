@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mont.algafoodapi.domain.model.State;
 import com.mont.algafoodapi.domain.service.StateService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/states")
 public class StateController {
@@ -38,12 +40,12 @@ public class StateController {
     }
 
     @PostMapping
-    public ResponseEntity<State> create(@RequestBody State state) {
+    public ResponseEntity<State> create(@RequestBody @Valid State state) {
         return ResponseEntity.status(HttpStatus.CREATED).body(stateService.create(state));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<State> update(@PathVariable Long id, @RequestBody State state) {
+    public ResponseEntity<State> update(@PathVariable Long id, @RequestBody @Valid State state) {
         state.setId(id);
         return ResponseEntity.status(HttpStatus.OK).body(stateService.update(id, state));
     }
