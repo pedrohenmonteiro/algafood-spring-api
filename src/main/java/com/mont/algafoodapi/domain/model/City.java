@@ -1,5 +1,6 @@
 package com.mont.algafoodapi.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mont.algafoodapi.Groups;
 
 import jakarta.persistence.Column;
@@ -37,6 +38,7 @@ public class City {
     private String name;
 
 
+    @JsonIgnoreProperties(value = "name", allowGetters = true)
     @Valid
     @ConvertGroup(from = Default.class, to = Groups.StateId.class)
     @NotNull
