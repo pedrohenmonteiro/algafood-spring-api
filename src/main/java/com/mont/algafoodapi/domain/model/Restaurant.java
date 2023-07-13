@@ -1,7 +1,7 @@
 package com.mont.algafoodapi.domain.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,15 +70,15 @@ public class Restaurant {
     private Address address;
 
 
-    @JsonIgnore
+    // @JsonIgnore
     @CreationTimestamp
     @Column(nullable = false)
-    private LocalDateTime dateCreation;
+    private OffsetDateTime dateCreation;
 
     @JsonIgnore
     @UpdateTimestamp
     @Column(nullable = false)
-    private LocalDateTime dateLastUpdate;
+    private OffsetDateTime dateLastUpdate;
 
 
     @JsonIgnore

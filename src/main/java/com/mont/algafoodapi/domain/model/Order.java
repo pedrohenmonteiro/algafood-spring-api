@@ -2,6 +2,7 @@ package com.mont.algafoodapi.domain.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,13 +42,13 @@ public class Order {
     private BigDecimal deliveryFee;
     
     @CreationTimestamp
-    private LocalDateTime creationDate;
+    private OffsetDateTime creationDate;
 
-    private LocalDateTime cancelDate;
+    private OffsetDateTime cancelDate;
 
-    private LocalDateTime confirmDate;
+    private OffsetDateTime confirmDate;
 
-    private LocalDateTime deliveredDate;
+    private OffsetDateTime deliveredDate;
 
     @Embedded
     private Address address;
