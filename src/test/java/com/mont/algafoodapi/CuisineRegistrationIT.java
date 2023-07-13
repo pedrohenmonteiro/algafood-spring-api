@@ -1,7 +1,5 @@
 package com.mont.algafoodapi;
 
-import org.assertj.core.util.Arrays;
-import org.flywaydb.core.Flyway;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
