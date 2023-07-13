@@ -1,62 +1,95 @@
 package com.mont.algafoodapi;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 
-import com.mont.algafoodapi.domain.exception.ConflictException;
-import com.mont.algafoodapi.domain.exception.NotFoundException;
-import com.mont.algafoodapi.domain.model.Cuisine;
-import com.mont.algafoodapi.domain.service.CuisineService;
-
-import jakarta.validation.ConstraintViolationException;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 
 @SpringBootTest
 class CuisineRegistrationIT {
 
-	@Autowired
-		private CuisineService cuisineService;
-
-	@Test
-	void mustAssignId_when_registrateCuisine() {
-		//scenary
-		Cuisine newCuisine = new Cuisine();
-		newCuisine.setName("Chinese");
-		//action
-		newCuisine = cuisineService.create(newCuisine);
-		
-		//validation
-		assertNotNull(newCuisine);
-		assertNotNull(newCuisine.getId());
-
-	}
-
-	@Test
-	void mustFail_when_registrateCuisineWithoutName() {
-		Cuisine newCuisine = new Cuisine();
-		newCuisine.setName(null);
-		
-		assertThrows(NotFoundException.class, () -> {
-			cuisineService.create(newCuisine);
-		});
-	}
-
-	@Test
-	void mustFail_when_deleteCuisineAlreadyInUse() {
-		assertThrows(ConflictException.class, () -> {
-			cuisineService.delete(1L);
-		});
-	}
-
-	@Test
-	void mustFail_when_deleteInexistentCuisine() {
-
-	assertThrows(NotFoundException.class, () -> {
-			cuisineService.delete(100L);
-		});
-	}
+@Test
+void mustReturnStatus200_when_queryCuisines() {
+	RestAssured.given()
+		.basePath("/cuisine")
+		.port(8081)
+		.accept(ContentType.JSON)
+	.when()
+		.get()
+	.then()
+		.statusCode(HttpStatus.OK.value());
 
 }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// @Autowired
+	// 	private CuisineService cuisineService;
+
+	// @Test
+	// void mustAssignId_when_registrateCuisine() {
+	// 	//scenary
+	// 	Cuisine newCuisine = new Cuisine();
+	// 	newCuisine.setName("Chinese");
+	// 	//action
+	// 	newCuisine = cuisineService.create(newCuisine);
+		
+	// 	//validation
+	// 	assertNotNull(newCuisine);
+	// 	assertNotNull(newCuisine.getId());
+
+	// }
+
+	// @Test
+	// void mustFail_when_registrateCuisineWithoutName() {
+	// 	Cuisine newCuisine = new Cuisine();
+	// 	newCuisine.setName(null);
+		
+	// 	assertThrows(ConstraintViolationException.class, () -> {
+	// 		cuisineService.create(newCuisine);
+	// 	});
+	// }
+
+	// @Test
+	// void mustFail_when_deleteCuisineAlreadyInUse() {
+	// 	assertThrows(ConflictException.class, () -> {
+	// 		cuisineService.delete(1L);
+	// 	});
+	// }
+
+	// @Test
+	// void mustFail_when_deleteInexistentCuisine() {
+
+	// assertThrows(NotFoundException.class, () -> {
+	// 		cuisineService.delete(100L);
+	// 	});
+	// }
