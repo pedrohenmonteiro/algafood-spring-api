@@ -54,6 +54,7 @@ public class Restaurant {
     private String name;
     
     @PositiveOrZero
+    @NotNull
     private BigDecimal deliveryFee;
 
     // @JsonIgnore

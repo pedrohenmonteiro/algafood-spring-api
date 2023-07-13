@@ -124,6 +124,7 @@ class CuisineRegistrationIT {
 }
 
 
+
 	 void prepareData() {
 
 		Cuisine frenchCuisine = new Cuisine();
