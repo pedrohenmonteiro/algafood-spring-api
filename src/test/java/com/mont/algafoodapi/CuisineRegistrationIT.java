@@ -1,25 +1,50 @@
 package com.mont.algafoodapi;
 
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CuisineRegistrationIT {
 
-@Test
-void mustReturnStatus200_when_queryCuisines() {
-	RestAssured.given()
-		.basePath("/cuisine")
-		.port(8081)
-		.accept(ContentType.JSON)
-	.when()
-		.get()
-	.then()
-		.statusCode(HttpStatus.OK.value());
+	@LocalServerPort
+	private int port;
+
+	@Test
+	void mustReturnStatus200_when_queryCuisines() {
+
+		// RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+
+		RestAssured.given()
+			.basePath("/cuisine")
+			.port(port)
+			.accept(ContentType.JSON)
+		.when()
+			.get()
+		.then()
+			.statusCode(HttpStatus.OK.value());
+
+}
+
+	@Test
+	void mustContain4Cuisines_when_getCuisines() {
+
+		// RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+
+		RestAssured.given()
+			.basePath("/cuisine")
+			.port(port)
+			.accept(ContentType.JSON)
+		.when()
+			.get()
+		.then()
+			.body("",Matchers.hasSize(4))
+			.body("name", Matchers.hasItems("Argentine", "Brazilian"));
 
 }
 
