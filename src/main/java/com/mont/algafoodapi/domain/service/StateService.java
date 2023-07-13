@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.State;

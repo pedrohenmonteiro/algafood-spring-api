@@ -10,11 +10,8 @@ import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.City;
-import com.mont.algafoodapi.domain.model.State;
 import com.mont.algafoodapi.domain.repository.CityRepository;
 import com.mont.algafoodapi.domain.repository.StateRepository;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class CityService {
