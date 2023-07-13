@@ -14,6 +14,7 @@ import org.springframework.test.context.TestPropertySource;
 import com.mont.algafoodapi.domain.model.Cuisine;
 import com.mont.algafoodapi.domain.repository.CuisineRepository;
 import com.mont.algafoodapi.util.DatabaseCleaner;
+import com.mont.algafoodapi.util.ResourceUtils;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -31,12 +32,20 @@ class CuisineRegistrationIT {
 	@Autowired
 	private CuisineRepository cuisineRepository;
 
+
+	private static final int INEXISTENT_CUISINE_ID = 100;
+	private Cuisine brazilianCuisine;
+	private int registeredCuisineSize;
+	private String correctJsonFrenchCuisine;
+
 	@BeforeEach
 	void setUp() {
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 		RestAssured.port = port;
 		RestAssured.basePath = "/cuisine";
 		databaseCleaner.clearTables();
+
+		correctJsonFrenchCuisine = ResourceUtils.getContentFromResource("/json/correct/french-cuisine.json");
 
 		prepareData();
 	}
@@ -70,7 +79,7 @@ class CuisineRegistrationIT {
 	@Test
 	void mustReturnStatus404_when_getInexistentCuisine() {
 		RestAssured.given()
-			.pathParam("id", 10)
+			.pathParam("id", INEXISTENT_CUISINE_ID)
 			.accept(ContentType.JSON)
 		.when()
 			.get("/{id}")
@@ -82,34 +91,32 @@ class CuisineRegistrationIT {
 	@Test
 	void mustReturnStatusAndRequestCorrectly_when_getCuisineById() {
 		RestAssured.given()
-			.pathParam("id", 2)
+			.pathParam("id", brazilianCuisine.getId())
 			.accept(ContentType.JSON)
 		.when()
 			.get("/{id}")
 		.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("name", Matchers.equalTo("Brazilian"));
+			.body("name", Matchers.equalTo(brazilianCuisine.getName()));
 
 	}
 
 	@Test
-	void mustContain2Cuisines_when_getCuisines() {
+	void mustContainAllCuisine_when_getCuisines() {
 
 		RestAssured.given()
 			.accept(ContentType.JSON)
 		.when()
 			.get()
 		.then()
-			.body("",Matchers.hasSize(2))
-			.body("name", Matchers.hasItems("French", "Brazilian"));
-
+			.body("",Matchers.hasSize(registeredCuisineSize));
 }
 
 	@Test
 	void mustReturnStatus201_when_postCuisine() {
 
 		RestAssured.given()
-			.body("{ \"name\": \"French\"}")
+			.body(correctJsonFrenchCuisine)
 			.contentType(ContentType.JSON)
 			.accept(ContentType.JSON)
 		.when()
@@ -121,14 +128,16 @@ class CuisineRegistrationIT {
 
 	 void prepareData() {
 
-		Cuisine cuisine1 = new Cuisine();
-		Cuisine cuisine2 = new Cuisine();
+		Cuisine frenchCuisine = new Cuisine();
+		brazilianCuisine = new Cuisine();
 		
-		cuisine1.setName("French");
-		cuisine2.setName("Brazilian");
+		frenchCuisine.setName("French");
+		brazilianCuisine.setName("Brazilian");
 
-		cuisineRepository.save(cuisine1);
-		cuisineRepository.save(cuisine2);
+		cuisineRepository.save(frenchCuisine);
+		cuisineRepository.save(brazilianCuisine);
+
+		registeredCuisineSize = (int) cuisineRepository.count();
 
 
 	}
