@@ -55,8 +55,45 @@ class CuisineRegistrationIT {
 }
 
 	@Test
-	void mustContain2Cuisines_when_getCuisines() {
+	void mustReturnStatus200AndRequestCorrectly_when_getCuisineById() {
+		RestAssured.given()
+			.pathParam("id", 2)
+			.accept(ContentType.JSON)
+		.when()
+			.get("/{id}")
+		.then()
+			.statusCode(HttpStatus.OK.value())
+			.body("name", Matchers.equalTo("Brazilian"));
 
+	}
+
+	@Test
+	void mustReturnStatus404_when_getInexistentCuisine() {
+		RestAssured.given()
+			.pathParam("id", 10)
+			.accept(ContentType.JSON)
+		.when()
+			.get("/{id}")
+		.then()
+			.statusCode(HttpStatus.NOT_FOUND.value());
+
+	}
+
+	@Test
+	void mustReturnStatusAndRequestCorrectly_when_getCuisineById() {
+		RestAssured.given()
+			.pathParam("id", 2)
+			.accept(ContentType.JSON)
+		.when()
+			.get("/{id}")
+		.then()
+			.statusCode(HttpStatus.OK.value())
+			.body("name", Matchers.equalTo("Brazilian"));
+
+	}
+
+	@Test
+	void mustContain2Cuisines_when_getCuisines() {
 
 		RestAssured.given()
 			.accept(ContentType.JSON)
