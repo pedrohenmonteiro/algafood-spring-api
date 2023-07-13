@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mont.algafoodapi.Groups;
 
 import jakarta.persistence.Column;
@@ -58,6 +59,7 @@ public class Restaurant {
     private BigDecimal deliveryFee;
 
     // @JsonIgnore
+    @JsonIgnoreProperties(value = "name", allowGetters = true)
     @Valid
     @NotNull
     @ManyToOne  // (fetch = FetchType.LAZY)

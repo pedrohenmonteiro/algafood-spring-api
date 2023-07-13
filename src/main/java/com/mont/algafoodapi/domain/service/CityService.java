@@ -14,6 +14,8 @@ import com.mont.algafoodapi.domain.model.State;
 import com.mont.algafoodapi.domain.repository.CityRepository;
 import com.mont.algafoodapi.domain.repository.StateRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class CityService {
     
@@ -36,7 +38,6 @@ public class CityService {
         return cityRepository.save(city);
         
     }
-
 
     public City update(Long id, City city) {
         getCity(id);
