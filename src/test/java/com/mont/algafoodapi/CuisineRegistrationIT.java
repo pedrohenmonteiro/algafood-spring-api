@@ -1,6 +1,7 @@
 package com.mont.algafoodapi;
 
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -15,14 +16,19 @@ class CuisineRegistrationIT {
 	@LocalServerPort
 	private int port;
 
+	@BeforeEach
+	void setUp() {
+		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+		RestAssured.port = port;
+		RestAssured.basePath = "/cuisine";
+
+	}
+
 	@Test
 	void mustReturnStatus200_when_queryCuisines() {
 
-		// RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
 		RestAssured.given()
-			.basePath("/cuisine")
-			.port(port)
 			.accept(ContentType.JSON)
 		.when()
 			.get()
@@ -37,8 +43,6 @@ class CuisineRegistrationIT {
 		// RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
 		RestAssured.given()
-			.basePath("/cuisine")
-			.port(port)
 			.accept(ContentType.JSON)
 		.when()
 			.get()
