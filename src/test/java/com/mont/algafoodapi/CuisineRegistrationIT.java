@@ -1,5 +1,6 @@
 package com.mont.algafoodapi;
 
+import org.assertj.core.util.Arrays;
 import org.flywaydb.core.Flyway;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
+
+import com.mont.algafoodapi.domain.model.Cuisine;
+import com.mont.algafoodapi.domain.repository.CuisineRepository;
+import com.mont.algafoodapi.util.DatabaseCleaner;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -21,15 +26,19 @@ class CuisineRegistrationIT {
 	private int port;
 
 	@Autowired
-	private Flyway flyway;
+	private DatabaseCleaner databaseCleaner;
+
+	@Autowired
+	private CuisineRepository cuisineRepository;
 
 	@BeforeEach
 	void setUp() {
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 		RestAssured.port = port;
 		RestAssured.basePath = "/cuisine";
+		databaseCleaner.clearTables();
 
-		flyway.migrate();
+		prepareData();
 	}
 
 	@Test
@@ -46,7 +55,7 @@ class CuisineRegistrationIT {
 }
 
 	@Test
-	void mustContain4Cuisines_when_getCuisines() {
+	void mustContain2Cuisines_when_getCuisines() {
 
 
 		RestAssured.given()
@@ -54,8 +63,8 @@ class CuisineRegistrationIT {
 		.when()
 			.get()
 		.then()
-			.body("",Matchers.hasSize(4))
-			.body("name", Matchers.hasItems("Argentine", "Brazilian"));
+			.body("",Matchers.hasSize(2))
+			.body("name", Matchers.hasItems("French", "Brazilian"));
 
 }
 
@@ -73,7 +82,19 @@ class CuisineRegistrationIT {
 }
 
 
+	 void prepareData() {
 
+		Cuisine cuisine1 = new Cuisine();
+		Cuisine cuisine2 = new Cuisine();
+		
+		cuisine1.setName("French");
+		cuisine2.setName("Brazilian");
+
+		cuisineRepository.save(cuisine1);
+		cuisineRepository.save(cuisine2);
+
+
+	}
 
 }
 
