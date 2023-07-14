@@ -1,11 +1,13 @@
 package com.mont.algafoodapi.domain.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.State;
@@ -27,6 +29,9 @@ public class StateService {
     }
     
     public State create(State state) {
+        if(Objects.nonNull(state.getId())) {
+            throw new BadRequestException("id must be null");
+        }
         return stateRepository.save(state);
     }
 

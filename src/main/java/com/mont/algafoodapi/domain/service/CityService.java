@@ -1,6 +1,7 @@
 package com.mont.algafoodapi.domain.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -31,7 +32,11 @@ public class CityService {
     }
     
     public City create(City city) {
-        setCity(city);
+        if(Objects.nonNull(city.getId())) {
+            throw new BadRequestException("id must be null");
+        }
+
+        setState(city);
         return cityRepository.save(city);
         
     }
@@ -39,12 +44,13 @@ public class CityService {
     public City update(Long id, City city) {
         getCity(id);
         city.setId(id);
-        setCity(city);
+        setState(city);
         return cityRepository.save(city);
     }
 
     public void delete(Long id) {
         try {
+            getCity(id);
             cityRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("Cannot delete resource due to existing references");
@@ -55,7 +61,7 @@ public class CityService {
         return cityRepository.findById(cityId).orElseThrow(() -> new NotFoundException("Resource not found"));
     }
 
-     private void setCity(City city) {
+     private void setState(City city) {
         var stateId = city.getState().getId();
         var state = stateRepository.findById(stateId).orElseThrow(() -> new BadRequestException("Resource state id " + stateId + " not found"));
         city.setState(state); 

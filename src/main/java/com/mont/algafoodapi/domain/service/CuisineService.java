@@ -1,11 +1,13 @@
 package com.mont.algafoodapi.domain.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Cuisine;
@@ -27,6 +29,9 @@ public class CuisineService {
     }
     
     public Cuisine create(Cuisine cuisine) {
+        if(Objects.nonNull(cuisine.getId())) {
+            throw new BadRequestException("id must be null");
+        }
         return cuisineRepository.save(cuisine);
     }
 

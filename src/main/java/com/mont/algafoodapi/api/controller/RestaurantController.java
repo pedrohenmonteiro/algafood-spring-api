@@ -41,6 +41,7 @@ public class RestaurantController {
     
     @GetMapping("/{id}")
     public ResponseEntity<Restaurant> findById(@PathVariable Long id) {
+        
         return ResponseEntity.status(HttpStatus.OK).body(restaurantService.findById(id));
     }
 

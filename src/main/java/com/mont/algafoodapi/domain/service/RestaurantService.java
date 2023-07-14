@@ -1,6 +1,7 @@
 package com.mont.algafoodapi.domain.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -32,6 +33,10 @@ public class RestaurantService {
     }
     
     public Restaurant create(Restaurant restaurant) {
+        if(Objects.nonNull(restaurant.getId())) {
+            throw new BadRequestException("id must be null");
+        }
+        
         setCuisine(restaurant);   
         return restaurantRepository.save(restaurant);
     }
