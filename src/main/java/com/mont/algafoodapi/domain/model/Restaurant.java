@@ -65,7 +65,7 @@ public class Restaurant {
     @ConvertGroup(from = Default.class, to = Groups.CuisineId.class)
     private Cuisine cuisine;
 
-    @JsonIgnore
+    // @JsonIgnore
     @Embedded
     private Address address;
 
@@ -75,13 +75,13 @@ public class Restaurant {
     @Column(nullable = false)
     private OffsetDateTime dateCreation;
 
-    @JsonIgnore
+    // @JsonIgnore
     @UpdateTimestamp
     @Column(nullable = false)
     private OffsetDateTime dateLastUpdate;
 
 
-    @JsonIgnore
+    // @JsonIgnore
     @ManyToMany
     @JoinTable(name = "restaurant_payment_method",
         joinColumns = @JoinColumn(name = "restaurant_id"),
@@ -89,7 +89,7 @@ public class Restaurant {
     private List<PaymentMethod> paymentMethods = new ArrayList<>();
 
 
-    @JsonIgnore
+    // @JsonIgnore
     @OneToMany(mappedBy = "restaurant")
     private List<Product> products = new ArrayList<>();    
 }

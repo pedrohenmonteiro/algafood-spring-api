@@ -36,7 +36,7 @@ public class RestaurantService {
         if(Objects.nonNull(restaurant.getId())) {
             throw new BadRequestException("id must be null");
         }
-        
+
         setCuisine(restaurant);   
         return restaurantRepository.save(restaurant);
     }
