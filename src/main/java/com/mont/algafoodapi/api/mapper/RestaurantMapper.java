@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import com.mont.algafoodapi.api.model.CuisineDto;
 import com.mont.algafoodapi.api.model.RestaurantDto;
+import com.mont.algafoodapi.api.model.input.RestaurantInputDto;
+import com.mont.algafoodapi.domain.model.Cuisine;
 import com.mont.algafoodapi.domain.model.Restaurant;
 
 @Component
@@ -31,6 +33,24 @@ public class RestaurantMapper {
     public List<RestaurantDto> toCollectionDto(List<Restaurant> restaurants) {
         return restaurants.stream().map(this::fromEntityToDto).collect(Collectors.toList());
     }
+
+
+    public Restaurant fromDtoToEntity(RestaurantInputDto dto) {
+        
+        var cuisine = Cuisine.builder()
+                .id(dto.getCuisineId().getId())
+            .build();
+
+        var restaurant = Restaurant.builder()
+                .name(dto.getName())
+                .deliveryFee(dto.getDeliveryFee())
+                .cuisine(cuisine)
+            .build();    
+
+        return restaurant;
+    }
+
+
 
         
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.mont.algafoodapi.api.mapper.RestaurantMapper;
 import com.mont.algafoodapi.api.model.RestaurantDto;
+import com.mont.algafoodapi.api.model.input.RestaurantInputDto;
 import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
@@ -37,17 +38,16 @@ public class RestaurantService {
         return restaurantMapper.fromEntityToDto(getRestaurant(id));
     }
     
-    public RestaurantDto create(Restaurant restaurant) {
-        if(Objects.nonNull(restaurant.getId())) {
-            throw new BadRequestException("id must be null");
-        }
-
+    public RestaurantDto create(RestaurantInputDto restaurantInputDto) {
+       
+        var restaurant = restaurantMapper.fromDtoToEntity(restaurantInputDto);
         setCuisine(restaurant);   
         return restaurantMapper.fromEntityToDto(restaurantRepository.save(restaurant));
     }
 
-    public RestaurantDto update(Long id, Restaurant restaurant) {
+    public RestaurantDto update(Long id, RestaurantInputDto restaurantInputDto) {
         var entity = getRestaurant(id);
+        var restaurant = restaurantMapper.fromDtoToEntity(restaurantInputDto);
         restaurant.setId(id);
         restaurant.setPaymentMethods(entity.getPaymentMethods());
         restaurant.setAddress(entity.getAddress());

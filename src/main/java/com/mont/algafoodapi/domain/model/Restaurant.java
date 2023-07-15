@@ -8,7 +8,6 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mont.algafoodapi.Groups;
 
@@ -30,6 +29,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.groups.ConvertGroup;
 import jakarta.validation.groups.Default;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -38,6 +38,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Restaurant {
     

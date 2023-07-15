@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.RestaurantDto;
+import com.mont.algafoodapi.api.model.input.RestaurantInputDto;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Restaurant;
 import com.mont.algafoodapi.domain.repository.RestaurantRepository;
@@ -47,15 +48,15 @@ public class RestaurantController {
     }
 
     @PostMapping
-    public ResponseEntity<RestaurantDto> create(@RequestBody @Valid Restaurant restaurant) {
+    public ResponseEntity<RestaurantDto> create(@RequestBody @Valid RestaurantInputDto restaurantInputDto) {
         
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(restaurantService.create(restaurant));
+        return ResponseEntity.status(HttpStatus.CREATED).body(restaurantService.create(restaurantInputDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RestaurantDto> update(@PathVariable Long id,@RequestBody @Valid Restaurant restaurant) {
-        return ResponseEntity.status(HttpStatus.OK).body(restaurantService.update(id, restaurant));
+    public ResponseEntity<RestaurantDto> update(@PathVariable Long id,@RequestBody @Valid RestaurantInputDto restaurantInputDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(restaurantService.update(id, restaurantInputDto));
     }
     
     @DeleteMapping("/{id}")
