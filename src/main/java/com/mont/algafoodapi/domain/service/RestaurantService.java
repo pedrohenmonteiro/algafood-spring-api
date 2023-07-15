@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.mont.algafoodapi.api.mapper.RestaurantMapper;
+import com.mont.algafoodapi.api.model.RestaurantDto;
 import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
@@ -23,25 +25,28 @@ public class RestaurantService {
     @Autowired
     private CuisineRepository cuisineRepository;
 
-    public List<Restaurant> findAll() {
-        return restaurantRepository.findAll();
+    @Autowired
+    private RestaurantMapper restaurantMapper;
+
+    public List<RestaurantDto> findAll() {
+        return restaurantMapper.toCollectionDto(restaurantRepository.findAll());
         
     }
 
-    public Restaurant findById(Long id) {
-        return getRestaurant(id);
+    public RestaurantDto findById(Long id) {
+        return restaurantMapper.fromEntityToDto(getRestaurant(id));
     }
     
-    public Restaurant create(Restaurant restaurant) {
+    public RestaurantDto create(Restaurant restaurant) {
         if(Objects.nonNull(restaurant.getId())) {
             throw new BadRequestException("id must be null");
         }
 
         setCuisine(restaurant);   
-        return restaurantRepository.save(restaurant);
+        return restaurantMapper.fromEntityToDto(restaurantRepository.save(restaurant));
     }
 
-    public Restaurant update(Long id, Restaurant restaurant) {
+    public RestaurantDto update(Long id, Restaurant restaurant) {
         var entity = getRestaurant(id);
         restaurant.setId(id);
         restaurant.setPaymentMethods(entity.getPaymentMethods());
@@ -50,7 +55,7 @@ public class RestaurantService {
         restaurant.setDateLastUpdate(entity.getDateLastUpdate());
         restaurant.setAddress(entity.getAddress());
         setCuisine(restaurant);
-        return restaurantRepository.save(restaurant);
+        return restaurantMapper.fromEntityToDto(restaurantRepository.save(restaurant));
     }
 
     public void delete(Long id) {

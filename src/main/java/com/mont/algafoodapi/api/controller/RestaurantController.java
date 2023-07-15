@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mont.algafoodapi.api.model.RestaurantDto;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Restaurant;
 import com.mont.algafoodapi.domain.repository.RestaurantRepository;
@@ -34,26 +35,26 @@ public class RestaurantController {
     private RestaurantRepository restaurantRepository;
 
     @GetMapping
-    public ResponseEntity<List<Restaurant>> findAll() {
+    public ResponseEntity<List<RestaurantDto>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(restaurantService.findAll());
     }
 
     
     @GetMapping("/{id}")
-    public ResponseEntity<Restaurant> findById(@PathVariable Long id) {
-        
+    public ResponseEntity<RestaurantDto> findById(@PathVariable Long id) {
+
         return ResponseEntity.status(HttpStatus.OK).body(restaurantService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Restaurant> create(@RequestBody @Valid Restaurant restaurant) {
+    public ResponseEntity<RestaurantDto> create(@RequestBody @Valid Restaurant restaurant) {
         
 
         return ResponseEntity.status(HttpStatus.CREATED).body(restaurantService.create(restaurant));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Restaurant> update(@PathVariable Long id,@RequestBody @Valid Restaurant restaurant) {
+    public ResponseEntity<RestaurantDto> update(@PathVariable Long id,@RequestBody @Valid Restaurant restaurant) {
         return ResponseEntity.status(HttpStatus.OK).body(restaurantService.update(id, restaurant));
     }
     
