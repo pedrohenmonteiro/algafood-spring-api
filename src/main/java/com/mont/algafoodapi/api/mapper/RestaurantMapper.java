@@ -1,13 +1,11 @@
 package com.mont.algafoodapi.api.mapper;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mont.algafoodapi.api.model.CuisineDto;
 import com.mont.algafoodapi.api.model.RestaurantDto;
 import com.mont.algafoodapi.api.model.input.RestaurantInputDto;
 import com.mont.algafoodapi.domain.model.Cuisine;
@@ -18,46 +16,55 @@ public class RestaurantMapper {
 
     @Autowired
     private ModelMapper modelMapper;
+
+       public Restaurant fromDtoToEntity(RestaurantInputDto dto) {
+        
+        // var cuisine = Cuisine.builder()
+        //         .id(dto.getCuisineId().getId())
+        //     .build();
+
+        // var restaurant = Restaurant.builder()
+        //         .name(dto.getName())
+        //         .deliveryFee(dto.getDeliveryFee())
+        //         .cuisine(cuisine)
+        //     .build();    
+
+
+            
+        return modelMapper.map(dto, Restaurant.class);
+    }
+
     
     public RestaurantDto fromEntityToDto(Restaurant restaurant) {
-        var cuisineDto = CuisineDto.builder()
-                .id(restaurant.getCuisine().getId())
-                .name(restaurant.getCuisine().getName())
-            .build();
 
-        var restaurantDto = RestaurantDto.builder()
-                .id(restaurant.getId())
-                .name(restaurant.getName())
-                .deliveryFee(restaurant.getDeliveryFee())
-                .cuisine(cuisineDto)
-            .build();    
+        // var cuisineDto = CuisineDto.builder()
+        //         .id(restaurant.getCuisine().getId())
+        //         .name(restaurant.getCuisine().getName())
+        //     .build();
 
-        return restaurantDto;
+        // var restaurantDto = RestaurantDto.builder()
+        //         .id(restaurant.getId())
+        //         .name(restaurant.getName())
+        //         .deliveryFee(restaurant.getDeliveryFee())
+        //         .cuisine(cuisineDto)
+        //     .build();    
+
+            return modelMapper.map(restaurant, RestaurantDto.class);
     }
 
 
     public List<RestaurantDto> toCollectionDto(List<Restaurant> restaurants) {
-        return restaurants.stream().map(this::fromEntityToDto).collect(Collectors.toList());
+        return restaurants.stream().map(this::fromEntityToDto).toList();
     }
 
-
-    public Restaurant fromDtoToEntity(RestaurantInputDto dto) {
-        
-        var cuisine = Cuisine.builder()
-                .id(dto.getCuisineId().getId())
-            .build();
-
-        var restaurant = Restaurant.builder()
-                .name(dto.getName())
-                .deliveryFee(dto.getDeliveryFee())
-                .cuisine(cuisine)
-            .build();    
-
-
-            
-        return restaurant;
+    public void copyToDomainModel(RestaurantInputDto restaurantInputDto, Restaurant restaurant) {
+        // new instance of cuisine created to avoid 
+        // org.springframework.orm.jpa.JpaSystemException: identifier of an instance of com.mont.algafoodapi.domain.model.Cuisine was altered from 2 to 1
+        restaurant.setCuisine(new Cuisine());
+        modelMapper.map(restaurantInputDto, restaurant);
     }
 
+ 
 
 
         

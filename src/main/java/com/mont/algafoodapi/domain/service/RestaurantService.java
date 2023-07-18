@@ -1,7 +1,7 @@
 package com.mont.algafoodapi.domain.service;
 
+import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -42,20 +42,22 @@ public class RestaurantService {
        
         var restaurant = restaurantMapper.fromDtoToEntity(restaurantInputDto);
         setCuisine(restaurant);   
+        restaurant.setDateCreation(OffsetDateTime.now());
         return restaurantMapper.fromEntityToDto(restaurantRepository.save(restaurant));
     }
 
     public RestaurantDto update(Long id, RestaurantInputDto restaurantInputDto) {
         var entity = getRestaurant(id);
-        var restaurant = restaurantMapper.fromDtoToEntity(restaurantInputDto);
-        restaurant.setId(id);
-        restaurant.setPaymentMethods(entity.getPaymentMethods());
-        restaurant.setAddress(entity.getAddress());
-        restaurant.setDateCreation(entity.getDateCreation());
-        restaurant.setDateLastUpdate(entity.getDateLastUpdate());
-        restaurant.setAddress(entity.getAddress());
-        setCuisine(restaurant);
-        return restaurantMapper.fromEntityToDto(restaurantRepository.save(restaurant));
+        // var restaurant = restaurantMapper.fromDtoToEntity(restaurantInputDto);
+        // restaurant.setId(id);
+        // restaurant.setPaymentMethods(entity.getPaymentMethods());
+        // restaurant.setAddress(entity.getAddress());
+        // restaurant.setDateCreation(entity.getDateCreation());
+        // restaurant.setDateLastUpdate(entity.getDateLastUpdate());
+        // restaurant.setAddress(entity.getAddress());
+        // setCuisine(restaurant);
+        restaurantMapper.copyToDomainModel(restaurantInputDto, entity);
+        return restaurantMapper.fromEntityToDto(restaurantRepository.save(entity));
     }
 
     public void delete(Long id) {

@@ -29,7 +29,6 @@ import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.groups.ConvertGroup;
 import jakarta.validation.groups.Default;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -38,7 +37,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Restaurant {
     
@@ -72,13 +70,13 @@ public class Restaurant {
 
 
     // @JsonIgnore
-    @CreationTimestamp
     @Column(nullable = false)
+    @CreationTimestamp
     private OffsetDateTime dateCreation;
 
     // @JsonIgnore
-    @UpdateTimestamp
     @Column(nullable = false)
+    @UpdateTimestamp
     private OffsetDateTime dateLastUpdate;
 
 
