@@ -48,16 +48,15 @@ public class RestaurantService {
 
     public RestaurantDto update(Long id, RestaurantInputDto restaurantInputDto) {
         var entity = getRestaurant(id);
-        // var restaurant = restaurantMapper.fromDtoToEntity(restaurantInputDto);
-        // restaurant.setId(id);
-        // restaurant.setPaymentMethods(entity.getPaymentMethods());
-        // restaurant.setAddress(entity.getAddress());
-        // restaurant.setDateCreation(entity.getDateCreation());
-        // restaurant.setDateLastUpdate(entity.getDateLastUpdate());
-        // restaurant.setAddress(entity.getAddress());
-        // setCuisine(restaurant);
-        restaurantMapper.copyToDomainModel(restaurantInputDto, entity);
-        return restaurantMapper.fromEntityToDto(restaurantRepository.save(entity));
+        var restaurant = restaurantMapper.fromDtoToEntity(restaurantInputDto);
+        restaurant.setId(id);
+        restaurant.setPaymentMethods(entity.getPaymentMethods());
+        restaurant.setAddress(entity.getAddress());
+        restaurant.setDateCreation(entity.getDateCreation());
+        restaurant.setDateLastUpdate(entity.getDateLastUpdate());
+        restaurant.setAddress(entity.getAddress());
+        setCuisine(restaurant);
+        return restaurantMapper.fromEntityToDto(restaurantRepository.save(restaurant));
     }
 
     public void delete(Long id) {

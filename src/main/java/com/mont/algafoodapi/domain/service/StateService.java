@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.mont.algafoodapi.api.mapper.StateMapper;
+import com.mont.algafoodapi.api.model.input.StateInputDto;
 import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
@@ -19,6 +21,9 @@ public class StateService {
     @Autowired 
     private StateRepository stateRepository;
 
+    @Autowired
+    private StateMapper stateMapper;
+
     public List<State> findAll() {
         return stateRepository.findAll();
         
@@ -28,10 +33,10 @@ public class StateService {
         return getState(id);
     }
     
-    public State create(State state) {
-        if(Objects.nonNull(state.getId())) {
-            throw new BadRequestException("id must be null");
-        }
+    public State create(StateInputDto stateInputDto) {
+       
+       var state = stateMapper.fromDtoToEntity(stateInputDto);
+        
         return stateRepository.save(state);
     }
 
