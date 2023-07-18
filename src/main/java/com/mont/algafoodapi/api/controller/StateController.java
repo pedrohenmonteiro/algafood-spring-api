@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mont.algafoodapi.api.model.StateDto;
 import com.mont.algafoodapi.api.model.input.StateInputDto;
 import com.mont.algafoodapi.domain.model.State;
 import com.mont.algafoodapi.domain.service.StateService;
@@ -41,7 +42,7 @@ public class StateController {
     }
 
     @PostMapping
-    public ResponseEntity<State> create(@RequestBody @Valid StateInputDto state) {
+    public ResponseEntity<StateDto> create(@RequestBody @Valid StateInputDto state) {
         return ResponseEntity.status(HttpStatus.CREATED).body(stateService.create(state));
     }
 

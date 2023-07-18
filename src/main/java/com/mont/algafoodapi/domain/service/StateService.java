@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.mont.algafoodapi.api.mapper.StateMapper;
+import com.mont.algafoodapi.api.model.StateDto;
 import com.mont.algafoodapi.api.model.input.StateInputDto;
 import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
@@ -33,11 +34,11 @@ public class StateService {
         return getState(id);
     }
     
-    public State create(StateInputDto stateInputDto) {
+    public StateDto create(StateInputDto stateInputDto) {
        
        var state = stateMapper.fromDtoToEntity(stateInputDto);
         
-        return stateRepository.save(state);
+        return stateMapper.fromEntityToDto(stateRepository.save(state));
     }
 
     public State update(Long id, State state) {
