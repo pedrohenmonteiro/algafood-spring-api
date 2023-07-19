@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.mont.algafoodapi.api.model.RestaurantDto;
 import com.mont.algafoodapi.api.model.input.RestaurantInputDto;
+import com.mont.algafoodapi.domain.model.Cuisine;
 import com.mont.algafoodapi.domain.model.Restaurant;
 
 @Component
@@ -56,6 +57,13 @@ public class RestaurantMapper {
         return restaurants.stream().map(this::fromEntityToDto).toList();
     }
 
+        public void copyToDomainObject(RestaurantInputDto restaurantInputDto, Restaurant restaurant) {
+        // New cuisine instance created to avoid exception
+        // org.springframework.orm.jpa.JpaSystemException:
+        // identifier of an instance of com.mont.algafoodapi.domain.model.Cuisine was altered from 2 to 1
+        restaurant.setCuisine(new Cuisine());
+        modelMapper.map(restaurantInputDto, restaurant);
+    }
    
  
 

@@ -39,23 +39,17 @@ public class RestaurantService {
     }
     
     public RestaurantDto create(RestaurantInputDto restaurantInputDto) {
-       
+        
         var restaurant = restaurantMapper.fromDtoToEntity(restaurantInputDto);
-        setCuisine(restaurant);   
-        restaurant.setDateCreation(OffsetDateTime.now());
+        setCuisine(restaurant);
         return restaurantMapper.fromEntityToDto(restaurantRepository.save(restaurant));
     }
 
     public RestaurantDto update(Long id, RestaurantInputDto restaurantInputDto) {
-        var entity = getRestaurant(id);
-        var restaurant = restaurantMapper.fromDtoToEntity(restaurantInputDto);
-        restaurant.setId(id);
-        restaurant.setPaymentMethods(entity.getPaymentMethods());
-        restaurant.setAddress(entity.getAddress());
-        restaurant.setDateCreation(entity.getDateCreation());
-        restaurant.setDateLastUpdate(entity.getDateLastUpdate());
-        restaurant.setAddress(entity.getAddress());
+        var restaurant = getRestaurant(id);
+        restaurantMapper.copyToDomainObject(restaurantInputDto, restaurant);   
         setCuisine(restaurant);
+
         return restaurantMapper.fromEntityToDto(restaurantRepository.save(restaurant));
     }
 
