@@ -31,11 +31,8 @@ public class CityService {
         return getCity(id);
     }
     
+    
     public City create(City city) {
-        if(Objects.nonNull(city.getId())) {
-            throw new BadRequestException("id must be null");
-        }
-
         setState(city);
         return cityRepository.save(city);
         

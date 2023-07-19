@@ -1,5 +1,7 @@
 package com.mont.algafoodapi.api.mapper;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,5 +23,13 @@ public class StateMapper {
 
     public StateDto fromEntityToDto(State state) {
         return modelMapper.map(state, StateDto.class);
+    }
+
+    public List<StateDto> toCollectionDto(List<State> state) {
+        return state.stream().map(this::fromEntityToDto).toList();
+    }
+
+    public void copyToDomainObject(StateInputDto stateInputDto, State state) {
+      modelMapper.map(stateInputDto, state);
     }
 }

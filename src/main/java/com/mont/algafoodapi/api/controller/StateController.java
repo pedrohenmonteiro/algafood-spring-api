@@ -32,12 +32,12 @@ public class StateController {
 
 
     @GetMapping
-    public ResponseEntity<List<State>> findAll() {
+    public ResponseEntity<List<StateDto>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(stateService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<State> findById(@PathVariable Long id) {
+    public ResponseEntity<StateDto> findById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(stateService.findById(id));
     }
 
@@ -47,9 +47,8 @@ public class StateController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<State> update(@PathVariable Long id, @RequestBody @Valid State state) {
-        state.setId(id);
-        return ResponseEntity.status(HttpStatus.OK).body(stateService.update(id, state));
+    public ResponseEntity<StateDto> update(@PathVariable Long id, @RequestBody @Valid StateInputDto stateInputDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(stateService.update(id, stateInputDto));
     }
 
     @DeleteMapping("/{id}")

@@ -25,13 +25,13 @@ public class StateService {
     @Autowired
     private StateMapper stateMapper;
 
-    public List<State> findAll() {
-        return stateRepository.findAll();
+    public List<StateDto> findAll() {
+        return stateMapper.toCollectionDto(stateRepository.findAll());
         
     }
 
-    public State findById(Long id) {
-        return getState(id);
+    public StateDto findById(Long id) {
+        return stateMapper.fromEntityToDto(getState(id));
     }
     
     public StateDto create(StateInputDto stateInputDto) {
@@ -41,10 +41,10 @@ public class StateService {
         return stateMapper.fromEntityToDto(stateRepository.save(state));
     }
 
-    public State update(Long id, State state) {
-        getState(id);
-        state.setId(id);
-        return stateRepository.save(state);
+    public StateDto update(Long id, StateInputDto stateInputDto) {
+        var state = getState(id);
+        stateMapper.copyToDomainObject(stateInputDto, state);
+        return stateMapper.fromEntityToDto(stateRepository.save(state));
     }
 
     public void delete(Long id) {
