@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mont.algafoodapi.api.model.CuisineDto;
-import com.mont.algafoodapi.api.model.input.CuisineIdInputDto;
+import com.mont.algafoodapi.api.model.input.CuisineInputDto;
 import com.mont.algafoodapi.domain.model.Cuisine;
 
 @Component
@@ -16,7 +16,7 @@ public class CuisineMapper {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Cuisine fromDtoToEntity(CuisineIdInputDto cuisineInputDto) {
+    public Cuisine fromDtoToEntity(CuisineInputDto cuisineInputDto) {
         return modelMapper.map(cuisineInputDto, Cuisine.class);
     }
 
@@ -26,6 +26,10 @@ public class CuisineMapper {
 
     public List<CuisineDto> toCollectionDto(List<Cuisine> cuisine) {
         return cuisine.stream().map(this::fromEntityToDto).toList();
+    }
+
+    public void copyToDomainObject(CuisineInputDto cuisineInputDto, Cuisine cuisine) {
+       modelMapper.map(cuisineInputDto, cuisine);
     }
 
 }

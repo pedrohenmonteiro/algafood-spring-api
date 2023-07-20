@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.mont.algafoodapi.api.mapper.CuisineMapper;
+import com.mont.algafoodapi.api.model.CuisineDto;
+import com.mont.algafoodapi.api.model.input.CuisineInputDto;
 import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
@@ -19,26 +22,27 @@ public class CuisineService {
     @Autowired 
     private CuisineRepository cuisineRepository;
 
-    public List<Cuisine> findAll() {
-        return cuisineRepository.findAll();
+    @Autowired
+    private CuisineMapper cuisineMapper;
+
+    public List<CuisineDto> findAll() {
+        return cuisineMapper.toCollectionDto(cuisineRepository.findAll());
         
     }
 
-    public Cuisine findById(Long id) {
-        return getCuisine(id);
+    public CuisineDto findById(Long id) {
+        return cuisineMapper.fromEntityToDto(getCuisine(id));
     }
     
-    public Cuisine create(Cuisine cuisine) {
-        if(Objects.nonNull(cuisine.getId())) {
-            throw new BadRequestException("id must be null");
-        }
-        return cuisineRepository.save(cuisine);
+    public CuisineDto create(CuisineInputDto cuisineInputDto) {
+        var cuisine = cuisineMapper.fromDtoToEntity(cuisineInputDto);
+        return cuisineMapper.fromEntityToDto(cuisineRepository.save(cuisine));
     }
 
-    public Cuisine update(Long id, Cuisine cuisine) {
-        getCuisine(id);
-        cuisine.setId(id);
-        return cuisineRepository.save(cuisine);
+    public CuisineDto update(Long id, CuisineInputDto cuisineInputDto) {
+        var cuisine = getCuisine(id);
+        cuisineMapper.copyToDomainObject(cuisineInputDto, cuisine);
+        return cuisineMapper.fromEntityToDto(cuisineRepository.save(cuisine));
     }
 
     public void delete(Long id) {

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mont.algafoodapi.api.model.CuisineDto;
+import com.mont.algafoodapi.api.model.input.CuisineInputDto;
 import com.mont.algafoodapi.domain.model.Cuisine;
 import com.mont.algafoodapi.domain.repository.CuisineRepository;
 import com.mont.algafoodapi.domain.service.CuisineService;
@@ -35,24 +37,23 @@ public class CuisineController {
 
 
     @GetMapping
-    public ResponseEntity<List<Cuisine>> findAll() {
+    public ResponseEntity<List<CuisineDto>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(cuisineService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cuisine> findById(@PathVariable Long id) {
+    public ResponseEntity<CuisineDto> findById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(cuisineService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Cuisine> create(@RequestBody @Valid Cuisine cuisine) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(cuisineService.create(cuisine));
+    public ResponseEntity<CuisineDto> create(@RequestBody @Valid CuisineInputDto cuisineInputDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(cuisineService.create(cuisineInputDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cuisine> update(@PathVariable Long id, @RequestBody @Valid Cuisine cuisine) {
-        cuisine.setId(id);
-        return ResponseEntity.status(HttpStatus.OK).body(cuisineService.update(id, cuisine));
+    public ResponseEntity<CuisineDto> update(@PathVariable Long id, @RequestBody @Valid CuisineInputDto cuisineInputDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(cuisineService.update(id, cuisineInputDto));
     }
 
     @DeleteMapping("/{id}")
