@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.CityDto;
 import com.mont.algafoodapi.api.model.input.CityInputDto;
-import com.mont.algafoodapi.domain.model.City;
 import com.mont.algafoodapi.domain.service.CityService;
 
 import jakarta.validation.Valid;

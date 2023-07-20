@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.StateDto;
 import com.mont.algafoodapi.api.model.input.StateInputDto;
-import com.mont.algafoodapi.domain.model.State;
 import com.mont.algafoodapi.domain.service.StateService;
 
 import jakarta.validation.Valid;
