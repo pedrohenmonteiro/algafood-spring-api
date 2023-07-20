@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mont.algafoodapi.api.model.CityDto;
+import com.mont.algafoodapi.api.model.input.CityInputDto;
 import com.mont.algafoodapi.domain.model.City;
 import com.mont.algafoodapi.domain.service.CityService;
 
@@ -30,24 +32,23 @@ public class CityController {
 
 
     @GetMapping
-    public ResponseEntity<List<City>> findAll() {
+    public ResponseEntity<List<CityDto>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(cityService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<City> findById(@PathVariable Long id) {
+    public ResponseEntity<CityDto> findById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(cityService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<City> create(@RequestBody @Valid City city) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(cityService.create(city));
+    public ResponseEntity<CityDto> create(@RequestBody @Valid CityInputDto cityInputDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(cityService.create(cityInputDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<City> update(@PathVariable Long id, @RequestBody @Valid City city) {
-        city.setId(id);
-        return ResponseEntity.status(HttpStatus.OK).body(cityService.update(id, city));
+    public ResponseEntity<CityDto> update(@PathVariable Long id, @RequestBody @Valid CityInputDto cityInputDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(cityService.update(id, cityInputDto));
     }
 
     @DeleteMapping("/{id}")

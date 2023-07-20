@@ -1,12 +1,14 @@
 package com.mont.algafoodapi.domain.service;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.mont.algafoodapi.api.mapper.CityMapper;
+import com.mont.algafoodapi.api.model.CityDto;
+import com.mont.algafoodapi.api.model.input.CityInputDto;
 import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
@@ -23,26 +25,31 @@ public class CityService {
     @Autowired
     private StateRepository stateRepository;
 
-    public List<City> findAll() {
-        return cityRepository.findAll();
+    @Autowired
+    private CityMapper cityMapper;
+
+    public List<CityDto> findAll() {
+        return cityMapper.toCollectionDto(cityRepository.findAll());
     }
 
-    public City findById(Long id) {
-        return getCity(id);
+    public CityDto findById(Long id) {
+        return cityMapper.fromEntityToDto(getCity(id));
     }
     
     
-    public City create(City city) {
+    public CityDto create(CityInputDto cityInputDto) {
+
+        var city = cityMapper.fromDtoToEntity(cityInputDto);
         setState(city);
-        return cityRepository.save(city);
+        return cityMapper.fromEntityToDto(cityRepository.save(city));
         
     }
 
-    public City update(Long id, City city) {
-        getCity(id);
-        city.setId(id);
+    public CityDto update(Long id, CityInputDto cityInputDto) {
+        var city = getCity(id);
+        cityMapper.copyToDomainObject(cityInputDto, city);
         setState(city);
-        return cityRepository.save(city);
+        return cityMapper.fromEntityToDto(cityRepository.save(city));
     }
 
     public void delete(Long id) {
