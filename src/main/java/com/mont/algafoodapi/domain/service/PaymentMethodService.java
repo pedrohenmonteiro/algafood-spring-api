@@ -35,9 +35,17 @@ public class PaymentMethodService {
         return paymentMethodMapper.fromEntityToDto(paymentMethodRepository.save(paymentMethod));
     }
     
+    public PaymentMethodDto update(Long id, PaymentMethodInputDto paymentMethodInputDto) {
+        var paymentMethod = getPaymentMethod(id);
+        paymentMethodMapper.copyToDomainObject(paymentMethodInputDto, paymentMethod);
+        return paymentMethodMapper.fromEntityToDto(paymentMethodRepository.save(paymentMethod));
+
+    }
+
 
     private PaymentMethod getPaymentMethod(Long id) {
         return paymentMethodRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
     }
+
 
 }
