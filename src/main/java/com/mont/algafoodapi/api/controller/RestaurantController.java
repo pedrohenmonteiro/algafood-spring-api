@@ -83,9 +83,6 @@ public class RestaurantController {
     }
     
 
-    //PUT /restaurants/{id}/active
-    //DELETE /restaurants/{id}/deactive
-
     @PutMapping("/{id}/active")
     public ResponseEntity<Void> active(@PathVariable Long id) {
         restaurantService.active(id);
