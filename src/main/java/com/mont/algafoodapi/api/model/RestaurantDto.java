@@ -16,11 +16,9 @@ import lombok.Setter;
 public class RestaurantDto {
     
     private Long id;
-    
     private String name;
-
     private BigDecimal deliveryFee;
-
     private CuisineDto cuisine;
+    private Boolean active;
 
 }

@@ -8,9 +8,6 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.mont.algafoodapi.Groups;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -22,12 +19,6 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.groups.ConvertGroup;
-import jakarta.validation.groups.Default;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -45,42 +36,30 @@ public class Restaurant {
     @EqualsAndHashCode.Include
     private Long id;
 
-    // @NotNull
-    // @NotEmpty
-    @NotBlank
     @Column(nullable = false)
     private String name;
     
-    @PositiveOrZero
-    @NotNull
     private BigDecimal deliveryFee;
 
-    // @JsonIgnore
-    @JsonIgnoreProperties(value = "name", allowGetters = true)
-    @Valid
-    @NotNull
     @ManyToOne  // (fetch = FetchType.LAZY)
     @JoinColumn(name = "cuisine_id", nullable = false)
-    @ConvertGroup(from = Default.class, to = Groups.CuisineId.class)
     private Cuisine cuisine;
 
-    // @JsonIgnore
     @Embedded
     private Address address;
 
+    private Boolean active = Boolean.TRUE;
 
-    // @JsonIgnore
+
     @Column(nullable = false)
     @CreationTimestamp
     private OffsetDateTime dateCreation;
 
-    // @JsonIgnore
     @Column(nullable = false)
     @UpdateTimestamp
     private OffsetDateTime dateLastUpdate;
 
 
-    // @JsonIgnore
     @ManyToMany
     @JoinTable(name = "restaurant_payment_method",
         joinColumns = @JoinColumn(name = "restaurant_id"),
