@@ -1,5 +1,6 @@
 package com.mont.algafoodapi.api.model.input;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,4 +8,6 @@ import lombok.Setter;
 @Setter
 public class PaymentMethodInputDto {
     
+    @NotBlank
+    private String description;
 }

@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.mont.algafoodapi.api.mapper.PaymentMethodMapper;
 import com.mont.algafoodapi.api.model.PaymentMethodDto;
+import com.mont.algafoodapi.api.model.input.PaymentMethodInputDto;
+import com.mont.algafoodapi.domain.exception.NotFoundException;
+import com.mont.algafoodapi.domain.model.PaymentMethod;
 import com.mont.algafoodapi.domain.repository.PaymentMethodRepository;
 
 @Service
@@ -22,4 +25,19 @@ public class PaymentMethodService {
     public List<PaymentMethodDto> findAll() {
         return paymentMethodMapper.toCollectionDto(paymentMethodRepository.findAll());
     }
+
+    public PaymentMethodDto findById(Long id) {
+        return paymentMethodMapper.fromEntityToDto(getPaymentMethod(id));
+    }
+
+    public PaymentMethodDto create(PaymentMethodInputDto paymentMethodInputDto) {
+        var paymentMethod = paymentMethodMapper.fromDtoToEntity(paymentMethodInputDto);
+        return paymentMethodMapper.fromEntityToDto(paymentMethodRepository.save(paymentMethod));
+    }
+    
+
+    private PaymentMethod getPaymentMethod(Long id) {
+        return paymentMethodRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
+    }
+
 }

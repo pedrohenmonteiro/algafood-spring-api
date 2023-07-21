@@ -3,13 +3,20 @@ package com.mont.algafoodapi.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.PaymentMethodDto;
+import com.mont.algafoodapi.api.model.input.PaymentMethodInputDto;
 import com.mont.algafoodapi.domain.service.PaymentMethodService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/payment-methods")
@@ -22,5 +29,16 @@ public class PaymentMethodController {
     public ResponseEntity<List<PaymentMethodDto>> findAll() {
         return ResponseEntity.ok(paymentMethodService.findAll());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PaymentMethodDto> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(paymentMethodService.findById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<PaymentMethodDto> create(@RequestBody @Valid PaymentMethodInputDto paymentMethodInputDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(paymentMethodService.create(paymentMethodInputDto));
+    }
+
 
 }
