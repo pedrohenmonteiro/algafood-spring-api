@@ -69,5 +69,15 @@ public class Restaurant {
 
     // @JsonIgnore
     @OneToMany(mappedBy = "restaurant")
-    private List<Product> products = new ArrayList<>();    
-}
+    private List<Product> products = new ArrayList<>(); 
+    
+    
+
+    public void active() {
+        setActive(true);
+    }
+
+    public void deactive() {
+        setActive(false);
+    }
+ }

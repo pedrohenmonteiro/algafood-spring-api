@@ -16,6 +16,8 @@ import com.mont.algafoodapi.domain.model.Restaurant;
 import com.mont.algafoodapi.domain.repository.CuisineRepository;
 import com.mont.algafoodapi.domain.repository.RestaurantRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class RestaurantService {
 
@@ -59,6 +61,18 @@ public class RestaurantService {
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("Cannot delete resource due to existing references");
         }
+    }
+
+    @Transactional
+    public void active(Long id) {
+        var restaurant = getRestaurant(id);
+        restaurant.active();
+    }
+
+    @Transactional
+     public void deactive(Long id) {
+        var restaurant = getRestaurant(id);
+        restaurant.setActive(false);
     }
 
     private Restaurant getRestaurant(Long id) {

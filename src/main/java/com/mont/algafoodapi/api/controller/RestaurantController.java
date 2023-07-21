@@ -82,4 +82,21 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurantRepository.findFirst().orElseThrow(() -> new NotFoundException("Resource not found")));
     }
     
+
+    //PUT /restaurants/{id}/active
+    //DELETE /restaurants/{id}/deactive
+
+    @PutMapping("/{id}/active")
+    public ResponseEntity<Void> active(@PathVariable Long id) {
+        restaurantService.active(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}/active")
+    public ResponseEntity<Void> deactive(@PathVariable Long id) {
+        restaurantService.deactive(id);
+        return ResponseEntity.noContent().build();
+    }
+    
+
 }
