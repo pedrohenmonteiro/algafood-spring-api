@@ -8,9 +8,10 @@ import org.springframework.stereotype.Component;
 
 import com.mont.algafoodapi.api.model.PaymentMethodDto;
 import com.mont.algafoodapi.api.model.input.PaymentMethodInputDto;
+import com.mont.algafoodapi.domain.model.PaymentMethod;
 
 @Component
-public class PaymentMethod {
+public class PaymentMethodMapper {
 
     @Autowired
     private ModelMapper modelMapper;
