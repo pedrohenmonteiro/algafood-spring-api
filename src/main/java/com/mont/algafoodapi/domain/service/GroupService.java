@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.mont.algafoodapi.api.mapper.GroupMapper;
 import com.mont.algafoodapi.api.model.GroupDto;
+import com.mont.algafoodapi.api.model.input.GroupInputDto;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Group;
 import com.mont.algafoodapi.domain.repository.GroupRepository;
@@ -29,8 +30,14 @@ public class GroupService {
         return groupMapper.fromEntityToDto(getGroup(id));
     }
 
+    public GroupDto create(GroupInputDto groupInputDto) {
+        var group = groupMapper.fromDtoToEntity(groupInputDto);
+        return groupMapper.fromEntityToDto(groupRepository.save(group));
+    }
 
     private Group getGroup(Long id) {
         return groupRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
     }
+
+   
 }
