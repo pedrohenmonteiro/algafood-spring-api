@@ -3,11 +3,13 @@ package com.mont.algafoodapi.domain.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.mont.algafoodapi.api.mapper.GroupMapper;
 import com.mont.algafoodapi.api.model.GroupDto;
 import com.mont.algafoodapi.api.model.input.GroupInputDto;
+import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Group;
 import com.mont.algafoodapi.domain.repository.GroupRepository;
@@ -42,9 +44,20 @@ public class GroupService {
 
     }
 
+
+    public void delete(Long id) {
+        try {
+        groupRepository.deleteById(id);
+        } catch (DataIntegrityViolationException ex) {
+            throw new ConflictException("Cannot delete resource due to existing references");
+        }
+    }
+
     private Group getGroup(Long id) {
         return groupRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
     }
 
-   
 }
+ 
+   
+
