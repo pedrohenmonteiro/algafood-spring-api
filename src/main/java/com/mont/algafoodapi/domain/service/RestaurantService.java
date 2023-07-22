@@ -13,6 +13,7 @@ import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Restaurant;
+import com.mont.algafoodapi.domain.repository.CityRepository;
 import com.mont.algafoodapi.domain.repository.CuisineRepository;
 import com.mont.algafoodapi.domain.repository.RestaurantRepository;
 
@@ -26,6 +27,9 @@ public class RestaurantService {
 
     @Autowired
     private CuisineRepository cuisineRepository;
+
+    @Autowired
+    private CityRepository cityRepository;
 
     @Autowired
     private RestaurantMapper restaurantMapper;
@@ -43,6 +47,7 @@ public class RestaurantService {
         
         var restaurant = restaurantMapper.fromDtoToEntity(restaurantInputDto);
         setCuisine(restaurant);
+        setCity(restaurant);
         return restaurantMapper.fromEntityToDto(restaurantRepository.save(restaurant));
     }
 
@@ -50,6 +55,7 @@ public class RestaurantService {
         var restaurant = getRestaurant(id);
         restaurantMapper.copyToDomainObject(restaurantInputDto, restaurant);   
         setCuisine(restaurant);
+        setCity(restaurant);
 
         return restaurantMapper.fromEntityToDto(restaurantRepository.save(restaurant));
     }
@@ -83,6 +89,11 @@ public class RestaurantService {
         var cuisineId = restaurant.getCuisine().getId();
         var cuisine = cuisineRepository.findById(cuisineId).orElseThrow(() -> new BadRequestException("Resource cuisine id " + cuisineId + " not found"));
         restaurant.setCuisine(cuisine);
+    }
 
+    private void setCity(Restaurant restaurant) {
+        var cityId = restaurant.getAddress().getCity().getId();
+        var city = cityRepository.findById(cityId).orElseThrow(() -> new BadRequestException("Resource city id " + cityId + " not found"));
+        restaurant.getAddress().setCity(city);
     }
 }

@@ -2,7 +2,7 @@ package com.mont.algafoodapi.api.model.input;
 
 import java.math.BigDecimal;
 
-
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -22,4 +22,8 @@ public class RestaurantInputDto {
     private BigDecimal deliveryFee;
 
     private CuisineIdInputDto cuisine;
+
+    @Valid
+    @NotNull
+    private AddressInputDto address;
 }

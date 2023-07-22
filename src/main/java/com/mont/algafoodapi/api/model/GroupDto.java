@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CuisineDto {
+public class GroupDto {
     
     private Long id;
     private String name;

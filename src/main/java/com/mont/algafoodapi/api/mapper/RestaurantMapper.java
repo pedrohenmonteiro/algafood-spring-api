@@ -1,6 +1,7 @@
 package com.mont.algafoodapi.api.mapper;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.mont.algafoodapi.api.model.RestaurantDto;
 import com.mont.algafoodapi.api.model.input.RestaurantInputDto;
+import com.mont.algafoodapi.domain.model.City;
 import com.mont.algafoodapi.domain.model.Cuisine;
 import com.mont.algafoodapi.domain.model.Restaurant;
 
@@ -62,6 +64,11 @@ public class RestaurantMapper {
         // org.springframework.orm.jpa.JpaSystemException:
         // identifier of an instance of com.mont.algafoodapi.domain.model.Cuisine was altered from 2 to 1
         restaurant.setCuisine(new Cuisine());
+        
+        if(Objects.nonNull(restaurant.getAddress())) {
+            restaurant.getAddress().setCity(new City());
+        }
+
         modelMapper.map(restaurantInputDto, restaurant);
     }
    

@@ -82,3 +82,4 @@ insert into permission (description, name) values
 ('Allows to query cuisine', 'QUERY_CUISINE'),
 ('Allows to edit cuisine', 'EDIT_CUISINE');
 
+insert into tb_group (name) values ('Manager'), ('Seller'), ("Secretary");

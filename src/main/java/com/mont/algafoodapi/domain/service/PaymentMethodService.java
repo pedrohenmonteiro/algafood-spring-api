@@ -3,11 +3,13 @@ package com.mont.algafoodapi.domain.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.mont.algafoodapi.api.mapper.PaymentMethodMapper;
 import com.mont.algafoodapi.api.model.PaymentMethodDto;
 import com.mont.algafoodapi.api.model.input.PaymentMethodInputDto;
+import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.PaymentMethod;
 import com.mont.algafoodapi.domain.repository.PaymentMethodRepository;
@@ -42,6 +44,14 @@ public class PaymentMethodService {
 
     }
 
+    public void delete(Long id) {
+        try {
+            getPaymentMethod(id);
+            paymentMethodRepository.deleteById(id);
+        } catch (DataIntegrityViolationException ex) {
+            throw new ConflictException("Cannot delete resource due to existing references");
+        }
+    }
 
     private PaymentMethod getPaymentMethod(Long id) {
         return paymentMethodRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
