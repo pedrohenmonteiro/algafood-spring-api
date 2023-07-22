@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.mont.algafoodapi.api.mapper.UserMapper;
 import com.mont.algafoodapi.api.model.UserDto;
+import com.mont.algafoodapi.domain.exception.NotFoundException;
+import com.mont.algafoodapi.domain.model.User;
 import com.mont.algafoodapi.domain.repository.UserRepository;
 
 @Service
@@ -20,5 +22,14 @@ public class UserService {
 
     public List<UserDto> findAll() {
         return userMapper.toCollectionDto(userRepository.findAll());
+    }
+
+    public UserDto findById(Long id) {
+        return userMapper.fromEntityToDto(getUser(id));
+    }
+
+
+    private User getUser(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
     }
 }
