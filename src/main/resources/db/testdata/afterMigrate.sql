@@ -83,3 +83,9 @@ insert into permission (description, name) values
 ('Allows to edit cuisine', 'EDIT_CUISINE');
 
 insert into tb_group (name) values ('Manager'), ('Seller'), ("Secretary");
+
+insert into user (id, name, email, password, creation_date) values
+(1, 'João da Silva', 'joao.ger@algafood.com', '123', utc_timestamp),
+(2, 'Maria Joaquina', 'maria.vnd@algafood.com', '123', utc_timestamp),
+(3, 'José Souza', 'jose.aux@algafood.com', '123', utc_timestamp),
+(4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', utc_timestamp);      
