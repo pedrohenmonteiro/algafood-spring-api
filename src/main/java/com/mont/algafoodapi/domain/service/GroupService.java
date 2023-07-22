@@ -35,6 +35,13 @@ public class GroupService {
         return groupMapper.fromEntityToDto(groupRepository.save(group));
     }
 
+    public GroupDto update(Long id, GroupInputDto groupInputDto) {
+        var group = getGroup(id);
+        groupMapper.copyToDomainObject(groupInputDto, group);
+        return groupMapper.fromEntityToDto(groupRepository.save(group));
+
+    }
+
     private Group getGroup(Long id) {
         return groupRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
     }

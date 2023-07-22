@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,4 +38,10 @@ public class GroupController {
     private ResponseEntity<GroupDto> create(@RequestBody GroupInputDto groupInputDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(groupService.create(groupInputDto));
     }
+
+    @PutMapping("/{id}")
+    private ResponseEntity<GroupDto> update(@PathVariable Long id, @RequestBody GroupInputDto groupInputDto) {
+        return ResponseEntity.ok(groupService.update(id, groupInputDto));
+    }
+
 }
