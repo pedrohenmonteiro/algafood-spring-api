@@ -3,12 +3,14 @@ package com.mont.algafoodapi.domain.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.mont.algafoodapi.api.mapper.UserMapper;
 import com.mont.algafoodapi.api.model.UserDto;
 import com.mont.algafoodapi.api.model.input.UserInputDto;
 import com.mont.algafoodapi.api.model.input.UserInputWithoutPasswordDto;
+import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.User;
 import com.mont.algafoodapi.domain.repository.UserRepository;
@@ -39,6 +41,15 @@ public class UserService {
         var user = getUser(id);
         userMapper.copyToDomainObject(userInputWithoutPasswordDto, user);
         return userMapper.fromEntityToDto(userRepository.save(user));
+    }
+
+    public void delete(Long id) {
+        try {
+            getUser(id);
+            userRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new ConflictException("Cannot delete resource due to existing references");
+        }
     }
 
     private User getUser(Long id) {
