@@ -2,7 +2,6 @@ package com.mont.algafoodapi.api.controller;
 
 import java.util.List;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +18,8 @@ import com.mont.algafoodapi.api.model.UserDto;
 import com.mont.algafoodapi.api.model.input.UserInputDto;
 import com.mont.algafoodapi.api.model.input.UserInputWithoutPasswordDto;
 import com.mont.algafoodapi.domain.service.UserService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
@@ -38,12 +39,12 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> create(@RequestBody UserInputDto userInputDto) {
+    public ResponseEntity<UserDto> create(@RequestBody @Valid UserInputDto userInputDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(userInputDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> update(@PathVariable Long id, @RequestBody UserInputWithoutPasswordDto userInputWithoutPasswordDto) {
+    public ResponseEntity<UserDto> update(@PathVariable Long id, @RequestBody @Valid UserInputWithoutPasswordDto userInputWithoutPasswordDto) {
         return ResponseEntity.ok(userService.update(id, userInputWithoutPasswordDto));
     }
 
