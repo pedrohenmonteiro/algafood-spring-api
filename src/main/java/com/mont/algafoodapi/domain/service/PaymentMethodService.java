@@ -53,7 +53,7 @@ public class PaymentMethodService {
         }
     }
 
-    private PaymentMethod getPaymentMethod(Long id) {
+    protected PaymentMethod getPaymentMethod(Long id) {
         return paymentMethodRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
     }
 
