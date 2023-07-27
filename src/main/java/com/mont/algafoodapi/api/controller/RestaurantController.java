@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mont.algafoodapi.api.model.PaymentMethodDto;
 import com.mont.algafoodapi.api.model.RestaurantDto;
 import com.mont.algafoodapi.api.model.input.RestaurantInputDto;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
@@ -99,11 +98,7 @@ public class RestaurantController {
         restaurantService.deactive(id);
         return ResponseEntity.noContent().build();
     }
-    
-    @GetMapping("/{id}/payment-methods")
-    public ResponseEntity<List<PaymentMethodDto>> findPaymentMethods(@PathVariable Long id) {
-        return ResponseEntity.ok(restaurantService.findPaymentMethods(id));
-    }
+
 
 
 }

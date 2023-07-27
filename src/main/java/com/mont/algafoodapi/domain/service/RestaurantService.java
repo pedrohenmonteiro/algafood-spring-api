@@ -36,18 +36,12 @@ public class RestaurantService {
     @Autowired
     private RestaurantMapper restaurantMapper;
 
-    @Autowired
-    private PaymentMethodMapper paymentMethodMapper;
 
     public List<RestaurantDto> findAll() {
         return restaurantMapper.toCollectionDto(restaurantRepository.findAll());
         
     }
 
-    public List<PaymentMethodDto> findPaymentMethods(Long id) {
-        var restaurant = getRestaurant(id);
-        return paymentMethodMapper.toCollectionDto(restaurant.getPaymentMethods());
-    }
 
     public RestaurantDto findById(Long id) {
         return restaurantMapper.fromEntityToDto(getRestaurant(id));
