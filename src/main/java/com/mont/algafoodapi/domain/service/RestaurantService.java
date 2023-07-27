@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.mont.algafoodapi.api.mapper.PaymentMethodMapper;
 import com.mont.algafoodapi.api.mapper.RestaurantMapper;
-import com.mont.algafoodapi.api.model.PaymentMethodDto;
 import com.mont.algafoodapi.api.model.RestaurantDto;
 import com.mont.algafoodapi.api.model.input.RestaurantInputDto;
 import com.mont.algafoodapi.domain.exception.BadRequestException;

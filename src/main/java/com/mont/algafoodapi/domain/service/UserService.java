@@ -17,8 +17,6 @@ import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.User;
 import com.mont.algafoodapi.domain.repository.UserRepository;
 
-import jakarta.persistence.EntityManager;
-
 @Service
 public class UserService {
    
