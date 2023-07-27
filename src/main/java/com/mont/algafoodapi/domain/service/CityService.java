@@ -57,12 +57,12 @@ public class CityService {
             getCity(id);
             cityRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("Cannot delete resource due to existing references");
+            throw new ConflictException("Cannot delete resource city id "+id+" due to existing references");
         }
 }
 
     private City getCity(Long cityId) {
-        return cityRepository.findById(cityId).orElseThrow(() -> new NotFoundException("Resource not found"));
+        return cityRepository.findById(cityId).orElseThrow(() -> new NotFoundException("Resource city " + cityId + " not found"));
     }
 
      private void setState(City city) {

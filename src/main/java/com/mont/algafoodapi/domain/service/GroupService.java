@@ -49,12 +49,12 @@ public class GroupService {
         try {
         groupRepository.deleteById(id);
         } catch (DataIntegrityViolationException ex) {
-            throw new ConflictException("Cannot delete resource due to existing references");
+            throw new ConflictException("Cannot delete resource group id "+id+" due to existing references");
         }
     }
 
     private Group getGroup(Long id) {
-        return groupRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
+        return groupRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource group id " + id + " not found"));
     }
 
 }

@@ -67,7 +67,7 @@ public class RestaurantService {
             getRestaurant(id);
             restaurantRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("Cannot delete resource due to existing references");
+            throw new ConflictException("Cannot delete resource restaurant id "+id+" due to existing references");
         }
     }
 
@@ -84,7 +84,7 @@ public class RestaurantService {
     }
 
     protected Restaurant getRestaurant(Long id) {
-        return restaurantRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
+        return restaurantRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource restaurant id " + id + " not found"));
     }
 
     private void setCuisine(Restaurant restaurant) {

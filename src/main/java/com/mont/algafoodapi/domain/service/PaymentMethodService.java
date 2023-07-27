@@ -49,12 +49,12 @@ public class PaymentMethodService {
             getPaymentMethod(id);
             paymentMethodRepository.deleteById(id);
         } catch (DataIntegrityViolationException ex) {
-            throw new ConflictException("Cannot delete resource due to existing references");
+            throw new ConflictException("Cannot delete resource paymentMethod id "+id+" due to existing references");
         }
     }
 
     protected PaymentMethod getPaymentMethod(Long id) {
-        return paymentMethodRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
+        return paymentMethodRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource paymentMethod id " + id + " not found"));
     }
 
 

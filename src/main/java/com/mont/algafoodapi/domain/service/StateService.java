@@ -50,12 +50,12 @@ public class StateService {
             getState(id);
             stateRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("Cannot delete resource due to existing references");
+            throw new ConflictException("Cannot delete resource state id "+id+" due to existing references");
         }
         
     }
 
     private State getState(Long id) {
-        return stateRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
+        return stateRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource state id " + id + " not found"));
     }
 }

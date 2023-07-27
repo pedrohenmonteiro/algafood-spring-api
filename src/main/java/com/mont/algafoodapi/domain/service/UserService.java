@@ -62,12 +62,12 @@ public class UserService {
             getUser(id);
             userRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("Cannot delete resource due to existing references");
+            throw new ConflictException("Cannot delete resource user id "+id+" due to existing references");
         }
     }
 
     private User getUser(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource user id " + id + " not found"));
     }
 
     
