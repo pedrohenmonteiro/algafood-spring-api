@@ -36,8 +36,16 @@ public class RestaurantPaymentMethodsService {
 
         restaurant.removePaymentMethod(paymentMethod);
         restaurantRepository.save(restaurant);
-
     }
+
+    public void associatePaymentMethod(Long restaurantId, Long paymentMethodId) {
+        var restaurant = getRestaurant(restaurantId);
+        var paymentMethod = getPaymentMethod(paymentMethodId);
+
+        restaurant.addPaymentMethod(paymentMethod);
+        restaurantRepository.save(restaurant);
+    }
+
 
      private Restaurant getRestaurant(Long id) {
         return restaurantRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource not found"));
