@@ -1,5 +1,6 @@
 package com.mont.algafoodapi.api.mapper;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -24,7 +25,7 @@ public class PaymentMethodMapper {
         return modelMapper.map(paymentMethod, PaymentMethodDto.class);
     }
 
-    public List<PaymentMethodDto> toCollectionDto(List<PaymentMethod> paymentMethods) {
+    public List<PaymentMethodDto> toCollectionDto(Collection<PaymentMethod> paymentMethods) {
         return paymentMethods.stream().map(this::fromEntityToDto).toList();
     }
 
