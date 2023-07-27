@@ -19,7 +19,6 @@ import com.mont.algafoodapi.api.model.RestaurantDto;
 import com.mont.algafoodapi.api.model.input.RestaurantInputDto;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Restaurant;
-import com.mont.algafoodapi.domain.repository.PaymentMethodRepository;
 import com.mont.algafoodapi.domain.repository.RestaurantRepository;
 import com.mont.algafoodapi.domain.service.RestaurantService;
 
@@ -36,8 +35,6 @@ public class RestaurantController {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    @Autowired
-    private PaymentMethodRepository paymentMethodRepository;
 
     @GetMapping
     public ResponseEntity<List<RestaurantDto>> findAll() {

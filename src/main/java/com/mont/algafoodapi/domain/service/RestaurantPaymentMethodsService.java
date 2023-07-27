@@ -21,7 +21,8 @@ public class RestaurantPaymentMethodsService {
     @Autowired
     private PaymentMethodService paymentMethodService;
 
-    @Autowired RestaurantService restaurantService;
+    @Autowired 
+    private RestaurantService restaurantService;
 
     public List<PaymentMethodDto> findAll(Long id) {
         var restaurant = restaurantService.getRestaurant(id);
