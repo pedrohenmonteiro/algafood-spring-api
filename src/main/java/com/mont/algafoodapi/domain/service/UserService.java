@@ -32,6 +32,7 @@ public class UserService {
         return userMapper.toCollectionDto(userRepository.findAll());
     }
 
+
     public UserDto findById(Long id) {
         return userMapper.fromEntityToDto(getUser(id));
     }
