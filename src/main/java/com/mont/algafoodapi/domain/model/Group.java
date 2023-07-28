@@ -1,7 +1,7 @@
 package com.mont.algafoodapi.domain.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,6 +35,14 @@ public class Group {
     @JoinTable(name = "group_permission",
     joinColumns = @JoinColumn(name = "tb_group_id"),
     inverseJoinColumns = @JoinColumn(name = "permission_id"))
-    private List<Permission> permissions = new ArrayList<>();
+    private Set<Permission> permissions = new HashSet<>();
+
+     public boolean addPermission(Permission permission) {
+        return getPermissions().add(permission);
+    }
     
+    public boolean removePermission(Permission permission) {
+        return getPermissions().remove(permission);
+    }
+   
 }

@@ -53,7 +53,7 @@ public class GroupService {
         }
     }
 
-    private Group getGroup(Long id) {
+    protected Group getGroup(Long id) {
         return groupRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource group id " + id + " not found"));
     }
 

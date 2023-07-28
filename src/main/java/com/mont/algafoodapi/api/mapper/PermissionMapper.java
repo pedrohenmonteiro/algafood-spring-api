@@ -1,5 +1,6 @@
 package com.mont.algafoodapi.api.mapper;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -24,7 +25,7 @@ public class PermissionMapper {
         return modelMapper.map(permissionInputDto, Permission.class);
     }
 
-    public List<PermissionDto> fromCollectionToListDto(List<Permission> permissions) {
+    public List<PermissionDto> toCollectionDto(Collection<Permission> permissions) {
         return permissions.stream()
                 .map(this::fromEntityToDto)
                 .toList();

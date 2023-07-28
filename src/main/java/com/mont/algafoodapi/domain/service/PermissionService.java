@@ -24,7 +24,7 @@ public class PermissionService {
     private PermissionMapper permissionMapper;
 
     public List<PermissionDto> findAll() {
-        return permissionMapper.fromCollectionToListDto(permissionRepository.findAll());
+        return permissionMapper.toCollectionDto(permissionRepository.findAll());
     }
 
     public PermissionDto findById(Long id) {
