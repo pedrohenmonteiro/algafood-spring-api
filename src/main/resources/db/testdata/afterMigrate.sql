@@ -57,10 +57,10 @@ insert into city (name, state_id) values ("Maringá", 1);
 insert into city (name, state_id) values ("São Paulo", 2);
 
 
-insert into restaurant (name, delivery_fee, cuisine_id, address_city_id, address_neighbourhood, address_street, address_number, address_zipcode, date_creation, date_last_update, active ) values ('La Gondola', 5, 1, 1, 'Centro', 'Rua Piauí', 100, '86020390',UTC_TIMESTAMP, UTC_TIMESTAMP, true);
-insert into restaurant (name, delivery_fee, cuisine_id, date_creation, date_last_update, active) values ('Itashi Japan Foods', 10, 2, UTC_TIMESTAMP, UTC_TIMESTAMP, true);
-insert into restaurant (name, delivery_fee, cuisine_id, date_creation, date_last_update, active) values ('Pizza Chef', 0, 1, UTC_TIMESTAMP, UTC_TIMESTAMP, true);
-insert into restaurant (name, delivery_fee, cuisine_id, date_creation, date_last_update, active) values ('Jeitinho Brasileiro', 0, 3, UTC_TIMESTAMP, UTC_TIMESTAMP, true);
+insert into restaurant (name, delivery_fee, cuisine_id, address_city_id, address_neighbourhood, address_street, address_number, address_zipcode, date_creation, date_last_update, active, opened ) values ('La Gondola', 5, 1, 1, 'Centro', 'Rua Piauí', 100, '86020390',UTC_TIMESTAMP, UTC_TIMESTAMP, true, true);
+insert into restaurant (name, delivery_fee, cuisine_id, date_creation, date_last_update, active, opened) values ('Itashi Japan Foods', 10, 2, UTC_TIMESTAMP, UTC_TIMESTAMP, true, false);
+insert into restaurant (name, delivery_fee, cuisine_id, date_creation, date_last_update, active, opened) values ('Pizza Chef', 0, 1, UTC_TIMESTAMP, UTC_TIMESTAMP, true, false);
+insert into restaurant (name, delivery_fee, cuisine_id, date_creation, date_last_update, active, opened) values ('Jeitinho Brasileiro', 0, 3, UTC_TIMESTAMP, UTC_TIMESTAMP, true, false);
 
 insert into payment_method (description) values ("Credit Card");
 insert into payment_method (description) values ("Debit Card");

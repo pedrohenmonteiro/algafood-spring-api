@@ -50,7 +50,12 @@ public class Restaurant {
     @Embedded
     private Address address;
 
+    private Boolean opened = Boolean.FALSE;
+
+
     private Boolean active = Boolean.TRUE;
+
+    
 
 
     @Column(nullable = false)
@@ -74,6 +79,13 @@ public class Restaurant {
     private List<Product> products = new ArrayList<>(); 
     
     
+    public void openRestaurant() {
+        setOpened(true);
+    }
+    
+    public void closeRestaurant() {
+        setOpened(false);
+    }
 
     public void active() {
         setActive(true);
