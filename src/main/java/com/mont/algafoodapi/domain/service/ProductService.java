@@ -26,6 +26,7 @@ public class ProductService {
 
 
 
+
     public List<ProductDto> findAll(Long restaurantId) {
         var restaurant = restaurantService.getRestaurant(restaurantId);
         return productMapper.toCollectionDto(productRepository.findByRestaurant(restaurant));
@@ -36,13 +37,17 @@ public class ProductService {
         return productMapper.fromEntityToDto(getProduct(restaurantId, productId));
     }
 
-    public ProductDto create(ProductInputDto productInputDto) {
+    public ProductDto create(Long restaurantId, ProductInputDto productInputDto) {
+        var restaurant = restaurantService.getRestaurant(restaurantId);
         var product = productMapper.fromDtoToEntity(productInputDto);
+        
+        product.setRestaurant(restaurant);
         return productMapper.fromEntityToDto(productRepository.save(product));
     }
 
+
     private Product getProduct(Long restaurantId, Long productId) {
-        return productRepository.findById(restaurantId, productId).orElseThrow(() -> new NotFoundException("Resource product id " + productId + " not found"));
+        return productRepository.findById(restaurantId, productId).orElseThrow(() -> new NotFoundException("Resource product id " + productId + " not found in restaurant id " + restaurantId));
     }
   
 } 
