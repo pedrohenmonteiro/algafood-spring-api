@@ -96,6 +96,17 @@ public class RestaurantController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{id}/opening") 
+         public ResponseEntity<Void> opening(@PathVariable Long id) {
+        restaurantService.openRestaurant(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/closing") 
+         public ResponseEntity<Void> closing(@PathVariable Long id) {
+        restaurantService.closeRestaurant(id);
+        return ResponseEntity.noContent().build();
+    }
 
 
 }

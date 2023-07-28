@@ -13,6 +13,7 @@ public class RestaurantDto {
     private String name;
     private BigDecimal deliveryFee;
     private CuisineDto cuisine;
+    private Boolean opened;
     private Boolean active;
     private AddressDto address;
 }
