@@ -6,5 +6,4 @@ import com.mont.algafoodapi.domain.model.PaymentMethod;
 
 
 public interface PaymentMethodRepository extends JpaRepository<PaymentMethod, Long> {
-    
 }

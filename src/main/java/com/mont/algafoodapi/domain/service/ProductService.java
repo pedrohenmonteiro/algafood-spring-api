@@ -45,6 +45,12 @@ public class ProductService {
         return productMapper.fromEntityToDto(productRepository.save(product));
     }
 
+    public ProductDto update(Long restaurantId, Long productId, ProductInputDto productInputDto) {
+       var product = getProduct(restaurantId, productId);
+       productMapper.copyToDomainObject(productInputDto, product);
+       return productMapper.fromEntityToDto(productRepository.save(product));
+    }
+
 
     private Product getProduct(Long restaurantId, Long productId) {
         return productRepository.findById(restaurantId, productId).orElseThrow(() -> new NotFoundException("Resource product id " + productId + " not found in restaurant id " + restaurantId));

@@ -7,14 +7,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.ProductDto;
 import com.mont.algafoodapi.api.model.input.ProductInputDto;
 import com.mont.algafoodapi.domain.service.ProductService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/restaurants/{restaurantId}/products")
@@ -34,7 +36,12 @@ public class RestaurantProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDto> create(@PathVariable Long restaurantId, @RequestBody ProductInputDto productInputDto) {
+    public ResponseEntity<ProductDto> create(@PathVariable Long restaurantId, @RequestBody @Valid ProductInputDto productInputDto) {
         return ResponseEntity.ok(productService.create(restaurantId, productInputDto));
+    }
+
+    @PutMapping("/{productId}")
+     public ResponseEntity<ProductDto> update(@PathVariable Long restaurantId, @PathVariable Long productId, @RequestBody @Valid ProductInputDto productInputDto) {
+        return ResponseEntity.ok(productService.update(restaurantId,productId, productInputDto));
     }
 }
