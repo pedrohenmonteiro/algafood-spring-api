@@ -10,17 +10,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.ProductDto;
-import com.mont.algafoodapi.domain.service.RestaurantProductService;
+import com.mont.algafoodapi.domain.service.ProductService;
 
 @RestController
 @RequestMapping("/restaurants/{restaurantId}/products")
 public class RestaurantProductController {
 
     @Autowired
-    private RestaurantProductService restaurantProductService;
+    private ProductService productService;
 
     @GetMapping
     public ResponseEntity<List<ProductDto>> findAll(@PathVariable Long restaurantId) {
-        return ResponseEntity.ok(restaurantProductService.findAll(restaurantId));
+        return ResponseEntity.ok(productService.findAll(restaurantId));
+    }
+
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductDto> findById(@PathVariable Long restaurantId, @PathVariable Long productId) {
+        return ResponseEntity.ok(productService.findById(restaurantId, productId));
     }
 }

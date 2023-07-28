@@ -83,7 +83,7 @@ public class RestaurantService {
         restaurant.setActive(false);
     }
 
-    protected Restaurant getRestaurant(Long id) {
+    public Restaurant getRestaurant(Long id) {
         return restaurantRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource restaurant id " + id + " not found"));
     }
 
