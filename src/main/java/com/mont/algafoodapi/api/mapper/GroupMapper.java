@@ -1,5 +1,6 @@
 package com.mont.algafoodapi.api.mapper;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -24,7 +25,7 @@ public class GroupMapper {
         return modelMapper.map(group, GroupDto.class);
     }
 
-    public List<GroupDto> toCollectionDto(List<Group> groups) {
+    public List<GroupDto> toCollectionDto(Collection<Group> groups) {
         return groups.stream().map(this::fromEntityToDto).toList();
     }
 

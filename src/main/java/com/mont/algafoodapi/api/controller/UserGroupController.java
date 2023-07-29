@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,5 +23,11 @@ public class UserGroupController {
     @GetMapping
     public ResponseEntity<List<GroupDto>> findAll(@PathVariable Long userId) {
         return ResponseEntity.ok(userGroupService.findAll(userId));
+    }
+
+    @PutMapping("/{groupId}")
+    public ResponseEntity<Void> associateGroup(@PathVariable Long userId, @PathVariable Long groupId) {
+        userGroupService.associateGroup(userId, groupId);
+        return ResponseEntity.noContent().build();
     }
 }
