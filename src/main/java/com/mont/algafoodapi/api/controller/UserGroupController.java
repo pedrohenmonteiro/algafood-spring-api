@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,6 +29,12 @@ public class UserGroupController {
     @PutMapping("/{groupId}")
     public ResponseEntity<Void> associateGroup(@PathVariable Long userId, @PathVariable Long groupId) {
         userGroupService.associateGroup(userId, groupId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{groupId}")
+    public ResponseEntity<Void> disassociateGroup(@PathVariable Long userId, @PathVariable Long groupId) {
+        userGroupService.disassociateGroup(userId, groupId);
         return ResponseEntity.noContent().build();
     }
 }
