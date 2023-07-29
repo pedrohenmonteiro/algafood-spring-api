@@ -24,6 +24,8 @@ delete from user;
 
 delete from user_group;
 
+delete from restaurant_responsible_user;
+
 set foreign_key_checks = 1;
 
 alter table city auto_increment = 1;
@@ -92,3 +94,8 @@ insert into user (id, name, email, password, creation_date) values
 
 insert into group_permission (tb_group_id, permission_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1); 
 insert into user_group (user_id, tb_group_id) values (1, 1), (1, 2), (2, 2);
+
+insert into user (id, name, email, password, creation_date) values
+(5, 'Manoel Lima', 'manoel.loja@gmail.com', '123', utc_timestamp);
+
+insert into restaurant_responsible_user(restaurant_id, user_id) values (1, 5), (3, 5);
