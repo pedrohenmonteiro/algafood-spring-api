@@ -91,3 +91,4 @@ insert into user (id, name, email, password, creation_date) values
 (4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', utc_timestamp);      
 
 insert into group_permission (tb_group_id, permission_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1); 
+insert into user_group (user_id, tb_group_id) values (1, 1), (1, 2), (2, 2);

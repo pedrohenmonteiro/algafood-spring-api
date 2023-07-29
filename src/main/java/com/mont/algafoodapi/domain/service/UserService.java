@@ -66,7 +66,7 @@ public class UserService {
         }
     }
 
-    private User getUser(Long id) {
+    protected User getUser(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource user id " + id + " not found"));
     }
 
