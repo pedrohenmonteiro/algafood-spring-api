@@ -17,6 +17,8 @@ import com.mont.algafoodapi.domain.repository.CityRepository;
 import com.mont.algafoodapi.domain.repository.CuisineRepository;
 import com.mont.algafoodapi.domain.repository.RestaurantRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class RestaurantService {
 
@@ -79,6 +81,24 @@ public class RestaurantService {
         var restaurant = getRestaurant(id);
         restaurant.deactive();
         restaurantRepository.save(restaurant);
+    }
+
+    @Transactional
+    public void active(List<Long> ids) {
+        try {
+            ids.forEach(this::active);
+        } catch (NotFoundException e) {
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
+    @Transactional
+    public void deactive(List<Long> ids) {
+        try {
+            ids.forEach(this::deactive);
+        } catch (NotFoundException e) {
+            throw new BadRequestException(e.getMessage());
+        }
     }
 
     public void openRestaurant(Long id) {

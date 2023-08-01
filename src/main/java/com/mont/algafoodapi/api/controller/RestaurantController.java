@@ -96,6 +96,18 @@ public class RestaurantController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/activations")
+    public ResponseEntity<Void> activations(@RequestBody List<Long> ids) {
+        restaurantService.active(ids);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/activations")
+    public ResponseEntity<Void> deactivations(@RequestBody List<Long> ids) {
+        restaurantService.deactive(ids);
+        return ResponseEntity.noContent().build();
+    }
+
     @PutMapping("/{id}/opening") 
          public ResponseEntity<Void> opening(@PathVariable Long id) {
         restaurantService.openRestaurant(id);
