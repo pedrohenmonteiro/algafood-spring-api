@@ -25,6 +25,8 @@ delete from user;
 delete from user_group;
 
 delete from restaurant_responsible_user;
+delete from tb_order;
+delete from order_item;
 
 set foreign_key_checks = 1;
 
@@ -99,3 +101,9 @@ insert into user (id, name, email, password, creation_date) values
 (5, 'Manoel Lima', 'manoel.loja@gmail.com', '123', utc_timestamp);
 
 insert into restaurant_responsible_user(restaurant_id, user_id) values (1, 5), (3, 5);
+
+insert into tb_order (id, restaurant_id, user_client_id, payment_method_id, address_city_id, address_zipcode, 
+    address_street, address_number, address_complement, address_neighbourhood,
+    status, creation_date, subtotal, delivery_fee, total_value)
+values (1, 1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
+'CREATED', utc_timestamp, 298.90, 10, 308.90);

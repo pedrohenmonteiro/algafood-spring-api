@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.OrderDto;
+import com.mont.algafoodapi.api.model.OrderSummaryDto;
 import com.mont.algafoodapi.domain.service.OrderService;
 
 @RestController
@@ -20,7 +21,7 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping
-    public ResponseEntity<List<OrderDto>> findAll() {
+    public ResponseEntity<List<OrderSummaryDto>> findAll() {
         return ResponseEntity.ok(orderService.findAll());
     }
 

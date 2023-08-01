@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mont.algafoodapi.api.mapper.OrderMapper;
+import com.mont.algafoodapi.api.mapper.OrderSummaryMapper;
 import com.mont.algafoodapi.api.model.OrderDto;
+import com.mont.algafoodapi.api.model.OrderSummaryDto;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Order;
 import com.mont.algafoodapi.domain.repository.OrderRepository;
@@ -19,9 +21,12 @@ public class OrderService {
 
     @Autowired
     private OrderMapper orderMapper;
+
+    @Autowired
+    private OrderSummaryMapper orderSummaryMapper;
     
-    public List<OrderDto> findAll() {
-        return orderMapper.toCollectionDto(orderRepository.findAll());
+    public List<OrderSummaryDto> findAll() {
+        return orderSummaryMapper.toCollectionDto(orderRepository.findAll());
     }
 
     public OrderDto findById(Long id) {
