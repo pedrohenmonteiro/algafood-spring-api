@@ -9,6 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -52,7 +54,8 @@ public class Order {
     @Embedded
     private Address address;
 
-    private OrderStatus status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status = OrderStatus.CREATED;
 
     @ManyToOne
     @JoinColumn(name = "user_client_id", nullable = false)
