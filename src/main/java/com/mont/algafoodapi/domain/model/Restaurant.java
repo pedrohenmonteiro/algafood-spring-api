@@ -77,7 +77,7 @@ public class Restaurant {
     @JoinTable(name = "restaurant_responsible_user",
         joinColumns = @JoinColumn(name = "restaurant_id"),
         inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> user = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
 
     // @JsonIgnore
@@ -107,5 +107,13 @@ public class Restaurant {
 
     public boolean removePaymentMethod(PaymentMethod paymentMethod) {
         return getPaymentMethods().remove(paymentMethod);
+    }
+
+    public boolean removeUsers(User users) {
+        return getUsers().remove(users);
+    }
+
+    public boolean addUsers(User users) {
+        return getUsers().add(users);
     }
  }
