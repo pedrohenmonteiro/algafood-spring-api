@@ -1,5 +1,6 @@
 package com.mont.algafoodapi.api.mapper;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -26,7 +27,7 @@ public class UserMapper {
     }
 
 
-    public List<UserDto> toCollectionDto(List<User> user) {
+    public List<UserDto> toCollectionDto(Collection<User> user) {
       return user.stream().map(this::fromEntityToDto).toList();
     }
 

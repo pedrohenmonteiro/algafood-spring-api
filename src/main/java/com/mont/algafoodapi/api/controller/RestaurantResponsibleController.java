@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,5 +24,17 @@ public class RestaurantResponsibleController {
     @GetMapping
     public ResponseEntity<List<UserDto>> findAll(@PathVariable Long restaurantId) {
         return ResponseEntity.ok(restaurantUserService.findAll(restaurantId));
+    }
+
+    @PutMapping("/{responsibleId}")
+    public ResponseEntity<Void> associateResponsible(@PathVariable Long restaurantId, @PathVariable Long responsibleId) {
+        restaurantUserService.associateUser(restaurantId, responsibleId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{responsibleId}")
+    public ResponseEntity<Void> disassociateResponsible(@PathVariable Long restaurantId, @PathVariable Long responsibleId) {
+        restaurantUserService.disassociateUser(restaurantId, responsibleId);
+        return ResponseEntity.noContent().build();
     }
 }

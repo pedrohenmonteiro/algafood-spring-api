@@ -77,7 +77,7 @@ public class Restaurant {
     @JoinTable(name = "restaurant_responsible_user",
         joinColumns = @JoinColumn(name = "restaurant_id"),
         inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users = new ArrayList<>();
+    private Set<User> users = new HashSet<>();
 
 
     // @JsonIgnore
