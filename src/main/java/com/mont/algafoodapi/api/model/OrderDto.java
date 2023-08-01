@@ -14,33 +14,18 @@ import lombok.Setter;
 @Setter
 public class OrderDto {
     
-     private Long id;
-
+    private Long id;
     private BigDecimal subtotal;
-
     private BigDecimal totalValue;
-
     private BigDecimal deliveryFee;
-
     private OrderStatus status;
-    
     private OffsetDateTime creationDate;
-
     private OffsetDateTime cancelDate;
-
     private OffsetDateTime confirmDate;
-
     private OffsetDateTime deliveredDate;
-
     private AddressDto address;
-
-
     private UserDto client;
-
     private RestaurantSummaryDto restaurant;
-
-
     private PaymentMethod paymentMethod;
-
     private List<OrderItemDto> items;
 }
