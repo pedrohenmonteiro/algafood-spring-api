@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -71,7 +72,7 @@ public class Order {
     @JoinColumn(name = "payment_method_id", nullable = false)
     private PaymentMethod paymentMethod;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> items = new ArrayList<>();
 
 
