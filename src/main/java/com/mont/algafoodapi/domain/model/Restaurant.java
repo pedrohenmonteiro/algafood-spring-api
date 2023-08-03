@@ -116,4 +116,12 @@ public class Restaurant {
     public boolean addUsers(User users) {
         return getUsers().add(users);
     }
+
+    public boolean acceptPaymentMethod(PaymentMethod paymentMethod) {
+        return getPaymentMethods().contains(paymentMethod);
+    }
+
+    public boolean dontAcceptPaymentMethod(PaymentMethod paymentMethod) {
+        return !acceptPaymentMethod(paymentMethod);
+    }
  }

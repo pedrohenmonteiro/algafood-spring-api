@@ -126,3 +126,6 @@ values (2, 4, 1, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro',
 insert into order_item (id, order_id, product_id, quantity, unit_price, total_price, observation)
 values (3, 2, 6, 1, 79, 79, 'Ao ponto');
 
+alter table tb_order auto_increment = 1;
+alter table order_item auto_increment = 1;
+

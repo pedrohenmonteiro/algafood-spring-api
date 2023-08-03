@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.OrderDto;
 import com.mont.algafoodapi.api.model.OrderSummaryDto;
+import com.mont.algafoodapi.api.model.input.OrderInputDto;
 import com.mont.algafoodapi.domain.service.OrderService;
 
 @RestController
@@ -28,5 +31,10 @@ public class OrderController {
     @GetMapping("/{id}")
     public ResponseEntity<OrderDto> findById(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.findById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<OrderDto> create(@RequestBody OrderInputDto orderInputDto) {
+        return ResponseEntity.ok(orderService.create(orderInputDto));
     }
 }

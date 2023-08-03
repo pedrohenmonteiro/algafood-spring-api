@@ -61,7 +61,7 @@ public class CityService {
         }
 }
 
-    private City getCity(Long cityId) {
+    protected City getCity(Long cityId) {
         return cityRepository.findById(cityId).orElseThrow(() -> new NotFoundException("Resource city " + cityId + " not found"));
     }
 

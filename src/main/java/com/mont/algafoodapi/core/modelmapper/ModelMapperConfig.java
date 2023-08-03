@@ -4,6 +4,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.mont.algafoodapi.api.model.input.OrderItemInputDto;
+import com.mont.algafoodapi.domain.model.OrderItem;
+
+
 @Configuration
 public class ModelMapperConfig {
     
@@ -11,12 +15,11 @@ public class ModelMapperConfig {
     public ModelMapper modelMapper() {
         var modelMapper = new ModelMapper();
 
-    //    var addressToAddressDtoTypeMap =  modelMapper.createTypeMap(Address.class, AddressDto.class);
 
-    //    addressToAddressDtoTypeMap.<String>addMapping(
-    //    src -> src.getCity().getState().getName()
-    //    , (dest, value) -> dest.getCity().setStateName(value));
+    // modelMapper.createTypeMap(OrderItemInputDto.class, OrderItem.class).addMappings(mapper -> mapper.skip(OrderItem::setId));
+    // modelMapper.createTypeMap(OrderItemInputDto.class, OrderItem.class)
+    // .addMappings(mapper -> mapper.skip(OrderItem::setId));
 
-        return modelMapper;
+    return modelMapper;
     }
 }

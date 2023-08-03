@@ -52,7 +52,7 @@ public class ProductService {
     }
 
 
-    private Product getProduct(Long restaurantId, Long productId) {
+    protected Product getProduct(Long restaurantId, Long productId) {
         return productRepository.findById(restaurantId, productId).orElseThrow(() -> new NotFoundException("Resource product id " + productId + " not found in restaurant id " + restaurantId));
     }
   

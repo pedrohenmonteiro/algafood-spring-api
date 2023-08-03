@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mont.algafoodapi.api.model.OrderDto;
+import com.mont.algafoodapi.api.model.input.OrderInputDto;
 import com.mont.algafoodapi.domain.model.Order;
 
 @Component
@@ -14,6 +15,10 @@ public class OrderMapper {
     
     @Autowired
     private ModelMapper modelMapper;
+
+    public Order fromDtoToEntity(OrderInputDto orderInputDto) {
+        return modelMapper.map(orderInputDto, Order.class);
+    }
 
     public OrderDto fromEntityToDto(Order order) {
         return modelMapper.map(order, OrderDto.class);

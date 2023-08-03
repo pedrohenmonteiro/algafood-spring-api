@@ -16,5 +16,5 @@ public class OrderItemInputDto {
     @PositiveOrZero
     private Integer quantity;
 
-    private String observatio;
+    private String observation;
 }
