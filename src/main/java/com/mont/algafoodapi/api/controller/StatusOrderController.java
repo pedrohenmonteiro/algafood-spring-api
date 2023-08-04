@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mont.algafoodapi.domain.service.StatusOrderService;
 
 @RestController
-@RequestMapping("/orders/{orderId}")
+@RequestMapping("/orders/{orderCode}")
 public class StatusOrderController {
     
     @Autowired
@@ -18,20 +18,20 @@ public class StatusOrderController {
 
 
     @PutMapping("/confirmation")
-    public ResponseEntity<Void> confirm(@PathVariable Long orderId) {
-        statusOrderService.confirm(orderId);
+    public ResponseEntity<Void> confirm(@PathVariable String orderCode) {
+        statusOrderService.confirm(orderCode);
        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/delivered")
-    public ResponseEntity<Void> delivered(@PathVariable Long orderId) {
-        statusOrderService.delivered(orderId);
+    public ResponseEntity<Void> delivered(@PathVariable String orderCode) {
+        statusOrderService.delivered(orderCode);
        return ResponseEntity.noContent().build();
     }
 
      @PutMapping("/cancelation")
-    public ResponseEntity<Void> cancel(@PathVariable Long orderId) {
-        statusOrderService.canceled(orderId);
+    public ResponseEntity<Void> cancel(@PathVariable String orderCode) {
+        statusOrderService.canceled(orderCode);
        return ResponseEntity.noContent().build();
     }
 }

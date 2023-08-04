@@ -1,13 +1,7 @@
 package com.mont.algafoodapi.domain.service;
 
-import java.time.OffsetDateTime;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.mont.algafoodapi.domain.exception.BadRequestException;
-import com.mont.algafoodapi.domain.model.Order;
-import com.mont.algafoodapi.domain.model.OrderStatus;
 
 import jakarta.transaction.Transactional;
 
@@ -19,20 +13,20 @@ public class StatusOrderService {
 
 
     @Transactional
-    public void confirm(Long orderId) {
-        var order = orderService.getOrder(orderId);
+    public void confirm(String orderCode) {
+        var order = orderService.getOrder(orderCode);
         order.confirm();
     }
 
     @Transactional
-    public void delivered(Long orderId) {
-        var order = orderService.getOrder(orderId);
+    public void delivered(String orderCode) {
+        var order = orderService.getOrder(orderCode);
         order.deliver();
     }
 
     @Transactional
-    public void canceled(Long orderId) {
-        var order = orderService.getOrder(orderId); 
+    public void canceled(String orderCode) {
+        var order = orderService.getOrder(orderCode); 
         order.cancel();       
     }
 

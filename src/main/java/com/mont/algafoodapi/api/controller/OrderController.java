@@ -28,9 +28,9 @@ public class OrderController {
         return ResponseEntity.ok(orderService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<OrderDto> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(orderService.findById(id));
+    @GetMapping("/{orderCode}")
+    public ResponseEntity<OrderDto> findById(@PathVariable String orderCode) {
+        return ResponseEntity.ok(orderService.findByCode(orderCode));
     }
 
     @PostMapping

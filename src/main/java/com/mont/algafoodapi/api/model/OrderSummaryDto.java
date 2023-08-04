@@ -13,7 +13,7 @@ import lombok.Setter;
 public class OrderSummaryDto {
     
 
-    private Long id;
+    private String code;
     private BigDecimal subtotal;
     private BigDecimal totalValue;
     private BigDecimal deliveryFee;

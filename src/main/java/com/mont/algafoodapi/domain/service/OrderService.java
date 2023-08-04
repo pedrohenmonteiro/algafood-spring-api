@@ -52,8 +52,8 @@ public class OrderService {
         return orderSummaryMapper.toCollectionDto(orderRepository.findAll());
     }
 
-    public OrderDto findById(Long id) {
-        var order = getOrder(id);
+    public OrderDto findByCode(String code) {
+        var order = getOrder(code);
         return orderMapper.fromEntityToDto(order);
     }
 
@@ -102,7 +102,7 @@ private void validateItems(Order order) {
 }
 
 
-    protected Order getOrder(Long id) {
-        return orderRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource order id " + id + " not found"));
+    protected Order getOrder(String code) {
+        return orderRepository.findByCode(code).orElseThrow(() -> new NotFoundException("Resource order id " + code + " not found"));
     }
 }

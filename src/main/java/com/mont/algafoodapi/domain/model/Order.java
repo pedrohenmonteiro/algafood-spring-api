@@ -36,6 +36,8 @@ public class Order {
     @EqualsAndHashCode.Include
     private Long id;
 
+    private String code;
+
     private BigDecimal subtotal;
 
     private BigDecimal totalValue;

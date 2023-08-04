@@ -102,10 +102,10 @@ insert into user (id, name, email, password, creation_date) values
 
 insert into restaurant_responsible_user(restaurant_id, user_id) values (1, 5), (3, 5);
 
-insert into tb_order (id, restaurant_id, user_client_id, payment_method_id, address_city_id, address_zipcode, 
+insert into tb_order (id, code, restaurant_id, user_client_id, payment_method_id, address_city_id, address_zipcode, 
     address_street, address_number, address_complement, address_neighbourhood,
     status, creation_date, subtotal, delivery_fee, total_value)
-values (1, 1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
+values (1, 'ac79e71d-2595-4387-afaf-2627311f5256', 1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
 'CREATED', utc_timestamp, 298.90, 10, 308.90);
 
 
@@ -117,10 +117,10 @@ insert into order_item (id, order_id, product_id, quantity, unit_price, total_pr
 values (2, 1, 2, 2, 110, 220, 'Menos picante, por favor');
 
 
-insert into tb_order (id, restaurant_id, user_client_id, payment_method_id, address_city_id, address_zipcode, 
+insert into tb_order (id,code, restaurant_id, user_client_id, payment_method_id, address_city_id, address_zipcode, 
     address_street, address_number, address_complement, address_neighbourhood,
     status, creation_date, subtotal, delivery_fee, total_value)
-values (2, 4, 1, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro',
+values (2, '53c2da0b-63e9-4dd4-81a9-2ae03523d160', 4, 1, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro',
 'CREATED', utc_timestamp, 79, 0, 79);
 
 insert into order_item (id, order_id, product_id, quantity, unit_price, total_price, observation)
@@ -128,4 +128,6 @@ values (3, 2, 6, 1, 79, 79, 'Ao ponto');
 
 alter table tb_order auto_increment = 1;
 alter table order_item auto_increment = 1;
+
+
 
