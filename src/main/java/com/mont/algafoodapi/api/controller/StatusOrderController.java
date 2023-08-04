@@ -28,4 +28,10 @@ public class StatusOrderController {
         statusOrderService.delivered(orderId);
        return ResponseEntity.noContent().build();
     }
+
+     @PutMapping("/cancelation")
+    public ResponseEntity<Void> cancel(@PathVariable Long orderId) {
+        statusOrderService.canceled(orderId);
+       return ResponseEntity.noContent().build();
+    }
 }
