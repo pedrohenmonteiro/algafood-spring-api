@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.mont.algafoodapi.domain.exception.BadRequestException;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -78,5 +80,32 @@ public class Order {
         this.subtotal = getItems().stream().map(item -> item.getTotalPrice()).reduce(BigDecimal.ZERO, BigDecimal::add);
 
         this.totalValue = this.subtotal.add(this.deliveryFee);
+    }
+
+
+    public void confirm() {
+        setStatus(OrderStatus.CONFIRMED);
+        setConfirmDate(OffsetDateTime.now());
+    }
+
+    public void deliver() {
+        setStatus(OrderStatus.DELIVERED);
+        setDeliveredDate(OffsetDateTime.now());
+
+    }
+
+    public void cancel() {
+        setStatus(OrderStatus.CANCELED);
+        setCancelDate(OffsetDateTime.now());
+    }
+
+    private void setStatus(OrderStatus newStatus) {
+        if(getStatus().cantChangeTo(newStatus)) {
+             throw new BadRequestException(String.format("Order status %d can not be changed from %s to %s", 
+                getId(), getStatus(), newStatus.getDescription()
+            ));
+        }
+
+         this.status = newStatus;
     }
 }
