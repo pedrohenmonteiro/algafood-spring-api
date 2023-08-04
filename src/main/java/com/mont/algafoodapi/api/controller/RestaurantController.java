@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.mont.algafoodapi.api.model.RestaurantDto;
 import com.mont.algafoodapi.api.model.input.RestaurantInputDto;
+import com.mont.algafoodapi.api.model.view.RestaurantView;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Restaurant;
 import com.mont.algafoodapi.domain.repository.RestaurantRepository;
@@ -35,10 +37,16 @@ public class RestaurantController {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-
+    @JsonView(RestaurantView.Summary.class)
     @GetMapping
     public ResponseEntity<List<RestaurantDto>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(restaurantService.findAll());
+    }
+
+     @JsonView(RestaurantView.OnlyName.class)
+    @GetMapping(params = "proj=name")
+    public ResponseEntity<List<RestaurantDto>> findAllName() {
+        return findAll();
     }
 
     
