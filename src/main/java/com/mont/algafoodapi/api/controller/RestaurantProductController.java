@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.ProductDto;
@@ -26,8 +27,12 @@ public class RestaurantProductController {
     private ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductDto>> findAll(@PathVariable Long restaurantId) {
-        return ResponseEntity.ok(productService.findAll(restaurantId));
+    public ResponseEntity<List<ProductDto>> findAll(@PathVariable Long restaurantId, @RequestParam(required = false) boolean includeInactive) {
+        var response = ResponseEntity.ok(productService.findAllActives(restaurantId));
+        if(includeInactive) {
+            response = ResponseEntity.ok(productService.findAll(restaurantId)); 
+        }
+        return response;
     }
 
     @GetMapping("/{productId}")

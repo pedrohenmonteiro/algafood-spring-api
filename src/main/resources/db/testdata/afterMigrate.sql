@@ -78,7 +78,7 @@ Insert into product (name, description, price, active, restaurant_id) values
 ('Sushi Combo A', 'Assorted sushi rolls and sashimi', 40, true, 2),
 ('Sushi Combo B', 'Chef''s selection of premium sushi and sashimi', 50, true, 2),
 ('Spaghetti Carbonara', 'Pasta with creamy sauce, bacon, and Parmesan cheese', 45, true, 1),
-('Lasagna Bolognese', 'Layers of pasta, meat sauce, and cheese', 38, true, 1),
+('Lasagna Bolognese', 'Layers of pasta, meat sauce, and cheese', 38, false, 1),
 ('Feijoada', 'Traditional Brazilian black bean stew with pork', 42, true, 4),
 ('Picanha na Brasa', 'Grilled prime beef steak served with Brazilian side dishes', 55, true, 4);
 

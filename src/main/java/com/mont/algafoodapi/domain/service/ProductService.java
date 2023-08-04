@@ -32,6 +32,11 @@ public class ProductService {
         return productMapper.toCollectionDto(productRepository.findByRestaurant(restaurant));
     }
 
+    public List<ProductDto> findAllActives(Long restaurantId) {
+        var restaurant = restaurantService.getRestaurant(restaurantId);
+        return productMapper.toCollectionDto(productRepository.findActiveByRestaurant(restaurant));
+    }
+
     public ProductDto findById(Long restaurantId, Long productId) {
         restaurantService.getRestaurant(restaurantId);
         return productMapper.fromEntityToDto(getProduct(restaurantId, productId));
