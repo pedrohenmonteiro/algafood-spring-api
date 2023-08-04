@@ -103,6 +103,6 @@ private void validateItems(Order order) {
 
 
     protected Order getOrder(String code) {
-        return orderRepository.findByCode(code).orElseThrow(() -> new NotFoundException("Resource order id " + code + " not found"));
+        return orderRepository.findByCode(code).orElseThrow(() -> new NotFoundException("Resource order code " + code + " not found"));
     }
 }

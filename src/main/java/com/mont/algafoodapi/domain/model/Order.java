@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -21,6 +22,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -104,10 +106,14 @@ public class Order {
     private void setStatus(OrderStatus newStatus) {
         if(getStatus().cantChangeTo(newStatus)) {
              throw new BadRequestException(String.format("Order status %d can not be changed from %s to %s", 
-                getId(), getStatus(), newStatus.getDescription()
+                getCode(), getStatus(), newStatus.getDescription()
             ));
         }
-
          this.status = newStatus;
+    }
+
+    @PrePersist
+    private void generateCode() {
+        setCode(UUID.randomUUID().toString());
     }
 }
