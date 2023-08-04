@@ -11,6 +11,7 @@ import lombok.Data;
 @Data
 @Embeddable
 public class Address {
+
     
     @Column(name="address_zipcode")
     private String zipcode;
