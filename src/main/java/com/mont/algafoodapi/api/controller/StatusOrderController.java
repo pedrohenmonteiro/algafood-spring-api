@@ -22,4 +22,10 @@ public class StatusOrderController {
         statusOrderService.confirm(orderId);
        return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/delivered")
+    public ResponseEntity<Void> delivered(@PathVariable Long orderId) {
+        statusOrderService.delivered(orderId);
+       return ResponseEntity.noContent().build();
+    }
 }
