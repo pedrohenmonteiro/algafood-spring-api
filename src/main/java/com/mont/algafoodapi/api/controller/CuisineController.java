@@ -3,6 +3,8 @@ package com.mont.algafoodapi.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,8 +39,8 @@ public class CuisineController {
 
 
     @GetMapping
-    public ResponseEntity<List<CuisineDto>> findAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(cuisineService.findAll());
+    public ResponseEntity<Page<CuisineDto>> findAll(Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(cuisineService.findAll(pageable));
     }
 
     @GetMapping("/{id}")

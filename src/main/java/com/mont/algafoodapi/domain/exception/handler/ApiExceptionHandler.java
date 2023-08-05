@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,8 +27,8 @@ import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.ExceptionResponse;
-import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.exception.ExceptionResponse.Field;
+import com.mont.algafoodapi.domain.exception.NotFoundException;
 
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
@@ -65,8 +64,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
         return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, req);
 
     }
-
-
 
     @Override
     protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers, HttpStatusCode status, WebRequest req) {

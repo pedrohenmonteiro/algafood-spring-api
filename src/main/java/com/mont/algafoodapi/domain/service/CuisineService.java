@@ -1,9 +1,10 @@
 package com.mont.algafoodapi.domain.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.mont.algafoodapi.api.mapper.CuisineMapper;
@@ -23,8 +24,11 @@ public class CuisineService {
     @Autowired
     private CuisineMapper cuisineMapper;
 
-    public List<CuisineDto> findAll() {
-        return cuisineMapper.toCollectionDto(cuisineRepository.findAll());
+    public Page<CuisineDto> findAll(Pageable pageable) {
+        var cuisinePage = cuisineRepository.findAll(pageable);
+        var cuisineDto = cuisineMapper.toCollectionDto(cuisinePage.getContent());
+
+        return new PageImpl<>(cuisineDto, pageable, cuisinePage.getTotalElements());
         
     }
 
