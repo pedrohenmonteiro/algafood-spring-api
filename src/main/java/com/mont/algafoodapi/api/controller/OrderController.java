@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mont.algafoodapi.api.model.OrderDto;
 import com.mont.algafoodapi.api.model.OrderSummaryDto;
 import com.mont.algafoodapi.api.model.input.OrderInputDto;
+import com.mont.algafoodapi.domain.repository.OrderRepository;
+import com.mont.algafoodapi.domain.repository.filter.OrderFilter;
 import com.mont.algafoodapi.domain.service.OrderService;
 
 @RestController
@@ -23,9 +25,12 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    OrderRepository orderRepository;
+
     @GetMapping
-    public ResponseEntity<List<OrderSummaryDto>> findAll() {
-        return ResponseEntity.ok(orderService.findAll());
+    public ResponseEntity<List<OrderSummaryDto>> findAll(OrderFilter filter) {
+        return ResponseEntity.ok(orderService.findAll(filter));
     }
 
     @GetMapping("/{orderCode}")

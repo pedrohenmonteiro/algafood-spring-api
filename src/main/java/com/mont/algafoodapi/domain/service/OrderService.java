@@ -15,6 +15,8 @@ import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Order;
 import com.mont.algafoodapi.domain.repository.OrderRepository;
 import com.mont.algafoodapi.domain.repository.UserRepository;
+import com.mont.algafoodapi.domain.repository.filter.OrderFilter;
+import com.mont.algafoodapi.infraestructure.repository.spec.OrderSpecs;
 
 import jakarta.transaction.Transactional;
 
@@ -48,8 +50,9 @@ public class OrderService {
     @Autowired
     private ProductService productService;
     
-    public List<OrderSummaryDto> findAll() {
-        return orderSummaryMapper.toCollectionDto(orderRepository.findAll());
+    public List<OrderSummaryDto> findAll(OrderFilter filter) {
+        var orders = orderRepository.findAll(OrderSpecs.usingFilter(filter));
+        return orderSummaryMapper.toCollectionDto(orders);
     }
 
     public OrderDto findByCode(String code) {

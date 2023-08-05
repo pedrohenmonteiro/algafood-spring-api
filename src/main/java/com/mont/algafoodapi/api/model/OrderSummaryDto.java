@@ -3,8 +3,6 @@ package com.mont.algafoodapi.api.model;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
-import com.mont.algafoodapi.domain.model.OrderStatus;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +15,7 @@ public class OrderSummaryDto {
     private BigDecimal subtotal;
     private BigDecimal totalValue;
     private BigDecimal deliveryFee;
-    private OrderStatus status;
+    private String status;
     private OffsetDateTime creationDate;
     private UserDto client;
     private RestaurantSummaryDto restaurant;

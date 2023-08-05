@@ -66,12 +66,12 @@ public class Order {
     private User client;
 
     @ManyToOne
-    @JoinColumn(name = "restaurant_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Restaurant restaurant;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "payment_method_id", nullable = false)
+    @JoinColumn(nullable = false)
     private PaymentMethod paymentMethod;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)

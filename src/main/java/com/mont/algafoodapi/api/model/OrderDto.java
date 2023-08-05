@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-import com.mont.algafoodapi.domain.model.OrderStatus;
 import com.mont.algafoodapi.domain.model.PaymentMethod;
 
 import lombok.Getter;
@@ -18,14 +17,14 @@ public class OrderDto {
     private BigDecimal subtotal;
     private BigDecimal totalValue;
     private BigDecimal deliveryFee;
-    private OrderStatus status;
+    private String status;
     private OffsetDateTime creationDate;
     private OffsetDateTime cancelDate;
     private OffsetDateTime confirmDate;
     private OffsetDateTime deliveredDate;
-    private AddressDto address;
-    private UserDto client;
     private RestaurantSummaryDto restaurant;
+    private UserDto client;
     private PaymentMethod paymentMethod;
+    private AddressDto address;
     private List<OrderItemDto> items;
 }
