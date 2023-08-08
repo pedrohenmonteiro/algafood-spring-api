@@ -3,6 +3,9 @@ package com.mont.algafoodapi.domain.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.mont.algafoodapi.api.mapper.OrderMapper;
@@ -50,9 +53,10 @@ public class OrderService {
     @Autowired
     private ProductService productService;
     
-    public List<OrderSummaryDto> findAll(OrderFilter filter) {
-        var orders = orderRepository.findAll(OrderSpecs.usingFilter(filter));
-        return orderSummaryMapper.toCollectionDto(orders);
+    public Page<OrderSummaryDto> findAll(OrderFilter filter, Pageable pageable) {
+        var ordersPage = orderRepository.findAll(OrderSpecs.usingFilter(filter), pageable);
+        var ordersDto = orderSummaryMapper.toCollectionDto(ordersPage.getContent());
+        return new PageImpl<>(ordersDto, pageable, ordersPage.getTotalElements());
     }
 
     public OrderDto findByCode(String code) {
