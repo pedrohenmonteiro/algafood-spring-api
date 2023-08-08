@@ -1,5 +1,7 @@
 package com.mont.algafoodapi.domain.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -11,6 +13,7 @@ import com.mont.algafoodapi.api.mapper.OrderSummaryMapper;
 import com.mont.algafoodapi.api.model.OrderDto;
 import com.mont.algafoodapi.api.model.OrderSummaryDto;
 import com.mont.algafoodapi.api.model.input.OrderInputDto;
+import com.mont.algafoodapi.core.data.PageableTranslator;
 import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Order;
@@ -52,6 +55,7 @@ public class OrderService {
     private ProductService productService;
     
     public Page<OrderSummaryDto> findAll(OrderFilter filter, Pageable pageable) {
+        pageable = translatePageable(pageable);
         var ordersPage = orderRepository.findAll(OrderSpecs.usingFilter(filter), pageable);
         var ordersDto = orderSummaryMapper.toCollectionDto(ordersPage.getContent());
         return new PageImpl<>(ordersDto, pageable, ordersPage.getTotalElements());
@@ -109,5 +113,17 @@ private void validateItems(Order order) {
 
     protected Order getOrder(String code) {
         return orderRepository.findByCode(code).orElseThrow(() -> new NotFoundException("Resource order code " + code + " not found"));
+    }
+
+    
+    private Pageable translatePageable(Pageable apiPageable) {
+        var mapping = Map.of(
+            "code", "code",
+            "nameClient", "client.name",
+            "restaurant.name", "restaurant.name",
+            "totalValue", "totalValue"
+        );
+
+        return PageableTranslator.translate(apiPageable, mapping);
     }
 }
