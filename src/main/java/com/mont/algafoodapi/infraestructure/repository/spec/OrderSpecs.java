@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import org.springframework.data.jpa.domain.Specification;
 
+import com.mont.algafoodapi.domain.filter.OrderFilter;
 import com.mont.algafoodapi.domain.model.Order;
-import com.mont.algafoodapi.domain.repository.filter.OrderFilter;
 
 import jakarta.persistence.criteria.Predicate;
 

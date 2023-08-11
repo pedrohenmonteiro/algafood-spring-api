@@ -17,7 +17,6 @@ public class OrderSummaryDto {
     private BigDecimal deliveryFee;
     private String status;
     private OffsetDateTime creationDate;
-    // private UserDto client;
-    private String nameClient;
+    private UserDto client;
     private RestaurantSummaryDto restaurant;
 }

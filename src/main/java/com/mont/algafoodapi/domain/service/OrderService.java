@@ -16,10 +16,10 @@ import com.mont.algafoodapi.api.model.input.OrderInputDto;
 import com.mont.algafoodapi.core.data.PageableTranslator;
 import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
+import com.mont.algafoodapi.domain.filter.OrderFilter;
 import com.mont.algafoodapi.domain.model.Order;
 import com.mont.algafoodapi.domain.repository.OrderRepository;
 import com.mont.algafoodapi.domain.repository.UserRepository;
-import com.mont.algafoodapi.domain.repository.filter.OrderFilter;
 import com.mont.algafoodapi.infraestructure.repository.spec.OrderSpecs;
 
 import jakarta.transaction.Transactional;
@@ -119,7 +119,7 @@ private void validateItems(Order order) {
     private Pageable translatePageable(Pageable apiPageable) {
         var mapping = Map.of(
             "code", "code",
-            "nameClient", "client.name",
+            "client.name", "client.name",
             "restaurant.name", "restaurant.name",
             "totalValue", "totalValue"
         );
