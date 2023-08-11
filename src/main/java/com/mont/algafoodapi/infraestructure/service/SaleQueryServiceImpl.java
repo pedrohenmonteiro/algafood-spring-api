@@ -23,17 +23,25 @@ public class SaleQueryServiceImpl implements SaleQueryService {
     private EntityManager em;
 
     @Override
-    public List<DailySale> findByDailySales(DailySaleFilter filter) {
+    public List<DailySale> findByDailySales(DailySaleFilter filter, String timeOffset) {
         var builder = em.getCriteriaBuilder();
         var query = builder.createQuery(DailySale.class);
         var root = query.from(Order.class);
 
         List<Predicate> predicates = new ArrayList<>();
 
-        var functionDateCreation = builder.function("date", LocalDate.class, root.get("creationDate"));
+        var functionConvertTzCreationDate = builder.function(
+            "convert_tz",
+            LocalDate.class,
+            root.get("creationDate"),
+            builder.literal("+00:00"),
+            builder.literal(timeOffset)
+        );
+
+        var functionCreationDate = builder.function("date", LocalDate.class, functionConvertTzCreationDate);
 
         var selection =  builder.construct(DailySale.class,
-            functionDateCreation,
+            functionCreationDate,
             builder.count(root.get("id")),
             builder.sum(root.get("totalValue"))
         );
@@ -55,7 +63,7 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 
         query.select(selection);
         query.where(predicates.toArray(new Predicate[0]));
-        query.groupBy(functionDateCreation);
+        query.groupBy(functionCreationDate);
 
         return em.createQuery(query).getResultList();
     }
