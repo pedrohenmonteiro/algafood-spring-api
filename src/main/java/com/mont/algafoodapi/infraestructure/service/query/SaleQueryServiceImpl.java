@@ -1,4 +1,4 @@
-package com.mont.algafoodapi.infraestructure.service;
+package com.mont.algafoodapi.infraestructure.service.query;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
