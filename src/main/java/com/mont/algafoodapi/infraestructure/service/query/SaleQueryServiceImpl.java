@@ -1,7 +1,7 @@
 package com.mont.algafoodapi.infraestructure.service.query;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -32,13 +32,13 @@ public class SaleQueryServiceImpl implements SaleQueryService {
 
         var functionConvertTzCreationDate = builder.function(
             "convert_tz",
-            LocalDate.class,
+            Date.class,
             root.get("creationDate"),
             builder.literal("+00:00"),
             builder.literal(timeOffset)
         );
 
-        var functionCreationDate = builder.function("date", LocalDate.class, functionConvertTzCreationDate);
+        var functionCreationDate = builder.function("date", Date.class, functionConvertTzCreationDate);
 
         var selection =  builder.construct(DailySale.class,
             functionCreationDate,

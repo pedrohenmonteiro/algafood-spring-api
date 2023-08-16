@@ -1,7 +1,7 @@
 package com.mont.algafoodapi.domain.model.dto;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class DailySale {
     
-    private LocalDate date;
+    private Date date;
     private Long totalSales;
     private BigDecimal totalBilled;
 }
