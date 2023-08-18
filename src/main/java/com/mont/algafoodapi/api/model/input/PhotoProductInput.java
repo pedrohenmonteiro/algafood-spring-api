@@ -2,6 +2,10 @@ package com.mont.algafoodapi.api.model.input;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mont.algafoodapi.core.validation.FileSize;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +14,10 @@ import lombok.Setter;
 @Setter
 public class PhotoProductInput {
     
+    @NotNull
+    @FileSize(max = "500KB")
     private MultipartFile file;
+
+    @NotBlank
     private String description;
 }

@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.input.PhotoProductInput;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/restaurants/{restaurantId}/products/{productId}/photo")
 public class RestaurantProductPhotoController {
     
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void updatePhoto(@PathVariable Long restaurantId, Long productId, PhotoProductInput photoProductInput) {
+    public void updatePhoto(@PathVariable Long restaurantId, Long productId, @Valid PhotoProductInput photoProductInput) {
 
         var fileName = UUID.randomUUID().toString() + "_" + photoProductInput.getFile().getOriginalFilename();
 
