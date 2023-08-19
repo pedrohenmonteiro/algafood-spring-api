@@ -5,4 +5,6 @@ import com.mont.algafoodapi.domain.model.ProductPhoto;
 public interface ProductRepositoryQueries {
     
     ProductPhoto save(ProductPhoto photo);
+
+    void delete(ProductPhoto photo);
 }

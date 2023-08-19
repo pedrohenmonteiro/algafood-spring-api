@@ -20,5 +20,11 @@ public class ProductRepositoryImpl implements ProductRepositoryQueries {
     public ProductPhoto save(ProductPhoto photo) {
     return em.merge(photo);
     }
+
+    @Transactional
+    @Override
+    public void delete(ProductPhoto photo) {
+        em.remove(photo);
+    }
     
 }

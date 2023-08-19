@@ -9,6 +9,8 @@ import com.mont.algafoodapi.api.model.input.ProductPhotoInputDto;
 import com.mont.algafoodapi.domain.model.ProductPhoto;
 import com.mont.algafoodapi.domain.repository.ProductRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class CatalogProductPhotoService {
     
@@ -21,9 +23,16 @@ public class CatalogProductPhotoService {
     @Autowired
     private ProductPhotoMapper productPhotoMapper;
 
+    @Transactional
     public ProductPhotoDto save(ProductPhotoInputDto photoProductInput, Long restaurantId, Long productId) {
         
         var product = productService.getProduct(restaurantId, productId);
+        var existentPhoto = productRepository.findPhotoById(restaurantId, productId);
+
+        if(existentPhoto.isPresent()) {
+            productRepository.delete(existentPhoto.get());
+        }
+
         ProductPhoto photo = new ProductPhoto();
 
         var file = photoProductInput.getFile();
