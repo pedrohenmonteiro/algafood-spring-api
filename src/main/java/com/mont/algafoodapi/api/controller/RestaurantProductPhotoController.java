@@ -1,5 +1,7 @@
 package com.mont.algafoodapi.api.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +22,7 @@ public class RestaurantProductPhotoController {
     private CatalogProductPhotoService catalogProductPhotoService;
 
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void updatePhoto(@PathVariable Long restaurantId, @PathVariable Long productId, @Valid ProductPhotoInputDto photoProductInput) {
+    public void updatePhoto(@PathVariable Long restaurantId, @PathVariable Long productId, @Valid ProductPhotoInputDto photoProductInput) throws IOException {
 
         catalogProductPhotoService.save(photoProductInput, restaurantId, productId);
     }
