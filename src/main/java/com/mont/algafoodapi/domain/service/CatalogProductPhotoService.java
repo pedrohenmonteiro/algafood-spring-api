@@ -36,8 +36,10 @@ public class CatalogProductPhotoService {
         var product = productService.getProduct(restaurantId, productId);
         var existentPhoto = productRepository.findPhotoById(restaurantId, productId);
         var nameNewFile = photoStorageService.generateFileName(photoProductInput.getFile().getOriginalFilename());
+        String fileExistentName = null;
 
         if(existentPhoto.isPresent()) {
+            fileExistentName = existentPhoto.get().getFileName();
             productRepository.delete(existentPhoto.get());
         } 
         
@@ -63,7 +65,7 @@ public class CatalogProductPhotoService {
         .inputStream(file.getInputStream())
         .build();
         
-        photoStorageService.store(newPhoto);
+        photoStorageService.replace(fileExistentName, newPhoto);
 
 
         return productPhotoMapper.fromEntityToDto(photo);

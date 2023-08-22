@@ -27,8 +27,19 @@ public class LocalPhotoStorageService implements PhotoStorageService{
         }
     }
 
-    private Path getFilePath(String fileName) {
-        return photoDirectory.resolve(Path.of(fileName));
+   
+
+    @Override
+    public void remove(String fileName) {
+        try {
+            Path filePath = getFilePath(fileName);
+            Files.deleteIfExists(filePath);
+        } catch (Exception e) {
+            throw new StorageException("It was not possible to delete file", e);
+        }
     }
 
+     private Path getFilePath(String fileName) {
+        return photoDirectory.resolve(Path.of(fileName));
+    }
 }
