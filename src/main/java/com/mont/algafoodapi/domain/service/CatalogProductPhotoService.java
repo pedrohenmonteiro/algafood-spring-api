@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.mont.algafoodapi.api.mapper.ProductPhotoMapper;
 import com.mont.algafoodapi.api.model.ProductPhotoDto;
 import com.mont.algafoodapi.api.model.input.ProductPhotoInputDto;
+import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.ProductPhoto;
 import com.mont.algafoodapi.domain.repository.ProductRepository;
 import com.mont.algafoodapi.domain.service.PhotoStorageService.NewPhoto;
@@ -28,6 +29,11 @@ public class CatalogProductPhotoService {
 
     @Autowired 
     private PhotoStorageService photoStorageService;
+
+
+    public ProductPhotoDto findPhotoById(Long restaurantId, Long productId) {
+        return productPhotoMapper.fromEntityToDto(findOrFail(restaurantId, productId));
+    }
 
 
     @Transactional
@@ -69,5 +75,9 @@ public class CatalogProductPhotoService {
 
 
         return productPhotoMapper.fromEntityToDto(photo);
+    }
+
+    public ProductPhoto findOrFail(Long restaurantId, Long productId) {
+        return productRepository.findPhotoById(restaurantId, productId).orElseThrow(() -> new NotFoundException("Photo id " + productId + " not found"));
     }
 }
