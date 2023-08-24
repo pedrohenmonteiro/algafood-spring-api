@@ -1,5 +1,6 @@
 package com.mont.algafoodapi.infraestructure.service.storage;
 
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -39,7 +40,22 @@ public class LocalPhotoStorageService implements PhotoStorageService{
         }
     }
 
+
+     @Override
+    public InputStream recover(String fileName) {
+        try {
+            Path filePath = getFilePath(fileName);
+
+            return Files.newInputStream(filePath);
+            
+        } catch (Exception e) {
+            throw new StorageException("It was not possible to recover the file", e);
+        }
+    }
+
      private Path getFilePath(String fileName) {
         return photoDirectory.resolve(Path.of(fileName));
     }
+
+   
 }
