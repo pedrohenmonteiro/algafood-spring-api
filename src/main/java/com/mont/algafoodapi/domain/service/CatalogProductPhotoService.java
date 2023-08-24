@@ -97,6 +97,16 @@ public class CatalogProductPhotoService {
         return new InputStreamResource(inputStream);
         }
 
+
+    public void delete(Long restaurantId, Long productId) {
+        ProductPhoto photo = findOrFail(restaurantId, productId);
+
+        productRepository.delete(photo);
+        productRepository.flush();
+
+        photoStorageService.remove(photo.getFileName());
+    }
+
     public ProductPhoto findOrFail(Long restaurantId, Long productId) {
         return productRepository.findPhotoById(restaurantId, productId).orElseThrow(() -> new NotFoundException("Photo id " + productId + " not found"));
     }
