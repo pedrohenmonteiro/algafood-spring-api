@@ -1,9 +1,12 @@
 package com.mont.algafoodapi.domain.service;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.mont.algafoodapi.api.mapper.ProductPhotoMapper;
 import com.mont.algafoodapi.api.model.ProductPhotoDto;
@@ -76,6 +79,14 @@ public class CatalogProductPhotoService {
 
         return productPhotoMapper.fromEntityToDto(photo);
     }
+
+
+    public InputStreamResource servePhoto(@PathVariable Long restaurantId, @PathVariable Long productId) {
+        ProductPhoto photo = findOrFail(restaurantId, productId);
+        InputStream inputStream = photoStorageService.recover(photo.getFileName());
+
+        return new InputStreamResource(inputStream);
+        }
 
     public ProductPhoto findOrFail(Long restaurantId, Long productId) {
         return productRepository.findPhotoById(restaurantId, productId).orElseThrow(() -> new NotFoundException("Photo id " + productId + " not found"));
