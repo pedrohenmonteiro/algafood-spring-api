@@ -2,10 +2,13 @@ package com.mont.algafoodapi.domain.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.mont.algafoodapi.api.mapper.ProductPhotoMapper;
@@ -81,8 +84,14 @@ public class CatalogProductPhotoService {
     }
 
 
-    public InputStreamResource servePhoto(@PathVariable Long restaurantId, @PathVariable Long productId) {
+    public InputStreamResource servePhoto(@PathVariable Long restaurantId, @PathVariable Long productId, String acceptHeader) throws HttpMediaTypeNotAcceptableException {
         ProductPhoto photo = findOrFail(restaurantId, productId);
+
+        var mediaTypePhoto = MediaType.parseMediaType(photo.getContentType());
+        List<MediaType> mediaTypesAcceptable = MediaType.parseMediaTypes(acceptHeader);
+
+        verifyMediaTypeIsSupported(mediaTypePhoto, mediaTypesAcceptable);
+
         InputStream inputStream = photoStorageService.recover(photo.getFileName());
 
         return new InputStreamResource(inputStream);
@@ -90,5 +99,14 @@ public class CatalogProductPhotoService {
 
     public ProductPhoto findOrFail(Long restaurantId, Long productId) {
         return productRepository.findPhotoById(restaurantId, productId).orElseThrow(() -> new NotFoundException("Photo id " + productId + " not found"));
+    }
+
+    private void verifyMediaTypeIsSupported(MediaType mediaTypePhoto, List<MediaType> mediaTypesAcceptable) throws HttpMediaTypeNotAcceptableException {
+        boolean isSupported = mediaTypesAcceptable.stream()
+            .anyMatch(mediaTypeAcceptable -> mediaTypeAcceptable.isCompatibleWith(mediaTypePhoto));
+
+            if(!isSupported) {
+                throw new HttpMediaTypeNotAcceptableException(mediaTypesAcceptable);
+            }
     }
 }
