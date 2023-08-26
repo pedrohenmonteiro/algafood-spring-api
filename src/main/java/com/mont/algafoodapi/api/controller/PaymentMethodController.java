@@ -3,6 +3,7 @@ package com.mont.algafoodapi.api.controller;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.catalina.webresources.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,9 @@ public class PaymentMethodController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PaymentMethodDto> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(paymentMethodService.findById(id));
+        return ResponseEntity.ok()
+        .cacheControl(CacheControl.maxAge(30, TimeUnit.SECONDS))
+        .body(paymentMethodService.findById(id));
     }
 
     @PostMapping
