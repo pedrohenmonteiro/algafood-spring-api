@@ -67,9 +67,9 @@ insert into restaurant (name, delivery_fee, cuisine_id, date_creation, date_last
 insert into restaurant (name, delivery_fee, cuisine_id, date_creation, date_last_update, active, opened) values ('Pizza Chef', 0, 1, UTC_TIMESTAMP, UTC_TIMESTAMP, true, false);
 insert into restaurant (name, delivery_fee, cuisine_id, date_creation, date_last_update, active, opened) values ('Jeitinho Brasileiro', 0, 3, UTC_TIMESTAMP, UTC_TIMESTAMP, true, false);
 
-insert into payment_method (description) values ("Credit Card");
-insert into payment_method (description) values ("Debit Card");
-insert into payment_method (description) values ("Cash");
+insert into payment_method (description, update_date) values ("Credit Card", utc_timestamp);
+insert into payment_method (description, update_date) values ("Debit Card", utc_timestamp);
+insert into payment_method (description, update_date) values ("Cash", utc_timestamp);
 
 insert into restaurant_payment_method (restaurant_id, payment_method_id) values (1, 1), (1, 2), (2,1), (2,2), (2,3), (3,1), (3,2);
 

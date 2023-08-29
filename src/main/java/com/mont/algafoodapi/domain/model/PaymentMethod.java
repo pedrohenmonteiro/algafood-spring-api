@@ -1,5 +1,9 @@
 package com.mont.algafoodapi.domain.model;
 
+import java.time.OffsetTime;
+
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,5 +25,8 @@ public class PaymentMethod {
 
     @Column(nullable = false)
     private String description;
+
+    @UpdateTimestamp
+    private OffsetTime updateDate;
 
 }

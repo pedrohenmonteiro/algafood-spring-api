@@ -40,7 +40,7 @@ public class PaymentMethodController {
     @GetMapping("/{id}")
     public ResponseEntity<PaymentMethodDto> findById(@PathVariable Long id) {
         return ResponseEntity.ok()
-        .cacheControl(CacheControl.maxAge(30, TimeUnit.SECONDS))
+        .cacheControl(CacheControl.maxAge(30, TimeUnit.SECONDS).cachePublic())
         .body(paymentMethodService.findById(id));
     }
 
