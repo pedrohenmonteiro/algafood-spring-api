@@ -57,13 +57,30 @@ public class PaymentMethodController {
 
         return ResponseEntity.ok()
         .cacheControl(CacheControl.maxAge(30, TimeUnit.SECONDS))
+        .eTag(eTag)
         .body(paymentMethodService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PaymentMethodDto> findById(@PathVariable Long id) {
+    public ResponseEntity<PaymentMethodDto> findById(@PathVariable Long id, ServletWebRequest request) {
+        ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());
+
+        String eTag = "0";
+
+        OffsetDateTime lastUpdateDate = paymentMethodRepository.getLastUpdateById(id);
+
+        if(lastUpdateDate != null) {
+            eTag = String.valueOf(lastUpdateDate);
+        }
+
+        if(request.checkNotModified(eTag)) {
+            return null;
+        }
+
+
         return ResponseEntity.ok()
         .cacheControl(CacheControl.maxAge(30, TimeUnit.SECONDS).cachePublic())
+        .eTag(eTag)
         .body(paymentMethodService.findById(id));
     }
 
