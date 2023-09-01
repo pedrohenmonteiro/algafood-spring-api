@@ -1,5 +1,6 @@
 package com.mont.algafoodapi.api.controller;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -16,9 +17,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
 
 import com.mont.algafoodapi.api.model.PaymentMethodDto;
 import com.mont.algafoodapi.api.model.input.PaymentMethodInputDto;
+import com.mont.algafoodapi.domain.repository.PaymentMethodRepository;
 import com.mont.algafoodapi.domain.service.PaymentMethodService;
 
 import jakarta.validation.Valid;
@@ -30,8 +34,27 @@ public class PaymentMethodController {
     @Autowired
     private PaymentMethodService paymentMethodService;
 
+    @Autowired
+    private PaymentMethodRepository paymentMethodRepository;
+
     @GetMapping
-    public ResponseEntity<List<PaymentMethodDto>> findAll() {
+    public ResponseEntity<List<PaymentMethodDto>> findAll(ServletWebRequest request) {
+
+        ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());
+
+        String eTag = "0";
+
+        OffsetDateTime lastUpdateDate = paymentMethodRepository.getLastUpdateDate();
+        
+        if(lastUpdateDate != null) {
+            eTag = String.valueOf(lastUpdateDate.toEpochSecond());
+        }
+
+        if(request.checkNotModified(eTag)) {
+            return null;
+        }
+
+
         return ResponseEntity.ok()
         .cacheControl(CacheControl.maxAge(30, TimeUnit.SECONDS))
         .body(paymentMethodService.findAll());
