@@ -15,9 +15,9 @@ public class OpenApiConfig {
    public OpenAPI customOpenAPI() {
     return new OpenAPI()
         .info(new Info()
-            .title("Algafood API")
+            .title("AlgaFood API")
             .version("v1")
-            .description("Food API")
+            .description("Open API for clients and restaurants")
             .termsOfService("")
             .license(new License().name("Apache 2.0").url("")));
    }
