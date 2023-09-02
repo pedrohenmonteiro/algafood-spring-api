@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.CityDto;
 import com.mont.algafoodapi.api.model.input.CityInputDto;
+import com.mont.algafoodapi.domain.exception.ExceptionResponse;
 import com.mont.algafoodapi.domain.service.CityService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -69,7 +70,7 @@ public class CityController {
                 responseCode = "200",
                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = CityDto.class))
             ),
-            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
             @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
         }
     )

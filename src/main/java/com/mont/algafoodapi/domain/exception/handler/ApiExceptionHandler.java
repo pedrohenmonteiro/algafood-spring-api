@@ -1,6 +1,7 @@
 package com.mont.algafoodapi.domain.exception.handler;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -112,7 +113,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
         ).collect(Collectors.toList());
 
         var body = ExceptionResponse.builder()
-            .timestamp(LocalDateTime.now())
+            .timestamp(OffsetDateTime.now())
             .status(status.value())
             .title(HttpStatus.valueOf(status.value()).getReasonPhrase())
             .message(errorMessage)
@@ -171,7 +172,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
         String title = HttpStatus.valueOf(statusCode.value()).getReasonPhrase();      
 
         var newBody = ExceptionResponse.builder()
-            .timestamp(LocalDateTime.now())
+            .timestamp(OffsetDateTime.now())
             .status(statusCode.value())
             .title(title)
             .message(ex.getMessage())
