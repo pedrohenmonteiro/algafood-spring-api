@@ -4,10 +4,10 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.catalina.webresources.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +28,7 @@ import com.mont.algafoodapi.domain.service.PaymentMethodService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/payment-methods")
+@RequestMapping(path = "/payment-methods", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PaymentMethodController {
     
     @Autowired

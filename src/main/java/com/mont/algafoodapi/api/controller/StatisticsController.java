@@ -17,7 +17,7 @@ import com.mont.algafoodapi.domain.service.SaleQueryService;
 import com.mont.algafoodapi.domain.service.SaleReportService;
 
 @RestController
-@RequestMapping("/statistics")
+@RequestMapping(path = "/statistics", produces = MediaType.APPLICATION_JSON_VALUE)
 public class StatisticsController {
 
     @Autowired

@@ -29,7 +29,7 @@ import jakarta.validation.Valid;
 
 
 @RestController
-@RequestMapping("/restaurants")
+@RequestMapping(path = "/restaurants", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestaurantController {
     
     @Autowired

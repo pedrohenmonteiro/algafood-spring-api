@@ -23,7 +23,7 @@ import com.mont.algafoodapi.domain.service.CatalogProductPhotoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/restaurants/{restaurantId}/products/{productId}/photo")
+@RequestMapping( path = "/restaurants/{restaurantId}/products/{productId}/photo", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestaurantProductPhotoController {
     
     @Autowired

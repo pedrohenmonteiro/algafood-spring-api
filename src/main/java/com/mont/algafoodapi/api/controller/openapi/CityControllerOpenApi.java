@@ -31,9 +31,7 @@ public interface CityControllerOpenApi {
                 description = "Success",
                 responseCode = "200",
                 content = {
-                    @Content(
-                     mediaType = "application/json",
-                     array = @ArraySchema(schema = @Schema(implementation = CityDto.class)))
+                    @Content(array = @ArraySchema(schema = @Schema(implementation = CityDto.class)))
                 }
             ),
             @ApiResponse( description = "Internal Error", responseCode = "500", content = @Content),
@@ -48,7 +46,7 @@ public interface CityControllerOpenApi {
             @ApiResponse(
                 description = "Success",
                 responseCode = "200",
-                content = @Content(mediaType = "application/json", schema = @Schema(implementation = CityDto.class))
+                content = @Content(schema = @Schema(implementation = CityDto.class))
             ),
             @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
             @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
@@ -63,10 +61,9 @@ public interface CityControllerOpenApi {
             @ApiResponse(
                 description = "Created",
                 responseCode = "201",
-                content = @Content(mediaType = "application/json", schema = @Schema(implementation = CityDto.class))
+                content = @Content(schema = @Schema(implementation = CityDto.class))
             ),
             @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content(
-                mediaType = "application/json",
                 schema = @Schema(implementation = ExceptionResponse.class)
             )),
             @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
@@ -81,10 +78,9 @@ public interface CityControllerOpenApi {
             @ApiResponse(
                 description = "Success",
                 responseCode = "200",
-                content = @Content(mediaType = "application/json", schema = @Schema(implementation = CityDto.class))
+                content = @Content(schema = @Schema(implementation = CityDto.class))
             ),
             @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content(
-                mediaType = "application/json",
                 schema = @Schema(implementation = ExceptionResponse.class)
             )),
             @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
