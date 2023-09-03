@@ -29,8 +29,7 @@ public class CityController implements CityControllerOpenApi {
     @Autowired
     private CityService cityService;
 
-
-
+    @GetMapping
     public ResponseEntity<List<CityDto>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(cityService.findAll());
     }

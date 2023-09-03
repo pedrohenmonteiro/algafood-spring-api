@@ -3,11 +3,7 @@ package com.mont.algafoodapi.api.controller.openapi;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import com.mont.algafoodapi.api.model.CityDto;
 import com.mont.algafoodapi.api.model.input.CityInputDto;
@@ -40,13 +36,9 @@ public interface CityControllerOpenApi {
                      array = @ArraySchema(schema = @Schema(implementation = CityDto.class)))
                 }
             ),
-            @ApiResponse(
-                description = "Internal Server Error",
-                responseCode = "500",
-                content = @Content),
+            @ApiResponse( description = "Internal Error", responseCode = "500", content = @Content),
         }
     )
-    @GetMapping
     public ResponseEntity<List<CityDto>> findAll();
 
     @Operation(
@@ -62,7 +54,6 @@ public interface CityControllerOpenApi {
             @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
         }
     )
-    @GetMapping("/{id}")
     public ResponseEntity<CityDto> findById(@Parameter(description = "The id of the city to find") @PathVariable Long id);
 
     @Operation(
@@ -81,7 +72,6 @@ public interface CityControllerOpenApi {
             @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
         }
     )
-    @PostMapping
     public ResponseEntity<CityDto> create(@RequestBody @Valid CityInputDto cityInputDto);
 
     @Operation(
@@ -101,12 +91,11 @@ public interface CityControllerOpenApi {
             @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
         }
     )
-    @PutMapping("/{id}")
     public ResponseEntity<CityDto> update(@PathVariable Long id, @RequestBody @Valid CityInputDto cityInputDto);
 
     @Operation(
-        summary = "Update a city",
-        description = "Update a city.",
+        summary = "Delete a city",
+        description = "Delete a city.",
         responses = {
             @ApiResponse(
                 description = "No Content",
@@ -117,6 +106,5 @@ public interface CityControllerOpenApi {
             @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
         }
     )
-    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id);
 }
