@@ -23,7 +23,7 @@ public class ExceptionResponse {
     @Schema(example = "2023-09-02T04:49:45.408085817")
     private OffsetDateTime timestamp;
 
-    @Schema(example = "404")
+    @Schema(example = "400")
     private Integer status;
 
     @Schema(example = "Bad Request")

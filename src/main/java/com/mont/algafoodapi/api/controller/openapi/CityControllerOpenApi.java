@@ -40,8 +40,10 @@ public interface CityControllerOpenApi {
                      array = @ArraySchema(schema = @Schema(implementation = CityDto.class)))
                 }
             ),
-            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-            @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            @ApiResponse(
+                description = "Internal Server Error",
+                responseCode = "500",
+                content = @Content),
         }
     )
     @GetMapping
@@ -56,22 +58,65 @@ public interface CityControllerOpenApi {
                 responseCode = "200",
                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = CityDto.class))
             ),
-            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
             @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
         }
     )
     @GetMapping("/{id}")
     public ResponseEntity<CityDto> findById(@Parameter(description = "The id of the city to find") @PathVariable Long id);
 
-    @Operation(summary = "Register a city")
+    @Operation(
+        summary = "Register a city",
+        description = "Register a city.",
+        responses = {
+            @ApiResponse(
+                description = "Created",
+                responseCode = "201",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = CityDto.class))
+            ),
+            @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = ExceptionResponse.class)
+            )),
+            @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+        }
+    )
     @PostMapping
     public ResponseEntity<CityDto> create(@RequestBody @Valid CityInputDto cityInputDto);
 
-    @Operation(summary = "Update a city by id")
+    @Operation(
+        summary = "Update a city",
+        description = "Update a city.",
+        responses = {
+            @ApiResponse(
+                description = "Success",
+                responseCode = "200",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = CityDto.class))
+            ),
+            @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = ExceptionResponse.class)
+            )),
+            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+            @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+        }
+    )
     @PutMapping("/{id}")
     public ResponseEntity<CityDto> update(@PathVariable Long id, @RequestBody @Valid CityInputDto cityInputDto);
 
-    @Operation(summary = "Delete a city by id")    
+    @Operation(
+        summary = "Update a city",
+        description = "Update a city.",
+        responses = {
+            @ApiResponse(
+                description = "No Content",
+                responseCode = "204",
+                content = @Content
+            ),
+            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+            @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+        }
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id);
 }
