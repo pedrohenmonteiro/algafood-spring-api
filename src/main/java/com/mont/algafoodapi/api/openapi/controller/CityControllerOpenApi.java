@@ -1,4 +1,4 @@
-package com.mont.algafoodapi.api.controller.openapi;
+package com.mont.algafoodapi.api.openapi.controller;
 
 import java.util.List;
 

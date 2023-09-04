@@ -21,18 +21,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.CuisineDto;
 import com.mont.algafoodapi.api.model.input.CuisineInputDto;
+import com.mont.algafoodapi.api.openapi.controller.CuisineControllerOpenApi;
 import com.mont.algafoodapi.domain.model.Cuisine;
 import com.mont.algafoodapi.domain.repository.CuisineRepository;
 import com.mont.algafoodapi.domain.service.CuisineService;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/cuisine", produces = MediaType.APPLICATION_JSON_VALUE)
-public class CuisineController {
+public class CuisineController implements CuisineControllerOpenApi {
     
-
-
     @Autowired
     private CuisineService cuisineService;
 
@@ -41,7 +41,9 @@ public class CuisineController {
 
 
     @GetMapping
-    public ResponseEntity<Page<CuisineDto>> findAll(@PageableDefault(size = 10) Pageable pageable) {
+    public ResponseEntity<Page<CuisineDto>> findAll(
+        @PageableDefault(size = 10) @Nullable Pageable pageable
+        ) {
         return ResponseEntity.status(HttpStatus.OK).body(cuisineService.findAll(pageable));
     }
 
@@ -71,6 +73,5 @@ public class CuisineController {
                 return ResponseEntity.ok(cuisineRepository.findByName(name));
 
     }
-
  
 }

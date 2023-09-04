@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mont.algafoodapi.api.controller.openapi.GroupControllerOpenApi;
 import com.mont.algafoodapi.api.model.GroupDto;
 import com.mont.algafoodapi.api.model.input.GroupInputDto;
+import com.mont.algafoodapi.api.openapi.controller.GroupControllerOpenApi;
 import com.mont.algafoodapi.domain.service.GroupService;
 
 @RestController

@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mont.algafoodapi.api.controller.openapi.CityControllerOpenApi;
 import com.mont.algafoodapi.api.model.CityDto;
 import com.mont.algafoodapi.api.model.input.CityInputDto;
+import com.mont.algafoodapi.api.openapi.controller.CityControllerOpenApi;
 import com.mont.algafoodapi.domain.service.CityService;
 
 import io.swagger.v3.oas.annotations.Parameter;
