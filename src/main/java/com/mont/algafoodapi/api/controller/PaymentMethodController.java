@@ -22,6 +22,7 @@ import org.springframework.web.filter.ShallowEtagHeaderFilter;
 
 import com.mont.algafoodapi.api.model.PaymentMethodDto;
 import com.mont.algafoodapi.api.model.input.PaymentMethodInputDto;
+import com.mont.algafoodapi.api.openapi.controller.PaymentMethodControllerOpenApi;
 import com.mont.algafoodapi.domain.repository.PaymentMethodRepository;
 import com.mont.algafoodapi.domain.service.PaymentMethodService;
 
@@ -29,7 +30,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/payment-methods", produces = MediaType.APPLICATION_JSON_VALUE)
-public class PaymentMethodController {
+public class PaymentMethodController implements PaymentMethodControllerOpenApi{
     
     @Autowired
     private PaymentMethodService paymentMethodService;

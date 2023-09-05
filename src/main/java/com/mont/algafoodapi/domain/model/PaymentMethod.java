@@ -1,6 +1,6 @@
 package com.mont.algafoodapi.domain.model;
 
-import java.time.OffsetTime;
+import java.time.OffsetDateTime;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -27,6 +27,6 @@ public class PaymentMethod {
     private String description;
 
     @UpdateTimestamp
-    private OffsetTime updateDate;
+    private OffsetDateTime updateDate;
 
 }
