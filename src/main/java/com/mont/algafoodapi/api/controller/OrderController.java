@@ -16,13 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mont.algafoodapi.api.model.OrderDto;
 import com.mont.algafoodapi.api.model.OrderSummaryDto;
 import com.mont.algafoodapi.api.model.input.OrderInputDto;
+import com.mont.algafoodapi.api.openapi.controller.OrderControllerOpenApi;
 import com.mont.algafoodapi.domain.filter.OrderFilter;
 import com.mont.algafoodapi.domain.repository.OrderRepository;
 import com.mont.algafoodapi.domain.service.OrderService;
 
+import jakarta.annotation.Nullable;
+
 @RestController
 @RequestMapping(path = "/orders", produces = MediaType.APPLICATION_JSON_VALUE)
-public class OrderController {
+public class OrderController implements OrderControllerOpenApi {
     
     @Autowired
     private OrderService orderService;
@@ -31,12 +34,12 @@ public class OrderController {
     OrderRepository orderRepository;
 
     @GetMapping
-    public ResponseEntity<Page<OrderSummaryDto>> findAll(@PageableDefault(size = 10) Pageable pageable, OrderFilter filter) {
+    public ResponseEntity<Page<OrderSummaryDto>> findAll(@PageableDefault(size = 10) @Nullable Pageable pageable, @Nullable OrderFilter filter) {
         return ResponseEntity.ok(orderService.findAll(filter, pageable));
     }
 
     @GetMapping("/{orderCode}")
-    public ResponseEntity<OrderDto> findById(@PathVariable String orderCode) {
+    public ResponseEntity<OrderDto> findByCode(@PathVariable String orderCode) {
         return ResponseEntity.ok(orderService.findByCode(orderCode));
     }
 
