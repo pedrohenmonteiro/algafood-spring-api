@@ -134,16 +134,70 @@ public interface RestaurantControllerOpenApi {
     public ResponseEntity<Restaurant> findFirst();
     
 
+    @Operation(
+        summary = "Active a restaurant",
+        description = "Active a restaurant.",
+        responses = {
+            @ApiResponse(description = "No Content",responseCode = "204", content = @Content),
+            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+            @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+        }
+    )
     public ResponseEntity<Void> active(@PathVariable Long id);
 
+    @Operation(
+        summary = "Deactive a restaurant",
+        description = "Deactive a restaurant.",
+        responses = {
+            @ApiResponse(description = "No Content",responseCode = "204", content = @Content),
+            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+            @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+        }
+    )
     public ResponseEntity<Void> deactive(@PathVariable Long id);
 
+    @Operation(
+        summary = "Active a list of restaurants",
+        description = "Active a list of restaurants by passing an array of Id's.",
+        responses = {
+            @ApiResponse(description = "No Content",responseCode = "204", content = @Content),
+            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+            @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+        }
+    )
     public ResponseEntity<Void> activations(@RequestBody List<Long> ids);
 
+    @Operation(
+        summary = "Deactive a multiple restaurants",
+        description = "Deactive a multiple restaurants by passing an array of Id's.",
+        responses = {
+            @ApiResponse(description = "No Content",responseCode = "204", content = @Content),
+            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+            @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+        }
+    )
     public ResponseEntity<Void> deactivations(@RequestBody List<Long> ids);
 
-         public ResponseEntity<Void> opening(@PathVariable Long id);
+    @Operation(
+        summary = "Open a restaurant",
+        description = "Open a restaurant.",
+        responses = {
+            @ApiResponse(description = "No Content",responseCode = "204", content = @Content),
+            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+            @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+        }
+    )
+    public ResponseEntity<Void> opening(@PathVariable Long id);
 
-         public ResponseEntity<Void> closing(@PathVariable Long id);
+    @Operation(
+        summary = "Close a restaurant",
+        description = "Close a restaurant.",
+        responses = {
+            @ApiResponse(description = "No Content",responseCode = "204", content = @Content),
+            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+            @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+        }
+    )
+    public ResponseEntity<Void> closing(@PathVariable Long id);
 
 }
