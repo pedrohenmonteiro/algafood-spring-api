@@ -20,17 +20,19 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.mont.algafoodapi.api.model.RestaurantDto;
 import com.mont.algafoodapi.api.model.input.RestaurantInputDto;
 import com.mont.algafoodapi.api.model.view.RestaurantView;
+import com.mont.algafoodapi.api.openapi.controller.RestaurantControllerOpenApi;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.model.Restaurant;
 import com.mont.algafoodapi.domain.repository.RestaurantRepository;
 import com.mont.algafoodapi.domain.service.RestaurantService;
 
+import io.micrometer.common.lang.Nullable;
 import jakarta.validation.Valid;
 
 
 @RestController
 @RequestMapping(path = "/restaurants", produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestaurantController {
+public class RestaurantController implements RestaurantControllerOpenApi{
     
     @Autowired
     private RestaurantService restaurantService;
@@ -44,7 +46,7 @@ public class RestaurantController {
         return ResponseEntity.status(HttpStatus.OK).body(restaurantService.findAll());
     }
 
-     @JsonView(RestaurantView.OnlyName.class)
+    @JsonView(RestaurantView.OnlyName.class)
     @GetMapping(params = "proj=name")
     public ResponseEntity<List<RestaurantDto>> findAllName() {
         return findAll();
@@ -76,7 +78,10 @@ public class RestaurantController {
     }
 
     @GetMapping("/by-name-and-fee")
-    public ResponseEntity<List<Restaurant>> findByNameAndFee(String name, BigDecimal minDeliveryFee, BigDecimal maxDeliveryFee) {
+    public ResponseEntity<List<Restaurant>> findByNameAndFee(
+        @Nullable String name,
+        @Nullable BigDecimal minDeliveryFee,
+        @Nullable BigDecimal maxDeliveryFee) {
 
     return ResponseEntity.ok().body(restaurantRepository.findByNameAndFee(name, minDeliveryFee, maxDeliveryFee));
     }

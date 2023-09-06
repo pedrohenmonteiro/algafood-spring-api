@@ -97,6 +97,6 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryQueries {
 
     @Override
     public List<Restaurant> findByZeroDeliveryFee(String name) {
-        return restaurantRepository.findAll(RestaurantSpecs.findZeroDeliveryFee().and(RestaurantSpecs.findWithSimilarName(name)));
+        return restaurantRepository.findAll(RestaurantSpecs.findZeroDeliveryFee());
     }
     }

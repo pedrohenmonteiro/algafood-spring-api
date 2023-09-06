@@ -16,6 +16,6 @@ public class CuisineDto {
     private Long id;
     
     @JsonView(RestaurantView.Summary.class)
-    @Schema(example = "Chinese")
+    @Schema(example = "Italian")
     private String name;
 }

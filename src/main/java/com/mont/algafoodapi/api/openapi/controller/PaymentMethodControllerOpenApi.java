@@ -69,8 +69,8 @@ public interface PaymentMethodControllerOpenApi {
 
 
     @Operation(
-        summary = "Update a city",
-        description = "Update a city.",
+        summary = "Update a payment method",
+        description = "Update a payment method.",
         responses = {
             @ApiResponse(
                 description = "Success",
