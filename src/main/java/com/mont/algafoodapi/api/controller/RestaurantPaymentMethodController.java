@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.PaymentMethodDto;
+import com.mont.algafoodapi.api.openapi.controller.RestaurantPaymentMethodControllerOpenApi;
 import com.mont.algafoodapi.domain.service.RestaurantPaymentMethodsService;
 
 @RestController
 @RequestMapping(path = "/restaurants/{restaurantId}/payment-methods", produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestaurantPaymentMethodController {
+public class RestaurantPaymentMethodController implements RestaurantPaymentMethodControllerOpenApi {
     
     @Autowired
     private RestaurantPaymentMethodsService restaurantPaymentMethodsService;
