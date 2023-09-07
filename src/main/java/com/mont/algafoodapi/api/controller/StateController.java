@@ -17,16 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.StateDto;
 import com.mont.algafoodapi.api.model.input.StateInputDto;
+import com.mont.algafoodapi.api.openapi.controller.StateControllerOpenApi;
 import com.mont.algafoodapi.domain.service.StateService;
 
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/states", produces = MediaType.APPLICATION_JSON_VALUE)
-public class StateController {
+public class StateController implements StateControllerOpenApi{
     
-
-
     @Autowired
     private StateService stateService;
 
