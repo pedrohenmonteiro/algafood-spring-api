@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.ProductDto;
 import com.mont.algafoodapi.api.model.input.ProductInputDto;
+import com.mont.algafoodapi.api.openapi.controller.RestaurantProductControllerOpenApi;
 import com.mont.algafoodapi.domain.service.ProductService;
 
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/restaurants/{restaurantId}/products", produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestaurantProductController {
+public class RestaurantProductController implements RestaurantProductControllerOpenApi {
 
     @Autowired
     private ProductService productService;

@@ -22,7 +22,6 @@ public interface RestaurantPaymentMethodControllerOpenApi {
         responses = {
             @ApiResponse(description = "Success", responseCode = "200", content = @Content),
             @ApiResponse(description = "Restaurant Not Found", responseCode = "404", content = @Content)
-            
         }
     )
     public ResponseEntity<List<PaymentMethodDto>> findAll(@PathVariable Long restaurantId);

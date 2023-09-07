@@ -25,7 +25,6 @@ public class OrderItemDto {
     @Schema(example = "Ao ponto")
     private String observation;
 
-    @Schema(example = "Layers of pasta, meat sauce, and cheese")
     private ProductDto product;
 
 }
