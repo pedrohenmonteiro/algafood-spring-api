@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mont.algafoodapi.api.openapi.controller.StatusOrderControllerOpenApi;
 import com.mont.algafoodapi.domain.service.StatusOrderService;
 
 @RestController
 @RequestMapping(path = "/orders/{orderCode}", produces = MediaType.APPLICATION_JSON_VALUE)
-public class StatusOrderController {
+public class StatusOrderController implements StatusOrderControllerOpenApi {
     
     @Autowired
     private StatusOrderService statusOrderService;
