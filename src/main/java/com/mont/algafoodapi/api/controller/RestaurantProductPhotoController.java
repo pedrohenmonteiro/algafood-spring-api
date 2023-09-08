@@ -36,12 +36,12 @@ public class RestaurantProductPhotoController {
         return ResponseEntity.ok(catalogProductPhotoService.save(photoProductInput, restaurantId, productId));
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public ResponseEntity<ProductPhotoDto> findPhotoById(@PathVariable Long restaurantId, @PathVariable Long productId) throws IOException {
         return ResponseEntity.ok(catalogProductPhotoService.findPhotoById(restaurantId, productId));
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.ALL_VALUE)
     public  ResponseEntity<InputStreamResource> servePhoto(@PathVariable Long restaurantId, @PathVariable Long productId,
     @RequestHeader(name = "accept") String acceptHeader) throws HttpMediaTypeNotAcceptableException {
         try {

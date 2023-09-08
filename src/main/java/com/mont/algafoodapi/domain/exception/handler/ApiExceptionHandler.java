@@ -29,8 +29,12 @@ import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.ConflictException;
 import com.mont.algafoodapi.domain.exception.ExceptionResponse;
 import com.mont.algafoodapi.domain.exception.ExceptionResponse.Field;
+
+import lombok.extern.slf4j.Slf4j;
+
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 
+@Slf4j
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 
@@ -60,6 +64,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleUncaughtExceptions(Exception ex, WebRequest req)
     {
+        log.error(ex.getMessage(), ex);
+
         String errorMessage = "An unexpected internal system error has occurred."
         + "Try again later and if the problem persists contact the system administrator.";
         return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, req);
