@@ -44,9 +44,6 @@ public class CuisineController implements CuisineControllerOpenApi {
     public ResponseEntity<Page<CuisineDto>> findAll(
         @PageableDefault(size = 10) @Nullable Pageable pageable
         ) {
-            if (true) {
-                throw new RuntimeException();
-            }
         return ResponseEntity.status(HttpStatus.OK).body(cuisineService.findAll(pageable));
     }
 
