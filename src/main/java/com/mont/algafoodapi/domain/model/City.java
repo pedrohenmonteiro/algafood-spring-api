@@ -42,4 +42,5 @@ public class City {
     @JoinColumn(nullable = false)
     private State state;
 
+
 }

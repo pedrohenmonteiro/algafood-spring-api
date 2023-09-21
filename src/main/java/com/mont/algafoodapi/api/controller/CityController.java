@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,5 +57,18 @@ public class CityController implements CityControllerOpenApi {
         cityService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/tasks")
+    public String getTasks(@AuthenticationPrincipal Jwt jwt) {
+        return """
+        <h1>
+        Top secret tasks for %s
+        </h1>
+                <ul>
+                <li>user tasks</li>
+                </ul>
+        """.formatted(jwt.getSubject());
+    }
+
 
 }
