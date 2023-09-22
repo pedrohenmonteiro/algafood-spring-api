@@ -90,10 +90,10 @@ insert into permission (description, name) values
 insert into tb_group (name) values ('Manager'), ('Seller'), ("Secretary");
 
 insert into user (id, name, email, password, creation_date) values
-(1, 'João da Silva', 'joao.ger@algafood.com', '123', utc_timestamp),
-(2, 'Maria Joaquina', 'maria.vnd@algafood.com', '123', utc_timestamp),
-(3, 'José Souza', 'jose.aux@algafood.com', '123', utc_timestamp),
-(4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', utc_timestamp);      
+(1, 'João da Silva', 'joao.ger@algafood.com', '$2a$12$KcEhJ6HidTOeC4AcvXyTmewLX1prorgPB/APeft6RNyFeFLW1TS6G', utc_timestamp),
+(2, 'Maria Joaquina', 'maria.vnd@algafood.com', '$2a$12$KcEhJ6HidTOeC4AcvXyTmewLX1prorgPB/APeft6RNyFeFLW1TS6G', utc_timestamp),
+(3, 'José Souza', 'jose.aux@algafood.com', '$2a$12$KcEhJ6HidTOeC4AcvXyTmewLX1prorgPB/APeft6RNyFeFLW1TS6G', utc_timestamp),
+(4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '$2a$12$KcEhJ6HidTOeC4AcvXyTmewLX1prorgPB/APeft6RNyFeFLW1TS6G', utc_timestamp);      
 
 insert into group_permission (tb_group_id, permission_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1); 
 insert into user_group (user_id, tb_group_id) values (1, 1), (1, 2), (2, 2);
