@@ -73,28 +73,16 @@ public class UserService {
     }
 
 
-    public void changePassword(Long id, String currentPassword, String newPassword) {
+    public void updatePassword(Long id, String currentPassword, String newPassword) {
         var user = getUser(id);
 
         if(!passwordEncoder.matches(currentPassword, user.getPassword())) {
             throw new BadRequestException("Current password is invalid");
         }
         user.setPassword(passwordEncoder.encode(newPassword));
+
+        userRepository.save(user);
     }
-
-    /*
-     * @Transactional
-	public void alterarSenha(Long usuarioId, String senhaAtual, String novaSenha) {
-		Usuario usuario = buscarOuFalhar(usuarioId);
-		
-		if (!passwordEncoder.matches(senhaAtual, usuario.getSenha())) {
-			throw new NegocioException("Senha atual informada não coincide com a senha do usuário.");
-		}
-		
-		usuario.setSenha(passwordEncoder.encode(novaSenha));
-	}
-
-     */
 
     protected User getUser(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource user id " + id + " not found"));

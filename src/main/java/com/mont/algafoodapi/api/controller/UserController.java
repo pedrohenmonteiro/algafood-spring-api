@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.UserDto;
+import com.mont.algafoodapi.api.model.input.PasswordInputDto;
 import com.mont.algafoodapi.api.model.input.UserInputDto;
 import com.mont.algafoodapi.api.model.input.UserInputWithoutPasswordDto;
 import com.mont.algafoodapi.domain.service.UserService;
@@ -49,7 +50,12 @@ public class UserController {
         return ResponseEntity.ok(userService.update(id, userInputWithoutPasswordDto));
     }
 
-  
+    @PutMapping("/{id}/password")
+    public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody @Valid PasswordInputDto password) {
+        userService.changePassword(id, password.getCurrentPassword(), password.getNewPassword());
+        return ResponseEntity.noContent().build();
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
