@@ -49,6 +49,8 @@ public class UserController {
         return ResponseEntity.ok(userService.update(id, userInputWithoutPasswordDto));
     }
 
+  
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         userService.delete(id);

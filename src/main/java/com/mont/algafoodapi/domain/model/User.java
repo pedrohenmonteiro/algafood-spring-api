@@ -48,4 +48,8 @@ public class User {
     public boolean addGroup(Group group) {
         return getGroups().add(group);
     }
+
+    public boolean isNew() {
+        return getId() == null;
+    }
 }

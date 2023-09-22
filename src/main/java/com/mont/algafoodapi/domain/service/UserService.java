@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.mont.algafoodapi.api.mapper.UserMapper;
@@ -26,6 +27,9 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public List<UserDto> findAll() {
         return userMapper.toCollectionDto(userRepository.findAll());
     }
@@ -36,12 +40,14 @@ public class UserService {
     }
 
     public UserDto create(UserInputDto userInputDto) {
-        var user = userMapper.fromDtoToEntity(userInputDto);
         Optional<User> userExistent = userRepository.findByEmail(userInputDto.getEmail());
         if(userExistent.isPresent()) {
             throw new BadRequestException("Email already exists.");
         }
-
+        
+        var user = userMapper.fromDtoToEntity(userInputDto);
+        user.setPassword(passwordEncoder.encode(userInputDto.getPassword()));
+        
         return userMapper.fromEntityToDto(userRepository.save(user));
     }
 
@@ -65,6 +71,30 @@ public class UserService {
             throw new ConflictException("Cannot delete resource user id "+id+" due to existing references");
         }
     }
+
+
+    public void changePassword(Long id, String currentPassword, String newPassword) {
+        var user = getUser(id);
+
+        if(!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new BadRequestException("Current password is invalid");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+    }
+
+    /*
+     * @Transactional
+	public void alterarSenha(Long usuarioId, String senhaAtual, String novaSenha) {
+		Usuario usuario = buscarOuFalhar(usuarioId);
+		
+		if (!passwordEncoder.matches(senhaAtual, usuario.getSenha())) {
+			throw new NegocioException("Senha atual informada não coincide com a senha do usuário.");
+		}
+		
+		usuario.setSenha(passwordEncoder.encode(novaSenha));
+	}
+
+     */
 
     protected User getUser(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Resource user id " + id + " not found"));
