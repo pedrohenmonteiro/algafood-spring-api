@@ -52,7 +52,7 @@ public class UserController {
 
     @PutMapping("/{id}/password")
     public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody @Valid PasswordInputDto password) {
-        userService.changePassword(id, password.getCurrentPassword(), password.getNewPassword());
+        userService.updatePassword(id, password.getCurrentPassword(), password.getNewPassword());
         return ResponseEntity.noContent().build();
     }
 

@@ -14,6 +14,7 @@ import com.mont.algafoodapi.api.model.OrderDto;
 import com.mont.algafoodapi.api.model.OrderSummaryDto;
 import com.mont.algafoodapi.api.model.input.OrderInputDto;
 import com.mont.algafoodapi.core.data.PageableTranslator;
+import com.mont.algafoodapi.core.security.AppSecurity;
 import com.mont.algafoodapi.domain.exception.BadRequestException;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.filter.OrderFilter;
@@ -53,6 +54,9 @@ public class OrderService {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired 
+    private AppSecurity appSecurity;
     
     public Page<OrderSummaryDto> findAll(OrderFilter filter, Pageable pageable) {
         pageable = translatePageable(pageable);
@@ -71,7 +75,7 @@ public class OrderService {
     @Transactional
     public OrderDto create(OrderInputDto orderInputDto) {
         var order = orderMapper.fromDtoToEntity(orderInputDto);
-        var user = userRepository.findById(1L).orElseThrow();
+        var user = userRepository.findById(appSecurity.getUserId()).orElseThrow();
         order.setClient(user);
 
         validateOrder(order);

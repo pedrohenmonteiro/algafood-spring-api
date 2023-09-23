@@ -22,6 +22,7 @@ import com.mont.algafoodapi.domain.repository.OrderRepository;
 import com.mont.algafoodapi.domain.service.OrderService;
 
 import jakarta.annotation.Nullable;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/orders", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -44,7 +45,7 @@ public class OrderController implements OrderControllerOpenApi {
     }
 
     @PostMapping
-    public ResponseEntity<OrderDto> create(@RequestBody OrderInputDto orderInputDto) {
+    public ResponseEntity<OrderDto> create(@RequestBody @Valid OrderInputDto orderInputDto) {
         return ResponseEntity.ok(orderService.create(orderInputDto));
     }
 
