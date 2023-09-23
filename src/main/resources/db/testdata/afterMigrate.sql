@@ -83,11 +83,28 @@ Insert into product (name, description, price, active, restaurant_id) values
 ('Feijoada', 'Traditional Brazilian black bean stew with pork', 42, true, 4),
 ('Picanha na Brasa', 'Grilled prime beef steak served with Brazilian side dishes', 55, true, 4);
 
-insert into permission (description, name) values 
-('Allows to query cuisine', 'QUERY_CUISINE'),
-('Allows to edit cuisine', 'EDIT_CUISINE');
+insert into permission (id, description, name) values 
+(1, 'Allows to query cuisine', 'QUERY_CUISINE'),
+(2, 'Allows to edit cuisine', 'EDIT_CUISINE'),
+(3, 'Allows to query cities', 'QUERY_CITIES'),
+(4, 'Allows to edit cities', 'EDIT_CITIES'),
+(5, 'Allows to query payment methods', 'QUERY_PAYMENT_METHODS'),
+(6, 'Allows to edit payment methods', 'EDIT_PAYMENT_METHODS'),
+(7, 'Allows to query restaurants', 'QUERY_RESTAURANTS'),
+(8, 'Allows to edit restaurants', 'EDIT_RESTAURANTS'),
+(9, 'Allows to query states', 'QUERY_STATES'),
+(10, 'Allows to edit states', 'EDIT_STATES'),
+(11, 'Allows to query products', 'QUERY_PRODUCTS'),
+(12, 'Allows to edit products', 'EDIT_PRODUCTS'),
+(13, 'Allows to query users', 'QUERY_USERS'),
+(14, 'Allows to edit users', 'EDIT_USERS'),
+(15, 'Allows to query orders', 'QUERY_ORDERS'),
+(16, 'Allows to manage orders', 'MANAGE_ORDERS'),
+(17, 'Allows to create orders', 'CREATE_REPORTS');
 
-insert into tb_group (name) values ('Manager'), ('Seller'), ("Secretary");
+
+
+insert into tb_group (id, name) values (1, 'Manager'), (2, 'Seller'), (3, "Assistant"), (4, "Register");
 
 insert into user (id, name, email, password, creation_date) values
 (1, 'João da Silva', 'joao.ger@algafood.com', '$2a$12$KcEhJ6HidTOeC4AcvXyTmewLX1prorgPB/APeft6RNyFeFLW1TS6G', utc_timestamp),
@@ -95,7 +112,24 @@ insert into user (id, name, email, password, creation_date) values
 (3, 'José Souza', 'jose.aux@algafood.com', '$2a$12$KcEhJ6HidTOeC4AcvXyTmewLX1prorgPB/APeft6RNyFeFLW1TS6G', utc_timestamp),
 (4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '$2a$12$KcEhJ6HidTOeC4AcvXyTmewLX1prorgPB/APeft6RNyFeFLW1TS6G', utc_timestamp);      
 
-insert into group_permission (tb_group_id, permission_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1); 
+#Add all permissions in manager group
+insert into group_permission (tb_group_id, permission_id)
+select 1, id from permission;
+
+#Add permissions in seller group
+insert into group_permission (tb_group_id, permission_id)
+select 2, id from permission where name like 'QUERY_%';
+
+insert into group_permission (tb_group_id, permission_id) values (2, 14);
+
+#Add permissions in assistant group
+insert into group_permission (tb_group_id, permission_id)
+select 3, id from permission where name like 'QUERY_%';
+
+#Add permissions in register group
+insert into group_permission (tb_group_id, permission_id)
+select 4, id from permission where name like '%_RESTAURANTS' or name like '%_PRODUCTS';
+
 insert into user_group (user_id, tb_group_id) values (1, 1), (1, 2), (2, 2);
 
 insert into user (id, name, email, password, creation_date) values
