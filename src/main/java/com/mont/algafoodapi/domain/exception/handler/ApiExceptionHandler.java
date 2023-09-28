@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -61,6 +62,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 
     }
 
+    @ExceptionHandler(AccessDeniedException.class) 
+        public ResponseEntity<?> handleAccessDeniedException(Exception ex, WebRequest req)
+    {
+        String errorMessage = "You do not have permission to perform this operation";
+        return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), HttpStatus.FORBIDDEN, req);
+
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleUncaughtExceptions(Exception ex, WebRequest req)
     {
@@ -79,6 +88,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
         
         return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), status, req);
     }
+
 
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(
