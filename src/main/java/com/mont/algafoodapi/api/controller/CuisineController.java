@@ -9,6 +9,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +41,7 @@ public class CuisineController implements CuisineControllerOpenApi {
     private CuisineRepository cuisineRepository;
 
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping
     public ResponseEntity<Page<CuisineDto>> findAll(
         @PageableDefault(size = 10) @Nullable Pageable pageable
@@ -47,21 +49,25 @@ public class CuisineController implements CuisineControllerOpenApi {
         return ResponseEntity.status(HttpStatus.OK).body(cuisineService.findAll(pageable));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
     public ResponseEntity<CuisineDto> findById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(cuisineService.findById(id));
     }
 
+    @PreAuthorize("hasAuthority('EDIT_CUISINE')") 
     @PostMapping
     public ResponseEntity<CuisineDto> create(@RequestBody @Valid CuisineInputDto cuisineInputDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(cuisineService.create(cuisineInputDto));
     }
 
+    @PreAuthorize("hasAuthority('EDIT_CUISINE')") 
     @PutMapping("/{id}")
     public ResponseEntity<CuisineDto> update(@PathVariable Long id, @RequestBody @Valid CuisineInputDto cuisineInputDto) {
         return ResponseEntity.status(HttpStatus.OK).body(cuisineService.update(id, cuisineInputDto));
     }
 
+    @PreAuthorize("hasAuthority('EDIT_CUISINE')") 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         cuisineService.delete(id);

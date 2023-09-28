@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,15 +17,14 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableMethodSecurity(prePostEnabled = true)
 public class ResourceServerConfig {
     
     @Bean
     SecurityFilterChain resourceServerFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((authorize) -> authorize
-            .requestMatchers(HttpMethod.POST, "/cuisine/**").hasAuthority("EDIT_CUISINE")
-            .requestMatchers(HttpMethod.PUT, "/cuisine/**").hasAuthority("EDIT_CUISINE")
-            .requestMatchers(HttpMethod.GET, "/cuisine/**").authenticated()
-            .anyRequest().denyAll())
+        http
+        .csrf(crsf -> crsf.disable())
+        .cors(Customizer.withDefaults())
         .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()).jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
 
 
