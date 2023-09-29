@@ -41,28 +41,28 @@ public class RestaurantController implements RestaurantControllerOpenApi{
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    @CheckSecurity.Restaurants.allowQuery
+    @CheckSecurity.Restaurants.allowsQuery
     @JsonView(RestaurantView.Summary.class)
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<RestaurantDto>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(restaurantService.findAll());
     }
 
-    @CheckSecurity.Restaurants.allowQuery
+    @CheckSecurity.Restaurants.allowsQuery
     @JsonView(RestaurantView.OnlyName.class)
     @GetMapping(params = "proj=name")
     public ResponseEntity<List<RestaurantDto>> findAllName() {
         return findAll();
     }
 
-    @CheckSecurity.Restaurants.allowQuery    
+    @CheckSecurity.Restaurants.allowsQuery    
     @GetMapping("/{id}")
     public ResponseEntity<RestaurantDto> findById(@PathVariable Long id) {
 
         return ResponseEntity.status(HttpStatus.OK).body(restaurantService.findById(id));
     }
 
-    @CheckSecurity.Restaurants.allowEdit
+    @CheckSecurity.Restaurants.allowsEdit
     @PostMapping
     public ResponseEntity<RestaurantDto> create(@RequestBody @Valid RestaurantInputDto restaurantInputDto) {
         
@@ -70,20 +70,20 @@ public class RestaurantController implements RestaurantControllerOpenApi{
         return ResponseEntity.status(HttpStatus.CREATED).body(restaurantService.create(restaurantInputDto));
     }
 
-    @CheckSecurity.Restaurants.allowEdit    
+    @CheckSecurity.Restaurants.allowsEdit    
     @PutMapping("/{id}")
     public ResponseEntity<RestaurantDto> update(@PathVariable Long id,@RequestBody @Valid RestaurantInputDto restaurantInputDto) {
         return ResponseEntity.status(HttpStatus.OK).body(restaurantService.update(id, restaurantInputDto));
     }
 
-    @CheckSecurity.Restaurants.allowEdit    
+    @CheckSecurity.Restaurants.allowsEdit    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         restaurantService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @CheckSecurity.Restaurants.allowQuery      
+    @CheckSecurity.Restaurants.allowsQuery      
     @GetMapping("/by-name-and-fee")
     public ResponseEntity<List<Restaurant>> findByNameAndFee(
         @Nullable String name,
@@ -93,55 +93,55 @@ public class RestaurantController implements RestaurantControllerOpenApi{
     return ResponseEntity.ok().body(restaurantRepository.findByNameAndFee(name, minDeliveryFee, maxDeliveryFee));
     }
 
-    @CheckSecurity.Restaurants.allowQuery  
+    @CheckSecurity.Restaurants.allowsQuery  
     @GetMapping("/free-delivery-fee")
     public ResponseEntity<List<Restaurant>> findByZeroDeliveryFee(String name) {
 
         return ResponseEntity.ok(restaurantRepository.findByZeroDeliveryFee(name));
     }
 
-    @CheckSecurity.Restaurants.allowQuery      
+    @CheckSecurity.Restaurants.allowsQuery      
     @GetMapping("/first")
     public ResponseEntity<Restaurant> findFirst() {
         return ResponseEntity.ok(restaurantRepository.findFirst().orElseThrow(() -> new NotFoundException("Resource not found")));
     }
 
-    @CheckSecurity.Restaurants.allowEdit  
+    @CheckSecurity.Restaurants.allowsEdit  
     @PutMapping("/{id}/active")
     public ResponseEntity<Void> active(@PathVariable Long id) {
         restaurantService.active(id);
         return ResponseEntity.noContent().build();
     }
 
-    @CheckSecurity.Restaurants.allowEdit  
+    @CheckSecurity.Restaurants.allowsEdit  
     @DeleteMapping("/{id}/active")
     public ResponseEntity<Void> deactive(@PathVariable Long id) {
         restaurantService.deactive(id);
         return ResponseEntity.noContent().build();
     }
 
-    @CheckSecurity.Restaurants.allowEdit
+    @CheckSecurity.Restaurants.allowsEdit
     @PutMapping("/activations")
     public ResponseEntity<Void> activations(@RequestBody List<Long> ids) {
         restaurantService.active(ids);
         return ResponseEntity.noContent().build();
     }
 
-    @CheckSecurity.Restaurants.allowEdit  
+    @CheckSecurity.Restaurants.allowsEdit  
     @DeleteMapping("/activations")
     public ResponseEntity<Void> deactivations(@RequestBody List<Long> ids) {
         restaurantService.deactive(ids);
         return ResponseEntity.noContent().build();
     }
 
-    @CheckSecurity.Restaurants.allowManageOperation
+    @CheckSecurity.Restaurants.allowsManageOperation
     @PutMapping("/{id}/opening") 
          public ResponseEntity<Void> opening(@PathVariable Long id) {
         restaurantService.openRestaurant(id);
         return ResponseEntity.noContent().build();
     }
 
-    @CheckSecurity.Restaurants.allowManageOperation
+    @CheckSecurity.Restaurants.allowsManageOperation
     @PutMapping("/{id}/closing") 
          public ResponseEntity<Void> closing(@PathVariable Long id) {
         restaurantService.closeRestaurant(id);

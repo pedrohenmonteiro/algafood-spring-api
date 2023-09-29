@@ -24,20 +24,20 @@ public class RestaurantResponsibleController implements RestaurantResponsibleCon
     @Autowired
     private RestaurantUserService restaurantUserService;
 
-    @CheckSecurity.Restaurants.allowQuery
+    @CheckSecurity.Restaurants.allowsQuery
     @GetMapping
     public ResponseEntity<List<UserDto>> findAll(@PathVariable Long restaurantId) {
         return ResponseEntity.ok(restaurantUserService.findAll(restaurantId));
     }
 
-    @CheckSecurity.Restaurants.allowEdit
+    @CheckSecurity.Restaurants.allowsEdit
     @PutMapping("/{responsibleId}")
     public ResponseEntity<Void> associateResponsible(@PathVariable Long restaurantId, @PathVariable Long responsibleId) {
         restaurantUserService.associateUser(restaurantId, responsibleId);
         return ResponseEntity.noContent().build();
     }
 
-    @CheckSecurity.Restaurants.allowEdit
+    @CheckSecurity.Restaurants.allowsEdit
     @DeleteMapping("/{responsibleId}")
     public ResponseEntity<Void> disassociateResponsible(@PathVariable Long restaurantId, @PathVariable Long responsibleId) {
         restaurantUserService.disassociateUser(restaurantId, responsibleId);

@@ -25,20 +25,20 @@ public class RestaurantPaymentMethodController implements RestaurantPaymentMetho
     private RestaurantPaymentMethodsService restaurantPaymentMethodsService;
 
 
-     @CheckSecurity.Restaurants.allowQuery  
+     @CheckSecurity.Restaurants.allowsQuery  
      @GetMapping
      public ResponseEntity<List<PaymentMethodDto>> findAll(@PathVariable Long restaurantId) {
         return ResponseEntity.ok(restaurantPaymentMethodsService.findAll(restaurantId));
     }
 
-     @CheckSecurity.Restaurants.allowEdit
+     @CheckSecurity.Restaurants.allowsEdit
      @DeleteMapping("/{paymentMethodId}")
      public ResponseEntity<Void> disassociate(@PathVariable Long restaurantId, @PathVariable Long paymentMethodId) {
         restaurantPaymentMethodsService.disassociatePaymentMethod(restaurantId, paymentMethodId);
         return ResponseEntity.noContent().build();
      }
      
-     @CheckSecurity.Restaurants.allowEdit
+     @CheckSecurity.Restaurants.allowsEdit
      @PutMapping("/{paymentMethodId}")
      public ResponseEntity<Void> associate(@PathVariable Long restaurantId, @PathVariable Long paymentMethodId) {
         restaurantPaymentMethodsService.associatePaymentMethod(restaurantId, paymentMethodId);

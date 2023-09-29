@@ -16,29 +16,29 @@ public @interface CheckSecurity {
         @PreAuthorize("hasAuthority('SCOPE_read') and isAuthenticated()")
         @Retention(RetentionPolicy.RUNTIME)
         @Target(ElementType.METHOD)
-        public @interface allowQuery {}
+        public @interface allowsQuery {}
 
         @PreAuthorize("hasAuthority('SCOPE_write') and hasAuthority('EDIT_CUISINE')")
         @Retention(RetentionPolicy.RUNTIME)
         @Target(ElementType.METHOD)
-        public @interface allowEdit {}
+        public @interface allowsEdit {}
     }
 
     public @interface Restaurants {
         @PreAuthorize("hasAuthority('SCOPE_read') and isAuthenticated()")
         @Retention(RetentionPolicy.RUNTIME)
         @Target(ElementType.METHOD)
-        public @interface allowQuery {}
+        public @interface allowsQuery {}
 
         @PreAuthorize("hasAuthority('SCOPE_write') and hasAuthority('EDIT_RESTAURANTS')")
         @Retention(RetentionPolicy.RUNTIME)
         @Target(ElementType.METHOD)
-        public @interface allowEdit {}
+        public @interface allowsEdit {}
 
         @PreAuthorize("hasAuthority('SCOPE_write') and hasAuthority('EDIT_RESTAURANTS') or @appSecurity.manageRestaurant(#id)")
         @Retention(RetentionPolicy.RUNTIME)
         @Target(ElementType.METHOD)
-        public @interface allowManageOperation {}
+        public @interface allowsManageOperation {}
 
     }
 
@@ -50,6 +50,17 @@ public @interface CheckSecurity {
 				+ "@appSecurity.manageRestaurant(returnObject.body.restaurant.id)")
         @Retention(RetentionPolicy.RUNTIME)
         @Target(ElementType.METHOD)
-        public @interface allowQuery {}
+        public @interface allowsQuery {}
+
+
+        @PreAuthorize("@appSecurity.allowsSearchOrder(#filter.clientId, #filter.restaurantId)")
+        @Retention(RetentionPolicy.RUNTIME)
+        @Target(ElementType.METHOD)
+        public @interface allowsSearch {}
+
+        @PreAuthorize("@appSecurity.allowsManageOrder(#orderCode)")
+        @Retention(RetentionPolicy.RUNTIME)
+        @Target(ElementType.METHOD)
+        public @interface allowsManage {}
     }
 }

@@ -29,7 +29,7 @@ public class RestaurantProductController implements RestaurantProductControllerO
     @Autowired
     private ProductService productService;
 
-    @CheckSecurity.Restaurants.allowQuery
+    @CheckSecurity.Restaurants.allowsQuery
     @GetMapping
     public ResponseEntity<List<ProductDto>> findAll(@PathVariable Long restaurantId, @RequestParam(required = false) boolean includeInactive) {
         var response = ResponseEntity.ok(productService.findAllActives(restaurantId));
@@ -39,19 +39,19 @@ public class RestaurantProductController implements RestaurantProductControllerO
         return response;
     }
 
-    @CheckSecurity.Restaurants.allowQuery
+    @CheckSecurity.Restaurants.allowsQuery
     @GetMapping("/{productId}")
     public ResponseEntity<ProductDto> findById(@PathVariable Long restaurantId, @PathVariable Long productId) {
         return ResponseEntity.ok(productService.findById(restaurantId, productId));
     }
 
-    @CheckSecurity.Restaurants.allowManageOperation
+    @CheckSecurity.Restaurants.allowsManageOperation
     @PostMapping
     public ResponseEntity<ProductDto> create(@PathVariable Long restaurantId, @RequestBody @Valid ProductInputDto productInputDto) {
         return ResponseEntity.ok(productService.create(restaurantId, productInputDto));
     }
 
-    @CheckSecurity.Restaurants.allowManageOperation
+    @CheckSecurity.Restaurants.allowsManageOperation
     @PutMapping("/{productId}")
      public ResponseEntity<ProductDto> update(@PathVariable Long restaurantId, @PathVariable Long productId, @RequestBody @Valid ProductInputDto productInputDto) {
         return ResponseEntity.ok(productService.update(restaurantId,productId, productInputDto));

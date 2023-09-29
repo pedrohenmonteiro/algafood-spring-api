@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
+import com.mont.algafoodapi.domain.repository.OrderRepository;
 import com.mont.algafoodapi.domain.repository.RestaurantRepository;
 
 
@@ -14,6 +15,9 @@ public class AppSecurity {
 
     @Autowired
     private RestaurantRepository restaurantRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
     
     public Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
@@ -32,11 +36,40 @@ public class AppSecurity {
     }
 
     public boolean manageRestaurant(Long restaurantId) {
+        if (restaurantId == null) {
+            return false;
+        }
         return restaurantRepository.existsResponsible(restaurantId, getUserId());
+    }
+
+    public boolean manageRestaurantOfOrder(String code) {
+        return orderRepository.isOrderManagedBy(code, getUserId());
+    }
+
+    public boolean hasAuthority(String authorityName) {
+        return getAuthentication().getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals(authorityName));
     }
 
     public boolean userAuthenticatedEqual(Long userId) {
 		return getUserId() != null && userId != null
 				&& getUserId().equals(userId);
 	}
+
+    public boolean hasScopeRead() {
+        return hasAuthority("SCOPE_read");
+    }
+
+    public boolean hasScopeWrite() {
+        return hasAuthority("SCOPE_write");
+    }
+
+    public boolean allowsSearchOrder(Long clientId, Long restaurantId) {
+        return hasScopeRead() && (hasAuthority("QUERY_ORDERS") || userAuthenticatedEqual(clientId) || manageRestaurant(restaurantId));
+    
+    }
+
+    public boolean allowsManageOrder(String orderCode) {
+        return hasScopeRead() && (hasAuthority("MANAGE_ORDERS") || manageRestaurantOfOrder(orderCode));
+    
+    }
 }

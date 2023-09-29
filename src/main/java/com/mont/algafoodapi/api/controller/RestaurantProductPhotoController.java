@@ -30,7 +30,7 @@ public class RestaurantProductPhotoController {
     @Autowired
     private CatalogProductPhotoService catalogProductPhotoService;
 
-    @CheckSecurity.Restaurants.allowEdit
+    @CheckSecurity.Restaurants.allowsEdit
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ProductPhotoDto> updatePhoto(@PathVariable Long restaurantId, @PathVariable Long productId,
      @Valid ProductPhotoInputDto photoProductInput) throws IOException {
@@ -38,13 +38,13 @@ public class RestaurantProductPhotoController {
         return ResponseEntity.ok(catalogProductPhotoService.save(photoProductInput, restaurantId, productId));
     }
 
-    @CheckSecurity.Restaurants.allowQuery
+    @CheckSecurity.Restaurants.allowsQuery
     @GetMapping
     public ResponseEntity<ProductPhotoDto> findPhotoById(@PathVariable Long restaurantId, @PathVariable Long productId) throws IOException {
         return ResponseEntity.ok(catalogProductPhotoService.findPhotoById(restaurantId, productId));
     }
 
-    @CheckSecurity.Restaurants.allowEdit
+    @CheckSecurity.Restaurants.allowsEdit
     @GetMapping(produces = MediaType.ALL_VALUE)
     public  ResponseEntity<InputStreamResource> servePhoto(@PathVariable Long restaurantId, @PathVariable Long productId,
     @RequestHeader(name = "accept") String acceptHeader) throws HttpMediaTypeNotAcceptableException {
@@ -55,7 +55,7 @@ public class RestaurantProductPhotoController {
         }
     }
 
-    @CheckSecurity.Restaurants.allowEdit
+    @CheckSecurity.Restaurants.allowsEdit
     @DeleteMapping
     public ResponseEntity<Void> delete(@PathVariable Long restaurantId, @PathVariable Long productId) {
         catalogProductPhotoService.delete(restaurantId, productId);

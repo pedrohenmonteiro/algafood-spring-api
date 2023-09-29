@@ -35,12 +35,13 @@ public class OrderController implements OrderControllerOpenApi {
     @Autowired
     OrderRepository orderRepository;
 
+    @CheckSecurity.Orders.allowsSearch
     @GetMapping
     public ResponseEntity<Page<OrderSummaryDto>> findAll(@PageableDefault(size = 10) @Nullable Pageable pageable, @Nullable OrderFilter filter) {
         return ResponseEntity.ok(orderService.findAll(filter, pageable));
     }
 
-    @CheckSecurity.Orders.allowQuery
+    @CheckSecurity.Orders.allowsQuery
     @GetMapping("/{orderCode}")
     public ResponseEntity<OrderDto> findByCode(@PathVariable String orderCode) {
         return ResponseEntity.ok(orderService.findByCode(orderCode));
