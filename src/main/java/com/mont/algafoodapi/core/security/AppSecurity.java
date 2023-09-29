@@ -1,13 +1,19 @@
 package com.mont.algafoodapi.core.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
+import com.mont.algafoodapi.domain.repository.RestaurantRepository;
+
 
 @Component
 public class AppSecurity {
+
+    @Autowired
+    private RestaurantRepository restaurantRepository;
     
     public Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
@@ -23,5 +29,9 @@ public class AppSecurity {
         }
 
         return Long.valueOf(userId);
+    }
+
+    public boolean manageRestaurant(Long restaurantId) {
+        return restaurantRepository.existsResponsible(restaurantId, getUserId());
     }
 }

@@ -134,14 +134,14 @@ public class RestaurantController implements RestaurantControllerOpenApi{
         return ResponseEntity.noContent().build();
     }
 
-    @CheckSecurity.Restaurants.allowEdit  
+    @CheckSecurity.Restaurants.allowManageOperation
     @PutMapping("/{id}/opening") 
          public ResponseEntity<Void> opening(@PathVariable Long id) {
         restaurantService.openRestaurant(id);
         return ResponseEntity.noContent().build();
     }
 
-    @CheckSecurity.Restaurants.allowEdit
+    @CheckSecurity.Restaurants.allowManageOperation
     @PutMapping("/{id}/closing") 
          public ResponseEntity<Void> closing(@PathVariable Long id) {
         restaurantService.closeRestaurant(id);

@@ -99,4 +99,5 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryQueries {
     public List<Restaurant> findByZeroDeliveryFee(String name) {
         return restaurantRepository.findAll(RestaurantSpecs.findZeroDeliveryFee());
     }
+    
     }

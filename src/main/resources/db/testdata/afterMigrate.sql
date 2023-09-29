@@ -103,7 +103,8 @@ insert into user (id, name, email, password, creation_date) values
 (1, 'João da Silva', 'joao.ger@algafood.com', '$2a$12$KcEhJ6HidTOeC4AcvXyTmewLX1prorgPB/APeft6RNyFeFLW1TS6G', utc_timestamp),
 (2, 'Maria Joaquina', 'maria.vnd@algafood.com', '$2a$12$KcEhJ6HidTOeC4AcvXyTmewLX1prorgPB/APeft6RNyFeFLW1TS6G', utc_timestamp),
 (3, 'José Souza', 'jose.aux@algafood.com', '$2a$12$KcEhJ6HidTOeC4AcvXyTmewLX1prorgPB/APeft6RNyFeFLW1TS6G', utc_timestamp),
-(4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '$2a$12$KcEhJ6HidTOeC4AcvXyTmewLX1prorgPB/APeft6RNyFeFLW1TS6G', utc_timestamp);      
+(4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '$2a$12$KcEhJ6HidTOeC4AcvXyTmewLX1prorgPB/APeft6RNyFeFLW1TS6G', utc_timestamp),
+(5, 'Manoel Lima', 'manoel.loja@gmail.com', '$2a$12$KcEhJ6HidTOeC4AcvXyTmewLX1prorgPB/APeft6RNyFeFLW1TS6G', utc_timestamp);
 
 #Add all permissions in manager group
 insert into group_permission (tb_group_id, permission_id)
@@ -125,9 +126,6 @@ insert into group_permission (tb_group_id, permission_id)
 select 4, id from permission where name like '%_RESTAURANTS' or name like '%_PRODUCTS';
 
 insert into user_group (user_id, tb_group_id) values (1, 1), (1, 2), (2, 2);
-
-insert into user (id, name, email, password, creation_date) values
-(5, 'Manoel Lima', 'manoel.loja@gmail.com', '123', utc_timestamp);
 
 insert into restaurant_responsible_user(restaurant_id, user_id) values (1, 5), (3, 5);
 
