@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.PaymentMethodDto;
 import com.mont.algafoodapi.api.openapi.controller.RestaurantPaymentMethodControllerOpenApi;
+import com.mont.algafoodapi.core.security.CheckSecurity;
 import com.mont.algafoodapi.domain.service.RestaurantPaymentMethodsService;
 
 @RestController
@@ -24,26 +25,24 @@ public class RestaurantPaymentMethodController implements RestaurantPaymentMetho
     private RestaurantPaymentMethodsService restaurantPaymentMethodsService;
 
 
-      @GetMapping
-    public ResponseEntity<List<PaymentMethodDto>> findAll(@PathVariable Long restaurantId) {
+     @CheckSecurity.Restaurants.allowQuery  
+     @GetMapping
+     public ResponseEntity<List<PaymentMethodDto>> findAll(@PathVariable Long restaurantId) {
         return ResponseEntity.ok(restaurantPaymentMethodsService.findAll(restaurantId));
     }
 
+     @CheckSecurity.Restaurants.allowEdit
      @DeleteMapping("/{paymentMethodId}")
      public ResponseEntity<Void> disassociate(@PathVariable Long restaurantId, @PathVariable Long paymentMethodId) {
         restaurantPaymentMethodsService.disassociatePaymentMethod(restaurantId, paymentMethodId);
         return ResponseEntity.noContent().build();
      }
-
+     
+     @CheckSecurity.Restaurants.allowEdit
      @PutMapping("/{paymentMethodId}")
      public ResponseEntity<Void> associate(@PathVariable Long restaurantId, @PathVariable Long paymentMethodId) {
         restaurantPaymentMethodsService.associatePaymentMethod(restaurantId, paymentMethodId);
         return ResponseEntity.noContent().build();
      }
-
-          
-          
-
-     
-     
+ 
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.ProductPhotoDto;
 import com.mont.algafoodapi.api.model.input.ProductPhotoInputDto;
+import com.mont.algafoodapi.core.security.CheckSecurity;
 import com.mont.algafoodapi.domain.exception.NotFoundException;
 import com.mont.algafoodapi.domain.service.CatalogProductPhotoService;
 
@@ -29,6 +30,7 @@ public class RestaurantProductPhotoController {
     @Autowired
     private CatalogProductPhotoService catalogProductPhotoService;
 
+    @CheckSecurity.Restaurants.allowEdit
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ProductPhotoDto> updatePhoto(@PathVariable Long restaurantId, @PathVariable Long productId,
      @Valid ProductPhotoInputDto photoProductInput) throws IOException {
@@ -36,11 +38,13 @@ public class RestaurantProductPhotoController {
         return ResponseEntity.ok(catalogProductPhotoService.save(photoProductInput, restaurantId, productId));
     }
 
+    @CheckSecurity.Restaurants.allowQuery
     @GetMapping
     public ResponseEntity<ProductPhotoDto> findPhotoById(@PathVariable Long restaurantId, @PathVariable Long productId) throws IOException {
         return ResponseEntity.ok(catalogProductPhotoService.findPhotoById(restaurantId, productId));
     }
 
+    @CheckSecurity.Restaurants.allowEdit
     @GetMapping(produces = MediaType.ALL_VALUE)
     public  ResponseEntity<InputStreamResource> servePhoto(@PathVariable Long restaurantId, @PathVariable Long productId,
     @RequestHeader(name = "accept") String acceptHeader) throws HttpMediaTypeNotAcceptableException {
@@ -51,6 +55,7 @@ public class RestaurantProductPhotoController {
         }
     }
 
+    @CheckSecurity.Restaurants.allowEdit
     @DeleteMapping
     public ResponseEntity<Void> delete(@PathVariable Long restaurantId, @PathVariable Long productId) {
         catalogProductPhotoService.delete(restaurantId, productId);

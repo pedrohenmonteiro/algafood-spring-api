@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mont.algafoodapi.api.model.ProductDto;
 import com.mont.algafoodapi.api.model.input.ProductInputDto;
 import com.mont.algafoodapi.api.openapi.controller.RestaurantProductControllerOpenApi;
+import com.mont.algafoodapi.core.security.CheckSecurity;
 import com.mont.algafoodapi.domain.service.ProductService;
 
 import jakarta.validation.Valid;
@@ -28,6 +29,7 @@ public class RestaurantProductController implements RestaurantProductControllerO
     @Autowired
     private ProductService productService;
 
+    @CheckSecurity.Restaurants.allowQuery
     @GetMapping
     public ResponseEntity<List<ProductDto>> findAll(@PathVariable Long restaurantId, @RequestParam(required = false) boolean includeInactive) {
         var response = ResponseEntity.ok(productService.findAllActives(restaurantId));
@@ -37,16 +39,19 @@ public class RestaurantProductController implements RestaurantProductControllerO
         return response;
     }
 
+    @CheckSecurity.Restaurants.allowQuery
     @GetMapping("/{productId}")
     public ResponseEntity<ProductDto> findById(@PathVariable Long restaurantId, @PathVariable Long productId) {
         return ResponseEntity.ok(productService.findById(restaurantId, productId));
     }
 
+    @CheckSecurity.Restaurants.allowEdit
     @PostMapping
     public ResponseEntity<ProductDto> create(@PathVariable Long restaurantId, @RequestBody @Valid ProductInputDto productInputDto) {
         return ResponseEntity.ok(productService.create(restaurantId, productInputDto));
     }
 
+    @CheckSecurity.Restaurants.allowEdit
     @PutMapping("/{productId}")
      public ResponseEntity<ProductDto> update(@PathVariable Long restaurantId, @PathVariable Long productId, @RequestBody @Valid ProductInputDto productInputDto) {
         return ResponseEntity.ok(productService.update(restaurantId,productId, productInputDto));

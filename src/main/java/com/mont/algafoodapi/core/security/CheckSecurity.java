@@ -15,11 +15,23 @@ public @interface CheckSecurity {
         @PreAuthorize("hasAuthority('SCOPE_read') and isAuthenticated()")
         @Retention(RetentionPolicy.RUNTIME)
         @Target(ElementType.METHOD)
-        public @interface allowQueryCuisine {}
+        public @interface allowQuery {}
 
         @PreAuthorize("hasAuthority('SCOPE_write') and hasAuthority('EDIT_CUISINE')")
         @Retention(RetentionPolicy.RUNTIME)
         @Target(ElementType.METHOD)
-        public @interface allowEditCuisine {}
+        public @interface allowEdit {}
+    }
+
+    public @interface Restaurants {
+        @PreAuthorize("hasAuthority('SCOPE_read') and isAuthenticated()")
+        @Retention(RetentionPolicy.RUNTIME)
+        @Target(ElementType.METHOD)
+        public @interface allowQuery {}
+
+        @PreAuthorize("hasAuthority('SCOPE_write') and hasAuthority('EDIT_RESTAURANTS')")
+        @Retention(RetentionPolicy.RUNTIME)
+        @Target(ElementType.METHOD)
+        public @interface allowEdit {}
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.UserDto;
 import com.mont.algafoodapi.api.openapi.controller.RestaurantResponsibleControllerOpenApi;
+import com.mont.algafoodapi.core.security.CheckSecurity;
 import com.mont.algafoodapi.domain.service.RestaurantUserService;
 
 @RestController
@@ -23,17 +24,20 @@ public class RestaurantResponsibleController implements RestaurantResponsibleCon
     @Autowired
     private RestaurantUserService restaurantUserService;
 
+    @CheckSecurity.Restaurants.allowQuery
     @GetMapping
     public ResponseEntity<List<UserDto>> findAll(@PathVariable Long restaurantId) {
         return ResponseEntity.ok(restaurantUserService.findAll(restaurantId));
     }
 
+    @CheckSecurity.Restaurants.allowEdit
     @PutMapping("/{responsibleId}")
     public ResponseEntity<Void> associateResponsible(@PathVariable Long restaurantId, @PathVariable Long responsibleId) {
         restaurantUserService.associateUser(restaurantId, responsibleId);
         return ResponseEntity.noContent().build();
     }
 
+    @CheckSecurity.Restaurants.allowEdit
     @DeleteMapping("/{responsibleId}")
     public ResponseEntity<Void> disassociateResponsible(@PathVariable Long restaurantId, @PathVariable Long responsibleId) {
         restaurantUserService.disassociateUser(restaurantId, responsibleId);

@@ -84,23 +84,16 @@ Insert into product (name, description, price, active, restaurant_id) values
 ('Picanha na Brasa', 'Grilled prime beef steak served with Brazilian side dishes', 55, true, 4);
 
 insert into permission (id, description, name) values 
-(1, 'Allows to query cuisine', 'QUERY_CUISINE'),
-(2, 'Allows to edit cuisine', 'EDIT_CUISINE'),
-(3, 'Allows to query cities', 'QUERY_CITIES'),
-(4, 'Allows to edit cities', 'EDIT_CITIES'),
-(5, 'Allows to query payment methods', 'QUERY_PAYMENT_METHODS'),
-(6, 'Allows to edit payment methods', 'EDIT_PAYMENT_METHODS'),
-(7, 'Allows to query restaurants', 'QUERY_RESTAURANTS'),
-(8, 'Allows to edit restaurants', 'EDIT_RESTAURANTS'),
-(9, 'Allows to query states', 'QUERY_STATES'),
-(10, 'Allows to edit states', 'EDIT_STATES'),
-(11, 'Allows to query products', 'QUERY_PRODUCTS'),
-(12, 'Allows to edit products', 'EDIT_PRODUCTS'),
-(13, 'Allows to query users', 'QUERY_USERS'),
-(14, 'Allows to edit users', 'EDIT_USERS'),
-(15, 'Allows to query orders', 'QUERY_ORDERS'),
-(16, 'Allows to manage orders', 'MANAGE_ORDERS'),
-(17, 'Allows to create orders', 'CREATE_REPORTS');
+(1, 'Allows to edit cuisine', 'EDIT_CUISINE'),
+(2, 'Allows to edit cities', 'EDIT_CITIES'),
+(3, 'Allows to edit payment methods', 'EDIT_PAYMENT_METHODS'),
+(4, 'Allows to edit restaurants', 'EDIT_RESTAURANTS'),
+(5, 'Allows to edit states', 'EDIT_STATES'),
+(6, 'Allows to query users', 'QUERY_USERS'),
+(7, 'Allows to edit users', 'EDIT_USERS'),
+(8, 'Allows to query orders', 'QUERY_ORDERS'),
+(9, 'Allows to manage orders', 'MANAGE_ORDERS'),
+(10, 'Allows to create orders', 'CREATE_REPORTS');
 
 
 
@@ -120,7 +113,8 @@ select 1, id from permission;
 insert into group_permission (tb_group_id, permission_id)
 select 2, id from permission where name like 'QUERY_%';
 
-insert into group_permission (tb_group_id, permission_id) values (2, 14);
+insert into group_permission (tb_group_id, permission_id)
+select 2, id from permission where name like 'EDIT_RESTAURANTS';
 
 #Add permissions in assistant group
 insert into group_permission (tb_group_id, permission_id)

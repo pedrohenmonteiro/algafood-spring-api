@@ -42,7 +42,7 @@ public class CuisineController implements CuisineControllerOpenApi {
     private CuisineRepository cuisineRepository;
 
 
-    @CheckSecurity.Cuisine.allowQueryCuisine
+    @CheckSecurity.Cuisine.allowQuery
     @GetMapping
     public ResponseEntity<Page<CuisineDto>> findAll(
         @PageableDefault(size = 10) @Nullable Pageable pageable
@@ -51,32 +51,32 @@ public class CuisineController implements CuisineControllerOpenApi {
         return ResponseEntity.status(HttpStatus.OK).body(cuisineService.findAll(pageable));
     }
 
-    @CheckSecurity.Cuisine.allowQueryCuisine
+    @CheckSecurity.Cuisine.allowQuery
     @GetMapping("/{id}")
     public ResponseEntity<CuisineDto> findById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(cuisineService.findById(id));
     }
 
-    @CheckSecurity.Cuisine.allowEditCuisine
+    @CheckSecurity.Cuisine.allowEdit
     @PostMapping
     public ResponseEntity<CuisineDto> create(@RequestBody @Valid CuisineInputDto cuisineInputDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(cuisineService.create(cuisineInputDto));
     }
 
-    @CheckSecurity.Cuisine.allowEditCuisine
+    @CheckSecurity.Cuisine.allowEdit
     @PutMapping("/{id}")
     public ResponseEntity<CuisineDto> update(@PathVariable Long id, @RequestBody @Valid CuisineInputDto cuisineInputDto) {
         return ResponseEntity.status(HttpStatus.OK).body(cuisineService.update(id, cuisineInputDto));
     }
 
-    @CheckSecurity.Cuisine.allowEditCuisine
+    @CheckSecurity.Cuisine.allowEdit
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         cuisineService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @CheckSecurity.Cuisine.allowQueryCuisine
+    @CheckSecurity.Cuisine.allowQuery
     @GetMapping("/by-name")
     public ResponseEntity<List<Cuisine>> findByName(@RequestParam String name) {
                 return ResponseEntity.ok(cuisineRepository.findByName(name));
