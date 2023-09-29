@@ -47,6 +47,7 @@ public class OrderController implements OrderControllerOpenApi {
         return ResponseEntity.ok(orderService.findByCode(orderCode));
     }
 
+    @CheckSecurity.Orders.allowsCreate
     @PostMapping
     public ResponseEntity<OrderDto> create(@RequestBody @Valid OrderInputDto orderInputDto) {
         return ResponseEntity.ok(orderService.create(orderInputDto));

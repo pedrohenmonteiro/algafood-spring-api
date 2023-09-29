@@ -23,6 +23,7 @@ import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import com.mont.algafoodapi.api.model.PaymentMethodDto;
 import com.mont.algafoodapi.api.model.input.PaymentMethodInputDto;
 import com.mont.algafoodapi.api.openapi.controller.PaymentMethodControllerOpenApi;
+import com.mont.algafoodapi.core.security.CheckSecurity;
 import com.mont.algafoodapi.domain.repository.PaymentMethodRepository;
 import com.mont.algafoodapi.domain.service.PaymentMethodService;
 
@@ -38,6 +39,7 @@ public class PaymentMethodController implements PaymentMethodControllerOpenApi{
     @Autowired
     private PaymentMethodRepository paymentMethodRepository;
 
+    @CheckSecurity.PaymentMethods.allowsQuery
     @GetMapping
     public ResponseEntity<List<PaymentMethodDto>> findAll(ServletWebRequest request) {
 
@@ -62,6 +64,7 @@ public class PaymentMethodController implements PaymentMethodControllerOpenApi{
         .body(paymentMethodService.findAll());
     }
 
+    @CheckSecurity.PaymentMethods.allowsQuery    
     @GetMapping("/{id}")
     public ResponseEntity<PaymentMethodDto> findById(@PathVariable Long id, ServletWebRequest request) {
         ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());
@@ -85,16 +88,19 @@ public class PaymentMethodController implements PaymentMethodControllerOpenApi{
         .body(paymentMethodService.findById(id));
     }
 
+    @CheckSecurity.PaymentMethods.allowsEdit   
     @PostMapping
     public ResponseEntity<PaymentMethodDto> create(@RequestBody @Valid PaymentMethodInputDto paymentMethodInputDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(paymentMethodService.create(paymentMethodInputDto));
     }
 
+    @CheckSecurity.PaymentMethods.allowsEdit  
     @PutMapping("/{id}")
     public ResponseEntity<PaymentMethodDto> update(@PathVariable Long id, @RequestBody @Valid PaymentMethodInputDto paymentMethodInputDto) {
         return ResponseEntity.ok(paymentMethodService.update(id, paymentMethodInputDto));
     }
 
+    @CheckSecurity.PaymentMethods.allowsEdit  
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         paymentMethodService.delete(id);

@@ -62,5 +62,23 @@ public @interface CheckSecurity {
         @Retention(RetentionPolicy.RUNTIME)
         @Target(ElementType.METHOD)
         public @interface allowsManage {}
+
+        @PreAuthorize("hasAuthority('SCOPE_write') and isAuthenticated()")
+        @Retention(RetentionPolicy.RUNTIME)
+        @Target(ElementType.METHOD)
+        public @interface allowsCreate {}
+    }
+
+    public @interface PaymentMethods {
+
+        @PreAuthorize("hasAuthority('SCOPE_read') and isAuthenticated()")
+        @Retention(RetentionPolicy.RUNTIME)
+        @Target(ElementType.METHOD)
+        public @interface allowsQuery {}
+
+        @PreAuthorize("hasAuthority('SCOPE_write') and hasAuthority('EDIT_PAYMENT_METHODS')")
+        @Retention(RetentionPolicy.RUNTIME)
+        @Target(ElementType.METHOD)
+        public @interface allowsEdit {}
     }
 }
