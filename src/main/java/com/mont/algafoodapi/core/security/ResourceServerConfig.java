@@ -22,6 +22,12 @@ public class ResourceServerConfig {
     
     @Bean
     SecurityFilterChain resourceServerFilterChain(HttpSecurity http) throws Exception {
+
+         http
+        .authorizeHttpRequests((authorize) -> authorize
+            .anyRequest().authenticated())
+        .formLogin(Customizer.withDefaults());
+
         http
         .csrf(crsf -> crsf.disable())
         .cors(Customizer.withDefaults())
