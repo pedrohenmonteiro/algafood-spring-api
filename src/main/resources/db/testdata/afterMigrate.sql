@@ -89,8 +89,8 @@ insert into permission (id, description, name) values
 (3, 'Allows to edit payment methods', 'EDIT_PAYMENT_METHODS'),
 (4, 'Allows to edit restaurants', 'EDIT_RESTAURANTS'),
 (5, 'Allows to edit states', 'EDIT_STATES'),
-(6, 'Allows to query users', 'QUERY_USERS'),
-(7, 'Allows to edit users', 'EDIT_USERS'),
+(6, 'Allows to query users', 'QUERY_USERS_GROUPS_PERMISSIONS'),
+(7, 'Allows to edit users', 'EDIT_USERS_GROUPS_PERMISSIONS'),
 (8, 'Allows to query orders', 'QUERY_ORDERS'),
 (9, 'Allows to manage orders', 'MANAGE_ORDERS'),
 (10, 'Allows to create orders', 'CREATE_REPORTS');

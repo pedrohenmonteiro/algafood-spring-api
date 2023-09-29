@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mont.algafoodapi.api.model.GroupDto;
+import com.mont.algafoodapi.core.security.CheckSecurity;
 import com.mont.algafoodapi.domain.service.UserGroupService;
 
 @RestController
@@ -22,17 +23,20 @@ public class UserGroupController {
     @Autowired
     private UserGroupService userGroupService;
 
+    @CheckSecurity.UserGroupsPermissions.allowsQuery
     @GetMapping
     public ResponseEntity<List<GroupDto>> findAll(@PathVariable Long userId) {
         return ResponseEntity.ok(userGroupService.findAll(userId));
     }
 
+    @CheckSecurity.UserGroupsPermissions.allowsEdit
     @PutMapping("/{groupId}")
     public ResponseEntity<Void> associateGroup(@PathVariable Long userId, @PathVariable Long groupId) {
         userGroupService.associateGroup(userId, groupId);
         return ResponseEntity.noContent().build();
     }
 
+    @CheckSecurity.UserGroupsPermissions.allowsEdit
     @DeleteMapping("/{groupId}")
     public ResponseEntity<Void> disassociateGroup(@PathVariable Long userId, @PathVariable Long groupId) {
         userGroupService.disassociateGroup(userId, groupId);

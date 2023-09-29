@@ -105,4 +105,31 @@ public @interface CheckSecurity {
         @Target(ElementType.METHOD)
         public @interface allowsEdit {}
     }
+
+    public @interface UserGroupsPermissions {
+
+        @PreAuthorize("hasAuthority('SCOPE_write') and @appSecurity.getUserId() == #userId")
+        @Retention(RetentionPolicy.RUNTIME)
+        @Target(ElementType.METHOD)
+        public @interface allowsChangeOwnPassword {}
+
+        @PreAuthorize("hasAuthority('SCOPE_write') and "
+                        + "(@appSecurity.getUserId() == #userId or"
+                        + "hasAuthority('EDIT_USERS_GROUPS_PERMISSIONS'))")
+        @Retention(RetentionPolicy.RUNTIME)
+        @Target(ElementType.METHOD)
+        public @interface allowsChangeUser {}
+
+
+        @PreAuthorize("hasAuthority('SCOPE_write') and hasAuthority('EDIT_USERS_GROUPS_PERMISSIONS')")
+        @Retention(RetentionPolicy.RUNTIME)
+        @Target(ElementType.METHOD)
+        public @interface allowsEdit {}
+
+        @PreAuthorize("hasAuthority('SCOPE_read') and hasAuthority('QUERY_USERS_GROUPS_PERMISSIONS')")
+        @Retention(RetentionPolicy.RUNTIME)
+        @Target(ElementType.METHOD)
+        public @interface allowsQuery {}
+
+    }
 }

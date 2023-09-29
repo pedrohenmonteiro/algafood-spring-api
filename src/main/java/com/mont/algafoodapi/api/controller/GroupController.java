@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mont.algafoodapi.api.model.GroupDto;
 import com.mont.algafoodapi.api.model.input.GroupInputDto;
 import com.mont.algafoodapi.api.openapi.controller.GroupControllerOpenApi;
+import com.mont.algafoodapi.core.security.CheckSecurity;
 import com.mont.algafoodapi.domain.service.GroupService;
 
 @RestController
@@ -27,26 +28,31 @@ public class GroupController implements GroupControllerOpenApi{
     @Autowired
     private GroupService groupService;
 
+    @CheckSecurity.UserGroupsPermissions.allowsQuery
     @GetMapping
     public ResponseEntity<List<GroupDto>> findAll() {
         return ResponseEntity.ok(groupService.findAll());
     }
 
+    @CheckSecurity.UserGroupsPermissions.allowsQuery
     @GetMapping("/{id}")
     public ResponseEntity<GroupDto> findById(@PathVariable Long id) {
         return ResponseEntity.ok(groupService.findById(id));
     }
 
+    @CheckSecurity.UserGroupsPermissions.allowsEdit
     @PostMapping
     public ResponseEntity<GroupDto> create(@RequestBody GroupInputDto groupInputDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(groupService.create(groupInputDto));
     }
 
+    @CheckSecurity.UserGroupsPermissions.allowsEdit
     @PutMapping("/{id}")
     public ResponseEntity<GroupDto> update(@PathVariable Long id, @RequestBody GroupInputDto groupInputDto) {
         return ResponseEntity.ok(groupService.update(id, groupInputDto));
     }
     
+    @CheckSecurity.UserGroupsPermissions.allowsEdit
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         groupService.delete(id);
