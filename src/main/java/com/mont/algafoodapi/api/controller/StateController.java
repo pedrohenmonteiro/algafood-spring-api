@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mont.algafoodapi.api.model.StateDto;
 import com.mont.algafoodapi.api.model.input.StateInputDto;
 import com.mont.algafoodapi.api.openapi.controller.StateControllerOpenApi;
+import com.mont.algafoodapi.core.security.CheckSecurity;
 import com.mont.algafoodapi.domain.service.StateService;
 
 import jakarta.validation.Valid;
@@ -30,26 +31,31 @@ public class StateController implements StateControllerOpenApi{
     private StateService stateService;
 
 
+    @CheckSecurity.States.allowsQuery
     @GetMapping
     public ResponseEntity<List<StateDto>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(stateService.findAll());
     }
 
+    @CheckSecurity.States.allowsQuery
     @GetMapping("/{id}")
     public ResponseEntity<StateDto> findById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(stateService.findById(id));
     }
 
+    @CheckSecurity.States.allowsEdit
     @PostMapping
     public ResponseEntity<StateDto> create(@RequestBody @Valid StateInputDto state) {
         return ResponseEntity.status(HttpStatus.CREATED).body(stateService.create(state));
     }
 
+    @CheckSecurity.States.allowsEdit
     @PutMapping("/{id}")
     public ResponseEntity<StateDto> update(@PathVariable Long id, @RequestBody @Valid StateInputDto stateInputDto) {
         return ResponseEntity.status(HttpStatus.OK).body(stateService.update(id, stateInputDto));
     }
 
+    @CheckSecurity.States.allowsEdit
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         stateService.delete(id);

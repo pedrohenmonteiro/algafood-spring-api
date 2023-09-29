@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mont.algafoodapi.api.model.CityDto;
 import com.mont.algafoodapi.api.model.input.CityInputDto;
 import com.mont.algafoodapi.api.openapi.controller.CityControllerOpenApi;
+import com.mont.algafoodapi.core.security.CheckSecurity;
 import com.mont.algafoodapi.domain.service.CityService;
 
 import io.swagger.v3.oas.annotations.Parameter;
@@ -32,43 +33,38 @@ public class CityController implements CityControllerOpenApi {
     @Autowired
     private CityService cityService;
 
+    @CheckSecurity.Cities.allowsQuery
     @GetMapping
     public ResponseEntity<List<CityDto>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(cityService.findAll());
     }
 
+    @CheckSecurity.Cities.allowsQuery
     @GetMapping("/{id}")
     public ResponseEntity<CityDto> findById(@Parameter(description = "The id of the city to find") @PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(cityService.findById(id));
     }
 
+    @CheckSecurity.Cities.allowsEdit
     @PostMapping
     public ResponseEntity<CityDto> create(@RequestBody @Valid CityInputDto cityInputDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(cityService.create(cityInputDto));
     }
 
+    @CheckSecurity.Cities.allowsEdit
     @PutMapping("/{id}")
     public ResponseEntity<CityDto> update(@PathVariable Long id, @RequestBody @Valid CityInputDto cityInputDto) {
         return ResponseEntity.status(HttpStatus.OK).body(cityService.update(id, cityInputDto));
     }
 
+    @CheckSecurity.Cities.allowsEdit
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         cityService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/tasks")
-    public String getTasks(@AuthenticationPrincipal Jwt jwt) {
-        return """
-        <h1>
-        Top secret tasks for %s
-        </h1>
-                <ul>
-                <li>user tasks</li>
-                </ul>
-        """.formatted(jwt.getSubject());
-    }
+
 
 
 }
