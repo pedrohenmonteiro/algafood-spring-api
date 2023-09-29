@@ -17,6 +17,7 @@ import com.mont.algafoodapi.api.model.OrderDto;
 import com.mont.algafoodapi.api.model.OrderSummaryDto;
 import com.mont.algafoodapi.api.model.input.OrderInputDto;
 import com.mont.algafoodapi.api.openapi.controller.OrderControllerOpenApi;
+import com.mont.algafoodapi.core.security.CheckSecurity;
 import com.mont.algafoodapi.domain.filter.OrderFilter;
 import com.mont.algafoodapi.domain.repository.OrderRepository;
 import com.mont.algafoodapi.domain.service.OrderService;
@@ -39,6 +40,7 @@ public class OrderController implements OrderControllerOpenApi {
         return ResponseEntity.ok(orderService.findAll(filter, pageable));
     }
 
+    @CheckSecurity.Orders.allowQuery
     @GetMapping("/{orderCode}")
     public ResponseEntity<OrderDto> findByCode(@PathVariable String orderCode) {
         return ResponseEntity.ok(orderService.findByCode(orderCode));

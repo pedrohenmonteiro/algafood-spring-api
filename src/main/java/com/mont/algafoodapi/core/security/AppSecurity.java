@@ -34,4 +34,9 @@ public class AppSecurity {
     public boolean manageRestaurant(Long restaurantId) {
         return restaurantRepository.existsResponsible(restaurantId, getUserId());
     }
+
+    public boolean userAuthenticatedEqual(Long userId) {
+		return getUserId() != null && userId != null
+				&& getUserId().equals(userId);
+	}
 }

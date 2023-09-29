@@ -5,6 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 public @interface CheckSecurity {
@@ -39,5 +40,16 @@ public @interface CheckSecurity {
         @Target(ElementType.METHOD)
         public @interface allowManageOperation {}
 
+    }
+
+    public @interface Orders {
+
+        @PreAuthorize("hasAuthority('SCOPE_read') and isAuthenticated()")
+        @PostAuthorize("hasAuthority('QUERY_ORDERS') or "
+                + "@appSecurity.userAuthenticatedEqual(returnObject.body.client.id) or "
+				+ "@appSecurity.manageRestaurant(returnObject.body.restaurant.id)")
+        @Retention(RetentionPolicy.RUNTIME)
+        @Target(ElementType.METHOD)
+        public @interface allowQuery {}
     }
 }

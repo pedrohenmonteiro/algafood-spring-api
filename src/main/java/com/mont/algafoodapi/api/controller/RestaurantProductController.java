@@ -45,13 +45,13 @@ public class RestaurantProductController implements RestaurantProductControllerO
         return ResponseEntity.ok(productService.findById(restaurantId, productId));
     }
 
-    @CheckSecurity.Restaurants.allowEdit
+    @CheckSecurity.Restaurants.allowManageOperation
     @PostMapping
     public ResponseEntity<ProductDto> create(@PathVariable Long restaurantId, @RequestBody @Valid ProductInputDto productInputDto) {
         return ResponseEntity.ok(productService.create(restaurantId, productInputDto));
     }
 
-    @CheckSecurity.Restaurants.allowEdit
+    @CheckSecurity.Restaurants.allowManageOperation
     @PutMapping("/{productId}")
      public ResponseEntity<ProductDto> update(@PathVariable Long restaurantId, @PathVariable Long productId, @RequestBody @Valid ProductInputDto productInputDto) {
         return ResponseEntity.ok(productService.update(restaurantId,productId, productInputDto));
